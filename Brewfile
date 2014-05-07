@@ -20,10 +20,17 @@ install zsh-completions || true
 install git || true
 install hub || true
 
+## Required
+install readline || true
+install openssl || true
+
+## Ruby
+install rbenv || true
+install ruby-build || true
+
 ## Utils
 install tree || true
 install jq || true
-
 
 ########################
 # Install Applications #
