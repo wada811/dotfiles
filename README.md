@@ -23,3 +23,11 @@
 
     sudo sh -c "echo /usr/local/bin/zsh >> /etc/shells"
     chsh -s /usr/local/bin/zsh
+
+## Symlink diff-highlight
+
+    ln -s /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin
+
+## Show dotfiles
+
+    defaults write com.apple.finder AppleShowAllFiles -boolean true && killall Finder
