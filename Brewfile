@@ -5,7 +5,7 @@ update || true
 upgrade || true
 
 # Install HomebrewCask
-tap wada811/HomebrewCask || true
+tap caskroom/cask || true
 install brew-cask || true
 
 ####################
