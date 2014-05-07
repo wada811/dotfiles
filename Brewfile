@@ -24,7 +24,6 @@ install hub || true
 ## Required
 install readline || true
 install openssl || true
-install java || true
 
 ## Ruby
 install rbenv || true
@@ -57,6 +56,7 @@ cask install sublime-text || true
 cask install coteditor || true
 
 ## IDE
+cask install java || true
 cask install eclipse-ide || true
 
 ## Utils
