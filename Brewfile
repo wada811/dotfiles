@@ -15,6 +15,7 @@ install brew-cask || true
 ## Shell
 install zsh || true
 install zsh-completions || true
+install terminal-notifier || true
 
 ## Git
 install git || true
