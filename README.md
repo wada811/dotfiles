@@ -1,4 +1,4 @@
-# dotfiles
+# wada811's dotfiles
 
 ## Install dotfiles
     cd ~
