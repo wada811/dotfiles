@@ -2,7 +2,7 @@
 
 ## Install dotfiles
     cd ~
-    git clone git@github.com:wada811/dotfiles.git
+    git clone https://github.com/wada811/dotfiles.git
 
 ## Usage dotfilesInstaller.sh
 
