@@ -1,0 +1,20 @@
+[user]
+	name = wada811
+	email = at.wada811@gmail.com
+[core]
+	excludesfile = /Users/wada/.gitignore
+	precomposeunicode = true
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
+[pager]
+	log = diff-highlight | less
+	show = diff-highlight | less
+	diff = diff-highlight | less
+[merge]
+	ff = false
+[alias]
+	lg = log --all --graph --decorate --oneline --abbrev-commit
+	fix = commit --amend
