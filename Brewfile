@@ -58,6 +58,7 @@ cask install coteditor || true
 ## IDE
 cask install java || true
 cask install eclipse-ide || true
+cask install android-studio || true
 
 ## Utils
 cask install google-japanese-ime || true
