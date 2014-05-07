@@ -32,6 +32,7 @@ install ruby-build || true
 ## Utils
 install tree || true
 install jq || true
+install figlet || true
 
 ########################
 # Install Applications #
