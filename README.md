@@ -21,7 +21,7 @@
 
 ##  Change default shell to Zsh
 
-    sudo sh -c "echo /usr/local/bin/zsh >> /etc/shells"
+    sudo sh -c "echo '/usr/local/bin/zsh' >> /etc/shells"
     chsh -s /usr/local/bin/zsh
 
 ## Symlink diff-highlight
