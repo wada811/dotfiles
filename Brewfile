@@ -47,7 +47,23 @@ install ffmpeg || true
 # Install Applications #
 ########################
 
+## Browser
+cask install google-chrome || true
+cask install firefox || true
 
+## Editor
+cask install sublime-text || true
+cask install coteditor || true
+
+## IDE
+cask install eclipse-ide || true
+
+## Utils
+cask install google-japanese-ime || true
+cask install dropbox || true
+cask install cyberduck || true
+cask install the-unarchiver || true
+cask install appcleaner || true
 
 # Remove outdated versions
 cleanup
