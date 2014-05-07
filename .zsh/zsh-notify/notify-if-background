@@ -5,7 +5,7 @@
 #
 # Notification is effectively posted only if the terminal application
 # (either Terminal.app or iTerm2) is in background, or if the session tab
-# is not active (or in other word when you are not looking at the shell). 
+# is not active (or in other word when you are not looking at the shell).
 #
 # Exits with status 1 if the terminal app is unsupported, or if the
 # notifier program is not found.
@@ -15,7 +15,7 @@
 # Requirements:
 #
 # - terminal-notifier.app
-#   https://github.com/alloy/terminal-notifier 
+#   https://github.com/alloy/terminal-notifier
 #
 # - growlnotify
 #   http://growl.info/extras.php/#growlnotify
@@ -39,7 +39,7 @@ if [[ "$TERM_PROGRAM" == 'iTerm.app' ]]; then
 elif [[ "$TERM_PROGRAM" == 'Apple_Terminal' ]]; then
   term_id='com.apple.terminal'
 else
-  # echo "Unsupported terminal: $TERM_PROGRAM" > /dev/stderr 
+  # echo "Unsupported terminal: $TERM_PROGRAM" > /dev/stderr
   return 1;
 fi
 
@@ -60,10 +60,10 @@ fi
 
 
 if [[ -x "$SYS_NOTIFIER" ]]; then
-  "$SYS_NOTIFIER" -activate "$term_id" -sender "$term_id" -title "$title" -message "$message" 1>/dev/null 
+  "$SYS_NOTIFIER" -activate "$term_id" -sender "$term_id" -title "$title" -message "$message" 1>/dev/null
 elif [[ -x "$GROWL_NOTIFIER" ]]; then
   [[ ! -z "$icon" ]] && icon_switch="--iconpath $icon"
-  echo "$message" | "$GROWL_NOTIFIER" "$title" 
+  echo "$message" | "$GROWL_NOTIFIER" "$title"
 else
   echo "No notifier program found." > /dev/stderr
   return 1

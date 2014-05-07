@@ -4,7 +4,6 @@
 #
 fpath=($fpath `dirname $0`)
 
-SYS_NOTIFIER="/Applications/terminal-notifier.app/Contents/MacOS/terminal-notifier"
 NOTIFY_COMMAND_COMPLETE_TIMEOUT=1
 
 # Default timeout is 30 seconds.
