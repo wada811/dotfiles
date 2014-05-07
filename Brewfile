@@ -24,6 +24,7 @@ install hub || true
 ## Required
 install readline || true
 install openssl || true
+install java || true
 
 ## Ruby
 install rbenv || true
