@@ -29,10 +29,19 @@ install openssl || true
 install rbenv || true
 install ruby-build || true
 
+## SQL
+install mysql || true
+install sqlite || true
+
 ## Utils
 install tree || true
 install jq || true
+install rename || true
 install figlet || true
+
+## Image and Video
+install imagemagick || true
+install ffmpeg || true
 
 ########################
 # Install Applications #
