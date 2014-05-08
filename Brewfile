@@ -1,12 +1,12 @@
 # Update Homebrew
-update || true
+update
 
 # Upgrate Formulas
-upgrade || true
+upgrade
 
 # Install HomebrewCask
-tap caskroom/cask || true
-install brew-cask || true
+tap caskroom/cask
+install brew-cask
 
 ####################
 # Install Packages #
@@ -17,63 +17,63 @@ tap sanemat/font
 install ricty
 
 ## Shell
-install zsh || true
-install zsh-completions || true
-install terminal-notifier || true
+install zsh
+install zsh-completions
+install terminal-notifier
 
 ## Git
-install git || true
-install hub || true
+install git
+install hub
 
 ## Android
 install android-sdk
 install android-ndk
 
 ## Required
-install readline || true
-install openssl || true
+install readline
+install openssl
 
 ## Ruby
-install rbenv || true
-install ruby-build || true
+install rbenv
+install ruby-build
 
 ## SQL
-install mysql || true
-install sqlite || true
+install mysql
+install sqlite
 
 ## Utils
-install tree || true
-install jq || true
-install rename || true
-install figlet || true
+install tree
+install jq
+install rename
+install figlet
 
 ## Image and Video
-install imagemagick || true
-install ffmpeg || true
+install imagemagick
+install ffmpeg
 
 ########################
 # Install Applications #
 ########################
 
 ## Browser
-cask install google-chrome || true
-cask install firefox || true
+cask install google-chrome
+cask install firefox
 
 ## Editor
-cask install sublime-text || true
-cask install coteditor || true
+cask install sublime-text
+cask install coteditor
 
 ## IDE
-cask install java || true
-cask install eclipse-ide || true
-cask install android-studio || true
+cask install java
+cask install eclipse-ide
+cask install android-studio
 
 ## Utils
-cask install google-japanese-ime || true
-cask install dropbox || true
-cask install cyberduck || true
-cask install the-unarchiver || true
-cask install appcleaner || true
+cask install google-japanese-ime
+cask install dropbox
+cask install cyberduck
+cask install the-unarchiver
+cask install appcleaner
 
 # Remove outdated versions
 cleanup
