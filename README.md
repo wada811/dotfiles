@@ -38,3 +38,8 @@
 ## Symlink diff-highlight
 
     ln -s /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin
+
+## Symlink Sublime Text 2
+
+    rm -rf ~/Library/Application\ Support/Sublime\ Text\ 2/
+    ln -s ~/Dropbox/Settings/Sublime\ Text\ 2/ ~/Library/Application\ Support/Sublime\ Text\ 2
