@@ -14,11 +14,11 @@
     chmod +x dotfilesInstaller.sh
     ./dotfilesInstaller.sh
 
-## [Install HomeBrew](http://brew.sh/#install)
+## [Install Homebrew](http://brew.sh/#install)
 
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
-## Install Formulas and Applications via HomeBrew and HomeBrew-cask
+## Install Formulas and Applications via Homebrew and Homebrew-cask
 
     cd ~
     brew bundle
