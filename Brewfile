@@ -12,6 +12,10 @@ install brew-cask || true
 # Install Packages #
 ####################
 
+## Font
+tap sanemat/font
+install ricty
+
 ## Shell
 install zsh || true
 install zsh-completions || true
