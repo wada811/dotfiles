@@ -69,3 +69,4 @@ cask install appcleaner || true
 
 # Remove outdated versions
 cleanup
+cask cleanup
