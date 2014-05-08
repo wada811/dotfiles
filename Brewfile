@@ -21,6 +21,10 @@ install terminal-notifier || true
 install git || true
 install hub || true
 
+## Android
+install android-sdk
+install android-ndk
+
 ## Required
 install readline || true
 install openssl || true
