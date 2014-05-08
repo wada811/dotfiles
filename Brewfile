@@ -55,6 +55,9 @@ install ffmpeg
 # Install Applications #
 ########################
 
+## Install Location Option
+export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+
 ## Browser
 cask install google-chrome
 cask install firefox
