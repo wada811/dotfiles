@@ -55,28 +55,25 @@ install ffmpeg
 # Install Applications #
 ########################
 
-## Install Location Option
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
 ## Browser
-cask install google-chrome
-cask install firefox
+cask install --appdir=/Applications google-chrome
+cask install --appdir=/Applications firefox
 
 ## Editor
-cask install sublime-text
-cask install coteditor
+cask install --appdir=/Applications sublime-text
+cask install --appdir=/Applications coteditor
 
 ## IDE
-cask install java
-cask install eclipse-ide
-cask install android-studio
+cask install --appdir=/Applications java
+cask install --appdir=/Applications eclipse-ide
+cask install --appdir=/Applications android-studio
 
 ## Utils
-cask install google-japanese-ime
-cask install dropbox
-cask install cyberduck
-cask install the-unarchiver
-cask install appcleaner
+cask install --appdir=/Applications google-japanese-ime
+cask install --appdir=/Applications dropbox
+cask install --appdir=/Applications cyberduck
+cask install --appdir=/Applications the-unarchiver
+cask install --appdir=/Applications appcleaner
 
 # Remove outdated versions
 cleanup
