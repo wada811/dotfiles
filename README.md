@@ -14,11 +14,11 @@
     chmod +x dotfilesInstaller.sh
     ./dotfilesInstaller.sh
 
-## [Install HomeBrew](http://brew.sh/#install)
+## [Install Homebrew](http://brew.sh/#install)
 
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
-## Install Formulas and Applications via HomeBrew and HomeBrew-cask
+## Install Formulas and Applications via Homebrew and Homebrew-cask
 
     cd ~
     brew bundle
@@ -38,3 +38,8 @@
 ## Symlink diff-highlight
 
     ln -s /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin
+
+## [Symlink Sublime Text 2](http://wada811.blogspot.com/2013/01/sharing-sublime-text-2-settings-with-dropbox.html)
+
+    rm -rf ~/Library/Application\ Support/Sublime\ Text\ 2/
+    ln -s ~/Dropbox/Settings/Sublime\ Text\ 2/ ~/Library/Application\ Support/Sublime\ Text\ 2
