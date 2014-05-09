@@ -2,7 +2,7 @@
 	name = wada811
 	email = at.wada811@gmail.com
 [core]
-	excludesfile = /Users/wada/.gitignore
+	excludesfile = ~/.gitignore
 	precomposeunicode = true
 [color]
 	ui = auto
