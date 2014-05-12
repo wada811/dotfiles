@@ -1,4 +1,4 @@
-# wada811's dotfiles
+# [wada811's dotfiles](http://wada811.blogspot.com/2014/05/dotfiles.html)
 
 ## Install dotfiles
     cd ~
@@ -11,14 +11,13 @@
 ## Usage dotfilesInstaller.sh
 
     cd ~/dotfiles
-    chmod +x dotfilesInstaller.sh
     ./dotfilesInstaller.sh
 
 ## [Install Homebrew](http://brew.sh/#install)
 
     ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
 
-## Install Formulas and Applications via Homebrew and Homebrew-cask
+## [Install Formulas and Applications via Homebrew and Homebrew-cask](http://wada811.blogspot.com/2014/05/brewfile-homebrew-cask.html)
 
     cd ~
     brew bundle
