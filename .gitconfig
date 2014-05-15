@@ -13,10 +13,10 @@
 	log = diff-highlight | less
 	show = diff-highlight | less
 	diff = diff-highlight | less
-[pull]
-	ff = only
 [merge]
 	ff = false
+[pull]
+	ff = only
 [alias]
 	lg = log --all --graph --decorate --oneline --abbrev-commit
 	fix = commit --amend
