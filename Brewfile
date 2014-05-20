@@ -6,6 +6,7 @@ upgrade
 
 # Install HomebrewCask
 tap caskroom/cask
+tap caskroom/versions
 install brew-cask
 
 ####################
@@ -64,7 +65,10 @@ cask install --appdir=/Applications sublime-text
 cask install --appdir=/Applications coteditor
 
 ## IDE
+# JDK6/JDK7 for Android Studio
 cask install --appdir=/Applications java
+cask install --appdir=/Applications java7
+cask install --appdir=/Applications java6
 cask install --appdir=/Applications eclipse-ide
 cask install --appdir=/Applications android-studio
 
