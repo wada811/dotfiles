@@ -78,6 +78,8 @@ cask install --appdir=/Applications dropbox
 cask install --appdir=/Applications cyberduck
 cask install --appdir=/Applications the-unarchiver
 cask install --appdir=/Applications appcleaner
+cask install --appdir=/Applications openoffice
+cask install --appdir=/Applications gyazo
 
 # Remove outdated versions
 cleanup
