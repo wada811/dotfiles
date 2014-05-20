@@ -51,7 +51,7 @@ bindkey "^p" history-beginning-search-backward-end
 bindkey "^n" history-beginning-search-forward-end
 
 # パス
-PATH=/usr/local/bin:/usr/local/share:/Library/AndroidSDK/tools:/Library/AndroidSDK/platform-tools:/Library/AndroidNDK:$PATH
+PATH=/usr/local/bin:/usr/local/share:$PATH
 export PATH
 
 # ソフトウェアエイリアス
