@@ -55,8 +55,6 @@ PATH=/usr/local/bin:/usr/local/share:$PATH
 export PATH
 
 # ソフトウェアエイリアス
-alias mysql=/usr/local/mysql/bin/mysql
-alias sqlite=/usr/local/Cellar/sqlite/3.7.14/bin/sqlite3
 alias st="/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl"
 
 # rbenv の初期化
