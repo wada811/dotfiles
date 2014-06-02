@@ -80,6 +80,7 @@ cask install --appdir=/Applications the-unarchiver
 cask install --appdir=/Applications appcleaner
 cask install --appdir=/Applications openoffice
 cask install --appdir=/Applications gyazo
+cask install --appdir=/Applications gimp
 
 # Remove outdated versions
 cleanup
