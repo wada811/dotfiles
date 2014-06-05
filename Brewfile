@@ -1,7 +1,7 @@
 # Update Homebrew
 update
 
-# Upgrate Formulas
+# Upgrade Formulas
 upgrade
 
 # Install HomebrewCask
