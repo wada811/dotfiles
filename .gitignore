@@ -15,7 +15,7 @@
 *.dmg
 *.gz
 *.iso
-# *.jar # use in Android
+*.jar
 *.rar
 *.tar
 *.zip
