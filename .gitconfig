@@ -5,10 +5,7 @@
 	excludesfile = ~/.gitignore
 	precomposeunicode = true
 [color]
-	ui = auto
-	diff = auto
-	status = auto
-	branch = auto
+	ui = true
 [pager]
 	log = diff-highlight | less
 	show = diff-highlight | less
