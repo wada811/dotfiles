@@ -56,8 +56,5 @@ export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
 PATH=~/bin:$ANDROID_SDK_HOME/tools:$ANDROID_SDK_HOME/platform-tools:$ANDROID_NDK_HOME:/usr/local/bin:/usr/local/share:$PATH
 export PATH
 
-# ソフトウェアエイリアス
-alias st="/Applications/Sublime\ Text\ 2.app/Contents/SharedSupport/bin/subl"
-
 # rbenv の初期化
 eval "$(rbenv init -)"
