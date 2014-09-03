@@ -43,7 +43,7 @@ setopt no_flow_control
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
 
-#履歴からコマンド補完
+# 履歴からコマンド補完
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
@@ -51,7 +51,9 @@ bindkey "^p" history-beginning-search-backward-end
 bindkey "^n" history-beginning-search-forward-end
 
 # パス
-PATH=/usr/local/bin:/usr/local/share:$PATH
+export ANDROID_SDK_HOME=/usr/local/opt/android-sdk
+export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
+PATH=~/bin:$ANDROID_SDK_HOME/tools:$ANDROID_SDK_HOME/platform-tools:$ANDROID_NDK_HOME:/usr/local/bin:/usr/local/share:$PATH
 export PATH
 
 # ソフトウェアエイリアス
