@@ -61,7 +61,7 @@ cask install --appdir=/Applications google-chrome
 cask install --appdir=/Applications firefox
 
 ## Editor
-cask install --appdir=/Applications sublime-text
+cask install --appdir=/Applications sublime-text3
 cask install --appdir=/Applications coteditor
 
 ## IDE
@@ -81,6 +81,7 @@ cask install --appdir=/Applications appcleaner
 cask install --appdir=/Applications openoffice
 cask install --appdir=/Applications gyazo
 cask install --appdir=/Applications gimp
+cask install --appdir=/Applications imageoptim
 
 # Remove outdated versions
 cleanup
