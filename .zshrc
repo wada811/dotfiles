@@ -56,5 +56,9 @@ export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
 PATH=~/bin:$ANDROID_SDK_HOME/tools:$ANDROID_SDK_HOME/platform-tools:$ANDROID_NDK_HOME:/usr/local/bin:/usr/local/share:$PATH
 export PATH
 
+# alias
+alias git-readme='curl -O https://gist.githubusercontent.com/wada811/5f67cc034ceda6ddae20/raw/8b63cef74f0c4adda928c94698d86f584bbecee1/README.md'
+alias git-license='curl -O https://gist.githubusercontent.com/wada811/37f1a829623796177ed7/raw/9d178381278d0bc520e429cb0f14a6e42e989cb0/LICENSE.md'
+
 # rbenv の初期化
 eval "$(rbenv init -)"
