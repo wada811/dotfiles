@@ -28,7 +28,7 @@ install hub
 
 ## Android
 install android-sdk
-install android-ndk || true
+install android-ndk || (brew unlink android-ndk && brew install android-ndk)
 
 ## Required
 install readline
