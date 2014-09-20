@@ -56,6 +56,9 @@ install ffmpeg
 # Install Applications #
 ########################
 
+## Terminal
+cask install --appdir=/Applications iterm2
+
 ## Browser
 cask install --appdir=/Applications google-chrome
 cask install --appdir=/Applications firefox
