@@ -1,0 +1,3 @@
+[submodule "ColorTheme"]
+	path = ColorTheme
+	url = git@github.com:chriskempson/tomorrow-theme.git
