@@ -7,7 +7,7 @@ upgrade
 # Install HomebrewCask
 tap caskroom/cask
 tap caskroom/versions
-install brew-cask
+install caskroom/cask/brew-cask
 
 ####################
 # Install Packages #
@@ -15,7 +15,7 @@ install brew-cask
 
 ## Font
 tap sanemat/font
-install ricty
+install sanemat/font/ricty
 
 ## Shell
 install zsh
