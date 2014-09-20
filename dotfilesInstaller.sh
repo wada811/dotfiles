@@ -8,4 +8,6 @@ ln -s ~/dotfiles/.vim/ ~/.vim
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 ln -s ~/dotfiles/.zsh/ ~/.zsh
 ln -s ~/dotfiles/.zshrc ~/.zshrc
-ln -s ~/dotfiles/.iterm2 ~/.iterm2
+rm ~/Library/Preferences/com.googlecode.iterm2.plist
+ln -s ~/dotfiles/.iterm2/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+ln -s ~/dotfiles/.iterm2/ ~/.iterm2
