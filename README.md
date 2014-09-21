@@ -2,7 +2,7 @@
 
 ## Install dotfiles
     cd ~
-    git clone https://github.com/wada811/dotfiles.git --recursive
+    git clone https://github.com/wada811/dotfiles.git
 
 ## Show dotfiles
 
