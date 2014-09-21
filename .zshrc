@@ -8,9 +8,22 @@ fpath=(~/.zsh/completion $fpath)
 autoload -Uz compinit
 compinit -u
 
-# add-zsh-hook を有効にする | zsh-notify を有効にする
-autoload -Uz add-zsh-hook
+# cdr, add-zsh-hook を有効にする
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+
+# cdr の設定
+zstyle ':completion:*' recent-dirs-insert both
+zstyle ':chpwd:*' recent-dirs-max 500
+zstyle ':chpwd:*' recent-dirs-default true
+zstyle ':chpwd:*' recent-dirs-file "$HOME/.cache/shell/chpwd-recent-dirs"
+zstyle ':chpwd:*' recent-dirs-pushd true
+
+# zsh-notify を有効にする (require add-zsh-hook)
 source ~/.zsh/zsh-notify/notify.plugin.zsh
+
+# load peco scripts (require cdr)
+for f (~/.zsh/peco-scripts/*) source "${f}"
 
 # cd したら自動的にpushdする
 setopt auto_pushd
@@ -43,6 +56,12 @@ setopt no_flow_control
 
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
+
+# 履歴から cd
+bindkey '^@' peco-cdr
+
+# 履歴からコマンド選択
+bindkey '^r' peco-select-history
 
 # 履歴からコマンド補完
 autoload history-search-end
