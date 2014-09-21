@@ -2,7 +2,7 @@
 
 ## Install dotfiles
     cd ~
-    git clone https://github.com/wada811/dotfiles.git
+    git clone https://github.com/wada811/dotfiles.git --recursive
 
 ## Show dotfiles
 
@@ -38,7 +38,7 @@
 
     ln -s /usr/local/opt/git/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin
 
-## [Symlink Sublime Text 2](http://wada811.blogspot.com/2013/01/sharing-sublime-text-2-settings-with-dropbox.html)
+## [Symlink Sublime Text 3](http://wada811.blogspot.com/2013/01/sharing-sublime-text-2-settings-with-dropbox.html)
 
-    rm -rf ~/Library/Application\ Support/Sublime\ Text\ 2/
-    ln -s ~/Dropbox/Settings/Sublime\ Text\ 2/ ~/Library/Application\ Support/Sublime\ Text\ 2
+    rm -rf ~/Library/Application\ Support/Sublime\ Text\ 3/
+    ln -s ~/Dropbox/Settings/Sublime\ Text\ 3/ ~/Library/Application\ Support/Sublime\ Text\ 3
