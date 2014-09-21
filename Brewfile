@@ -21,6 +21,8 @@ install sanemat/font/ricty
 install zsh
 install zsh-completions
 install terminal-notifier
+tap peco/peco
+install peco
 
 ## Git
 install git

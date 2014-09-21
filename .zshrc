@@ -21,6 +21,7 @@ setopt pushd_ignore_dups
 # グローバルエイリアス
 alias -g L='| less'
 alias -g G='| grep'
+alias -g P='| peco'
 
 # ヒストリの設定
 HISTFILE=~/.zsh_history
