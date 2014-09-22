@@ -1,0 +1,3 @@
+[submodule "adb-peco"]
+	path = adb-peco
+	url = git@github.com:tomorrowkey/adb-peco.git
