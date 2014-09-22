@@ -35,6 +35,9 @@ setopt pushd_ignore_dups
 alias -g L='| less'
 alias -g G='| grep'
 alias -g P='| peco'
+alias -g F='$(peco-git-changed-files)'
+alias -g H='$(peco-git-hash)'
+alias -g B='$(peco-git-branch)'
 
 # ヒストリの設定
 HISTFILE=~/.zsh_history
