@@ -1,3 +1,3 @@
 function peco-git-hash(){
-    git log --oneline --branches | peco | awk '{print $1}'
+    git lg | peco | sed -e "s/^[\*\|][ |\\\/\*]*//g" | awk '{ print $1 }'
 }
