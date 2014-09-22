@@ -17,3 +17,9 @@
 [alias]
 	lg = log --all --graph --decorate --oneline
 	fix = commit --amend
+	# Separate merged commit by `git commit --amend`
+	separate = reset HEAD@{1}
+	# Revert commit
+	cancel-commit = reset --soft HEAD^
+	# Revert merge
+	cancel-merge = reset --hard ORIG_HEAD
