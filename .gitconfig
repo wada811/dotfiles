@@ -15,5 +15,5 @@
 [pull]
 	ff = only
 [alias]
-	lg = log --all --graph --decorate --oneline --abbrev-commit
+	lg = log --all --graph --decorate --oneline
 	fix = commit --amend
