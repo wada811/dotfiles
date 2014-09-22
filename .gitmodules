@@ -1,3 +1,6 @@
 [submodule "adb-peco"]
 	path = adb-peco
 	url = git@github.com:tomorrowkey/adb-peco.git
+[submodule "ADB-Tools"]
+	path = ADB-Tools
+	url = git@github.com:wada811/ADB-Tools.git
