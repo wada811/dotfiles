@@ -1,1 +1,0 @@
-/Users/wada/dotfiles/adb-peco/bin/adb_peco.sh
