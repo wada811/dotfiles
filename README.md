@@ -1,17 +1,17 @@
 # [wada811's dotfiles](http://wada811.blogspot.com/2014/05/dotfiles.html)
 
 ## Install dotfiles
-    cd ~
+    cd
     git clone https://github.com/wada811/dotfiles.git
 
 ## Show dotfiles
 
     defaults write com.apple.finder AppleShowAllFiles -boolean true && killall Finder
 
-## Usage dotfilesInstaller.sh
+## Usage install.sh
 
     cd ~/dotfiles
-    ./dotfilesInstaller.sh
+    ./install.sh
 
 ## [Install Homebrew](http://brew.sh/#install)
 
@@ -19,8 +19,7 @@
 
 ## [Install Formulas and Applications via Homebrew and Homebrew-cask](http://wada811.blogspot.com/2014/05/brewfile-homebrew-cask.html)
 
-    cd ~
-    brew bundle
+    brew-update
 
 ##  Change default shell to Zsh
 
