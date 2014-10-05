@@ -1,7 +1,8 @@
 #! /bin/bash
 
-ln -s ~/dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/dotfiles/.gitignore ~/.gitignore
+ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
+ln -s ~/dotfiles/git/.gitattributes ~/.gitattributes
+ln -s ~/dotfiles/git/.gitignore ~/.gitignore
 
 test -e ~/Library/Preferences/com.googlecode.iterm2.plist && rm ~/Library/Preferences/com.googlecode.iterm2.plist
 ln -s ~/dotfiles/.iterm2/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
