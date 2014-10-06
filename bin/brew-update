@@ -1,0 +1,95 @@
+#!/usr/local/bin/zsh
+
+# Update HomeBrew
+brew update
+
+# Upgrade Formulas
+brew upgrade
+
+# Install HomebrewCask
+brew tap caskroom/cask
+brew tap caskroom/versions
+brew install caskroom/cask/brew-cask
+
+####################
+# Install Packages #
+####################
+
+## Font
+brew tap sanemat/font
+brew install sanemat/font/ricty
+
+## Shell
+brew install zsh
+brew install zsh-completions
+brew install terminal-notifier
+brew tap peco/peco
+brew install peco
+
+## Git
+brew install git
+brew install hub
+
+## Android
+brew install android-sdk
+brew install android-ndk || (brew unlink android-ndk && brew install android-ndk)
+
+## Required
+brew install readline
+brew install openssl
+
+## Ruby
+brew install rbenv
+brew install ruby-build
+
+## SQL
+brew install mysql
+brew install sqlite
+
+## Utils
+brew install tree
+brew install jq
+brew install rename
+brew install figlet
+
+## Image and Video
+brew install imagemagick
+brew install ffmpeg
+
+########################
+# Install Applications #
+########################
+
+## Terminal
+brew cask install --appdir=/Applications iterm2
+
+## Browser
+brew cask install --appdir=/Applications google-chrome
+brew cask install --appdir=/Applications firefox
+
+## Editor
+brew cask install --appdir=/Applications sublime-text3
+brew cask install --appdir=/Applications coteditor
+
+## IDE
+# JDK6/JDK7 for Android Studio
+brew cask install --appdir=/Applications java
+brew cask install --appdir=/Applications java7
+brew cask install --appdir=/Applications java6
+brew cask install --appdir=/Applications eclipse-ide
+brew cask install --appdir=/Applications android-studio
+
+## Utils
+brew cask install --appdir=/Applications google-japanese-ime
+brew cask install --appdir=/Applications dropbox
+brew cask install --appdir=/Applications cyberduck
+brew cask install --appdir=/Applications the-unarchiver
+brew cask install --appdir=/Applications appcleaner
+brew cask install --appdir=/Applications openoffice
+brew cask install --appdir=/Applications gyazo
+brew cask install --appdir=/Applications gimp
+brew cask install --appdir=/Applications imageoptim
+
+# Remove outdated versions
+brew cleanup
+brew cask cleanup
