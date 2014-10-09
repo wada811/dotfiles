@@ -3,6 +3,9 @@
 # Update HomeBrew
 brew update
 
+# Add Homebrew-binary
+brew tap homebrew/binary
+
 # Upgrade Formulas
 brew upgrade
 
@@ -33,6 +36,8 @@ brew install hub
 ## Android
 brew install android-sdk
 brew install android-ndk || (brew unlink android-ndk && brew install android-ndk)
+brew install dex2jar
+brew install jad
 
 ## Required
 brew install readline
