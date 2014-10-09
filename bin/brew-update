@@ -84,6 +84,9 @@ brew cask install --appdir=/Applications java6
 brew cask install --appdir=/Applications eclipse-ide
 brew cask install --appdir=/Applications android-studio
 
+### Ruby on Rails
+brew cask install --appdir=/Applications rubymine
+
 ## Utils
 brew cask install --appdir=/Applications google-japanese-ime
 brew cask install --appdir=/Applications dropbox
