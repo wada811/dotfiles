@@ -25,3 +25,5 @@
 	cancel-commit = reset --soft HEAD^
 	# Revert merge
 	cancel-merge = reset --hard ORIG_HEAD
+	# Delete merged branches
+	delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
