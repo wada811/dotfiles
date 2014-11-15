@@ -18,6 +18,7 @@
 	ff = only
 [alias]
 	lg = log --all --graph --decorate --oneline
+	cp = cherry-pick
 	fix = commit --amend
 	# Separate merged commit by `git commit --amend`
 	separate = reset HEAD@{1}
