@@ -81,14 +81,10 @@ brew cask install --appdir=/Applications coteditor
 brew cask install --appdir=/Applications java
 brew cask install --appdir=/Applications java7
 brew cask install --appdir=/Applications java6
-brew cask install --appdir=/Applications eclipse-ide
 brew cask install --appdir=/Applications android-studio
 
 ## Android
 brew cask install --appdir=/Applications jd-gui
-
-### Ruby on Rails
-brew cask install --appdir=/Applications rubymine
 
 ## Utils
 brew cask install --appdir=/Applications google-japanese-ime
