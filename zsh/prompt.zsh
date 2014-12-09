@@ -12,6 +12,8 @@
 # How to change Hostname in Mac OS X
 # sudo scutil --set HostName [NewHostName]
 
+setopt correct
+
 autoload colors
 colors # black, red, green, yellow, blue, magenta, cyan, and white
 
@@ -23,6 +25,8 @@ hStyle=${fg[cyan]}
 cStyle=${fg[white]}
 dStyle=${fg[cyan]}
 
+rStyle=${fg[red]}
+
 user=${uStyle}%n${reset}
 at=${aStyle}@${reset}
 host=${hStyle}%m${reset}
@@ -31,4 +35,4 @@ dir=${dStyle}%c${reset}
 
 PROMPT="[${user}${at}${host}${colon}${dir}]%% " # "[user@host:dirname]% "
 PROMPT2="[${user}${at}${host}${colon}${dir}]> " # "[user@host:dirname]> "
-SPROMPT="%r is correct? [n,y,a,e]: "
+SPROMPT="[Yes(y),No(n),Abort(a),Edit(e)]${rStyle}%r${reset} ?"
