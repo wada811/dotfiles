@@ -9,3 +9,6 @@
 alias ls="ls -GF"
 alias ll="ls -l"
 alias la="ll -a"
+
+alias du="du -h"
+alias df="df -h"
