@@ -46,6 +46,13 @@ brew install openssl
 ## Ruby
 brew install rbenv
 brew install ruby-build
+### For nokogiri
+brew tap homebrew/dupes
+brew install libiconv
+brew install libxml2
+brew install libxslt
+brew link --force libxml2
+brew link --force libxslt
 
 ## SQL
 brew install mysql
