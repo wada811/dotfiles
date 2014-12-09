@@ -16,6 +16,8 @@ source ~/dotfiles/zsh/color.zsh
 source ~/dotfiles/zsh/prompt.zsh
 # タイトル設定を読み込む
 source ~/dotfiles/zsh/title.zsh
+# cd設定を読み込む
+source ~/dotfiles/zsh/cd.zsh
 # ヒストリ設定を読み込む
 source ~/dotfiles/zsh/history.zsh
 
