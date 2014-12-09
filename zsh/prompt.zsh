@@ -19,20 +19,23 @@ colors # black, red, green, yellow, blue, magenta, cyan, and white
 
 reset=$reset_color
 
+bStyle="%(?.${fg[white]}.${fg[red]})"
 uStyle=${fg[cyan]}
-aStyle=${fg[white]}
+aStyle="%(?.${fg[white]}.${fg[red]})"
 hStyle=${fg[cyan]}
-cStyle=${fg[white]}
+cStyle="%(?.${fg[white]}.${fg[red]})"
 dStyle=${fg[cyan]}
 
 rStyle=${fg[red]}
 
+bra=${bStyle}[${reset}
+ket=${bStyle}]${reset}
 user=${uStyle}%n${reset}
 at=${aStyle}@${reset}
 host=${hStyle}%m${reset}
 colon=${cStyle}:${reset}
 dir=${dStyle}%c${reset}
 
-PROMPT="[${user}${at}${host}${colon}${dir}]%% " # "[user@host:dirname]% "
-PROMPT2="[${user}${at}${host}${colon}${dir}]> " # "[user@host:dirname]> "
+PROMPT="${bra}${user}${at}${host}${colon}${dir}${ket}%% " # "[user@host:dirname]% "
+PROMPT2="${bra}${user}${at}${host}${colon}${dir}${ket}> " # "[user@host:dirname]> "
 SPROMPT="[Yes(y),No(n),Abort(a),Edit(e)]${rStyle}%r${reset} ?"
