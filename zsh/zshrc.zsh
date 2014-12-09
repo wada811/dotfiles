@@ -9,3 +9,5 @@ export LANG=ja_JP.UTF-8
 source ~/dotfiles/zsh/prompt.zsh
 # タイトル設定を読み込む
 source ~/dotfiles/zsh/title.zsh
+# ヒストリ設定を読み込む
+source ~/dotfiles/zsh/history.zsh
