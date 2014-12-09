@@ -10,6 +10,9 @@ bindkey -e
 autoload -Uz compinit
 compinit -u
 
+# no remove postfix slash of command line
+setopt noautoremoveslash
+
 # 色設定を読み込む
 source ~/dotfiles/zsh/color.zsh
 # プロンプト設定を読み込む
