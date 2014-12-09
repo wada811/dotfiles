@@ -18,3 +18,6 @@ source ~/dotfiles/zsh/prompt.zsh
 source ~/dotfiles/zsh/title.zsh
 # ヒストリ設定を読み込む
 source ~/dotfiles/zsh/history.zsh
+
+# エイリアス設定を読み込む
+source ~/dotfiles/zsh/alias.zsh
