@@ -2,6 +2,9 @@
 # zsh alias #
 #############
 
+# aliased ls needs if file/dir completions work
+setopt complete_aliases
+
 # -G Enable colorized output.
 # -F Display marks.
 # -l long listing
