@@ -10,6 +10,8 @@ bindkey -e
 autoload -Uz compinit
 compinit -u
 
+# 色設定を読み込む
+source ~/dotfiles/zsh/color.zsh
 # プロンプト設定を読み込む
 source ~/dotfiles/zsh/prompt.zsh
 # タイトル設定を読み込む
