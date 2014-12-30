@@ -82,4 +82,4 @@ export PATH
 # alias
 
 # rbenv の初期化
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
