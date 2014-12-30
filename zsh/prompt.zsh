@@ -17,16 +17,16 @@ setopt correct
 autoload colors
 colors # black, red, green, yellow, blue, magenta, cyan, and white
 
-reset=$reset_color
+reset="%{$reset_color%}"
 
-bStyle="%(?.${fg[white]}.${fg[red]})"
-uStyle=${fg[cyan]}
-aStyle="%(?.${fg[white]}.${fg[red]})"
-hStyle=${fg[cyan]}
-cStyle="%(?.${fg[white]}.${fg[red]})"
-dStyle=${fg[cyan]}
+bStyle="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
+uStyle="%{${fg[cyan]}%}"
+aStyle="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
+hStyle="%{${fg[cyan]}%}"
+cStyle="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
+dStyle="%{${fg[cyan]}%}"
 
-rStyle=${fg[red]}
+rStyle="%{${fg[red]}%}"
 
 bra=${bStyle}[${reset}
 ket=${bStyle}]${reset}
