@@ -19,23 +19,31 @@ colors # black, red, green, yellow, blue, magenta, cyan, and white
 
 reset="%{$reset_color%}"
 
-bStyle="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
-uStyle="%{${fg[cyan]}%}"
-aStyle="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
-hStyle="%{${fg[cyan]}%}"
-cStyle="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
-dStyle="%{${fg[cyan]}%}"
+mark="%(?.%{${fg[white]}%}.%{${fg[red]}%})"
+text="%{${fg[cyan]}%}"
 
-rStyle="%{${fg[red]}%}"
+notice="%{${fg[red]}%}"
 
-bra=${bStyle}[${reset}
-ket=${bStyle}]${reset}
-user=${uStyle}%n${reset}
-at=${aStyle}@${reset}
-host=${hStyle}%m${reset}
-colon=${cStyle}:${reset}
-dir=${dStyle}%c${reset}
+bra="${mark}[${reset}"
+ket="${mark}]${reset}"
+user="${text}%n${reset}"
+at="${mark}@${reset}"
+host="${text}%m${reset}"
+colon="${mark}:${reset}"
+dir="${text}%c${reset}"
 
 PROMPT="${bra}${user}${at}${host}${colon}${dir}${ket}%% " # "[user@host:dirname]% "
 PROMPT2="${bra}${user}${at}${host}${colon}${dir}${ket}> " # "[user@host:dirname]> "
-SPROMPT="[Yes(y),No(n),Abort(a),Edit(e)]${rStyle}%r${reset} ?"
+SPROMPT="[Yes(y),No(n),Abort(a),Edit(e)]${notice}%r${reset} ?"
+
+unset reset
+unset mark
+unset text
+unset notice
+unset bra
+unset ket
+unset user
+unset at
+unset host
+unset colon
+unset dir
