@@ -16,9 +16,6 @@ autoload -Uz add-zsh-hook
 # zsh-notify を有効にする (require add-zsh-hook)
 source ~/.zsh/zsh-notify/notify.plugin.zsh
 
-# no remove postfix slash of command line
-setopt noautoremoveslash
-
 # 色設定を読み込む
 source ~/.zsh/color.zsh
 # プロンプト設定を読み込む
@@ -33,17 +30,14 @@ source ~/.zsh/history.zsh
 # load peco scripts (require cdr)
 for f (~/.zsh/peco-scripts/*) source "${f}"
 
+# キーバインド設定を読み込む
+source ~/.zsh/bindkey.zsh
+# オプション設定を読み込む
+source ~/.zsh/options.zsh
 # エイリアス設定を読み込む
 source ~/.zsh/alias.zsh
 
-# 日本語ファイル名を表示可能にする
-setopt print_eight_bit
 
-# フローコントロールを無効にする
-setopt no_flow_control
-
-# '#' 以降をコメントとして扱う
-setopt interactive_comments
 
 # パス
 export JAVA_HOME=`/usr/libexec/java_home`
