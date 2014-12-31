@@ -13,9 +13,6 @@ source ~/.zsh/completion.zsh
 # add-zsh-hook を有効にする
 autoload -Uz add-zsh-hook
 
-# zsh-notify を有効にする (require add-zsh-hook)
-source ~/.zsh/zsh-notify/notify.plugin.zsh
-
 # 色設定を読み込む
 source ~/.zsh/color.zsh
 # プロンプト設定を読み込む
@@ -26,10 +23,6 @@ source ~/.zsh/title.zsh
 source ~/.zsh/cd.zsh
 # ヒストリ設定を読み込む
 source ~/.zsh/history.zsh
-
-# load peco scripts (require cdr)
-for f (~/.zsh/peco-scripts/*) source "${f}"
-
 # キーバインド設定を読み込む
 source ~/.zsh/bindkey.zsh
 # オプション設定を読み込む
@@ -37,7 +30,11 @@ source ~/.zsh/options.zsh
 # エイリアス設定を読み込む
 source ~/.zsh/alias.zsh
 
+# zsh-notify を有効にする (require add-zsh-hook)
+source ~/.zsh/zsh-notify/notify.plugin.zsh
 
+# load peco scripts (require cdr)
+for f (~/.zsh/peco-scripts/*) source "${f}"
 
 # パス
 export JAVA_HOME=`/usr/libexec/java_home`
