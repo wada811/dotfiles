@@ -15,3 +15,9 @@ alias la="ll -a"
 
 alias du="du -h"
 alias df="df -h"
+
+
+# グローバルエイリアス
+alias -g F='$(peco-git-changed-files)'
+alias -g H='$(peco-git-hash)'
+alias -g B='$(peco-git-branch)'

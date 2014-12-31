@@ -36,11 +36,6 @@ for f (~/.zsh/peco-scripts/*) source "${f}"
 # エイリアス設定を読み込む
 source ~/.zsh/alias.zsh
 
-# グローバルエイリアス
-alias -g F='$(peco-git-changed-files)'
-alias -g H='$(peco-git-hash)'
-alias -g B='$(peco-git-branch)'
-
 # 日本語ファイル名を表示可能にする
 setopt print_eight_bit
 
