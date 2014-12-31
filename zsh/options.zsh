@@ -13,3 +13,6 @@ setopt interactive_comments
 
 # no remove postfix slash of command line
 setopt noautoremoveslash
+
+# wait ten seconds when executing `rm *` or `rm path/*`
+setopt rm_star_wait
