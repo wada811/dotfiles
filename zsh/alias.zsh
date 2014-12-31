@@ -10,7 +10,7 @@ setopt complete_aliases
 # -l long listing
 # -a list entries starting with .
 alias ls="ls -GF"
-alias ll="ls -l"
+alias ll="ls -lh"
 alias la="ll -a"
 
 alias du="du -h"
