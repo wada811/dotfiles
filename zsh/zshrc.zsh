@@ -45,12 +45,6 @@ setopt no_flow_control
 # '#' 以降をコメントとして扱う
 setopt interactive_comments
 
-# 履歴から cd
-bindkey '^@' peco-cdr
-
-# 履歴からコマンド選択
-bindkey '^r' peco-select-history
-
 # パス
 export JAVA_HOME=`/usr/libexec/java_home`
 export ANDROID_SDK_HOME=/usr/local/opt/android-sdk
