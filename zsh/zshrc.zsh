@@ -35,6 +35,10 @@ source ~/.zsh/zsh-notify/notify.plugin.zsh
 
 # load peco scripts (require cdr)
 for f (~/.zsh/peco-scripts/*) source "${f}"
+# load zsh functions
+for f (~/.zsh/zsh-functions/*) source "${f}"
+# hook設定を読み込む
+source ~/.zsh/hook.zsh
 
 # パス
 export JAVA_HOME=`/usr/libexec/java_home`
