@@ -92,6 +92,8 @@ brew cask install --appdir=/Applications java6
 brew cask install --appdir=/Applications android-studio
 
 ## Android
+brew cask install --appdir=/Applications virtualbox
+brew cask install --appdir=/Applications genymotion
 brew cask install --appdir=/Applications jd-gui
 
 ## Utils
