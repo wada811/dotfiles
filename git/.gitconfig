@@ -22,7 +22,7 @@
 [alias]
 	lg = log --all --graph --decorate --oneline
 	cp = cherry-pick
-	fix = commit --amend
+	fix = commit --amend --allow-empty-message -m ""
 	# Separate merged commit by `git commit --amend`
 	separate = reset HEAD@{1}
 	# Revert commit
