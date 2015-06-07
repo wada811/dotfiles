@@ -12,6 +12,9 @@
 	diff = diff-highlight | less
 [diff "json"]
 	textconv = "jq ."
+[fetch]
+	all = true
+	prune = true
 [merge]
 	ff = false
 [pull]
