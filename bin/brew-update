@@ -26,6 +26,11 @@ cd /usr/local/Library/Taps/homebrew/homebrew-dupes/
 git reset --hard @^
 git pull --ff origin master
 
+echo "font/ritcy"
+cd /usr/local/Library/Taps/sanemat/homebrew-font/
+git reset --hard @^
+git pull --ff origin master
+
 # Update HomeBrew
 brew update
 
