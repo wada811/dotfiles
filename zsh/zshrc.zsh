@@ -21,6 +21,8 @@ source ~/.zsh/prompt.zsh
 source ~/.zsh/title.zsh
 # cd設定を読み込む
 source ~/.zsh/cd.zsh
+# zmv設定を読み込む
+source ~/.zsh/zmv.zsh
 # ヒストリ設定を読み込む
 source ~/.zsh/history.zsh
 # キーバインド設定を読み込む
