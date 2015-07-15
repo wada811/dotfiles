@@ -20,6 +20,9 @@
 [pull]
 	ff = only
 [alias]
+	st = status
+	ch = checkout
+	co = commit
 	lg = log --all --graph --decorate --oneline
 	cp = cherry-pick
 	fix = commit --amend --allow-empty-message -m ""
