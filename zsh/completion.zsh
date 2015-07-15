@@ -3,6 +3,7 @@
 ##################
 
 # 補完機能を設定する
+fpath=(/usr/local/share/zsh/functions $fpath)
 fpath=(/usr/local/share/zsh-completions $fpath)
 fpath=(~/zsh/git-completion $fpath)
 
