@@ -16,11 +16,8 @@ set nocompatible
 " 挿入モードの全てにおいてバックスペースを許可する
 set backspace=indent,eol,start
 
-if has("vms")
-  set nobackup    " do not keep a backup file, use versions instead
-else
-  set backup      " keep a backup file
-endif
+set nobackup      " do not keep a backup file
+                  " バックアップファイルを作らない
 set history=50    " keep 50 lines of command line history
                   " コマンドライン履歴を50行保持する
 set ruler         " show the cursor position all the time
