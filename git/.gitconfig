@@ -21,6 +21,8 @@
 	ff = false
 [pull]
 	ff = only
+[push]
+	default = simple
 [alias]
 	st = status
 	ch = checkout
