@@ -3,12 +3,23 @@
 ###############
 
 # 履歴設定
+## ヒストリを保存するファイル
 HISTFILE=~/.zsh_history
+## メモリ上のヒストリ数
 HISTSIZE=1000000
-SAVEHIST=1000000
-setopt hist_ignore_dups # ignore duplication command history list
-setopt share_history # share command history data
-setopt hist_ignore_space # ignore command start with space
+## 保存するヒストリ数
+SAVEHIST=$HISTSIZE
+
+## ヒストリファイルにコマンドだけではなく実行時刻と実行時間も保存する
+setopt extended_history
+## 同じコマンドを連続で実行した場合はヒストリに登録しない
+setopt hist_ignore_dups
+## スペースで始まるコマンドはヒストリに登録しない
+setopt hist_ignore_space
+## すぐにヒストリに登録する
+setopt inc_append_history
+## zsh プロセス間でヒストリを共有する
+setopt share_history
 
 # 履歴からコマンド補完
 autoload history-search-end
