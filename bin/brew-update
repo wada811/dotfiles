@@ -140,6 +140,7 @@ brew cask install --appdir=/Applications openoffice
 brew cask install --appdir=/Applications gyazo
 brew cask install --appdir=/Applications gimp
 brew cask install --appdir=/Applications imageoptim
+brew cask install --appdir=/Applications slack
 
 # Remove outdated versions
 brew cleanup
