@@ -4,8 +4,6 @@
 #
 fpath=($fpath `dirname $0`)
 
-NOTIFY_COMMAND_COMPLETE_TIMEOUT=1
-
 # Default timeout is 30 seconds.
 [[ $NOTIFY_COMMAND_COMPLETE_TIMEOUT == "" ]]  \
   && NOTIFY_COMMAND_COMPLETE_TIMEOUT=30
@@ -50,7 +48,7 @@ function store-command-stats() {
   start_time=`date "+%s"`
 }
 
-
+autoload add-zsh-hook
 autoload -U tell-terminal
 autoload -U tell-iterm2
 autoload -U notify-if-background

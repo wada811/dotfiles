@@ -20,7 +20,7 @@
 # - growlnotify
 #   http://growl.info/extras.php/#growlnotify
 
-local term_id title icon_switch
+local term_id title icon_switch the_tty
 local -a otitle oicon
 zparseopts t:=otitle -icon:=oicon
 
@@ -43,9 +43,25 @@ else
   return 1;
 fi
 
+if [[ -n ${TMUX+1} ]]; then
+  the_tty=`tmux display-message -p '#{client_tty}'`
+else
+  the_tty=$TTY
+fi
+
 if [[ $term_id == 'com.googlecode.iterm2' ]]; then
-  TT='tell-iterm2'
-  if [[ `$TT <<< "frontmost and (tty of (current session of current terminal) is equal to \"$TTY\")"` == "true" ]]; then
+  # Use System Events as there's no frontmost property at least in current nightly
+  local iterm_frontmost tty_active
+  iterm_frontmost=`osascript <<OSA
+        tell application "System Events"
+            tell item 1 of (application processes whose bundle identifier is "com.googlecode.iterm2") to ¬
+                get its frontmost
+        end tell
+OSA`
+
+  tty_active=`tell-iterm2 <<< "tty of (current session of current tab of current window) is equal to \"$the_tty\""`
+
+  if [[ $iterm_frontmost == "true" && $tty_active == "true" ]]; then
     return 2
   fi
 else
@@ -68,4 +84,3 @@ else
   echo "No notifier program found." > /dev/stderr
   return 1
 fi
-
