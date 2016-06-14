@@ -12,6 +12,8 @@
 	diff = diff-highlight | less
 [help]
 	autocorrect = 20
+[diff]
+	compactionHeuristic = true
 [diff "json"]
 	textconv = "jq ."
 [fetch]
