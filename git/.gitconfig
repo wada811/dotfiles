@@ -33,7 +33,7 @@
 	co = commit
 	lg = log --all --graph --decorate --oneline
 	cp = cherry-pick
-	fix = commit --amend --allow-empty-message -m ""
+	fix = commit --amend --allow-empty-message
 	# Separate merged commit by `git commit --amend`
 	separate = reset HEAD@{1}
 	# Revert commit
