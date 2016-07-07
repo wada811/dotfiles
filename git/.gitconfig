@@ -23,6 +23,8 @@
 	ff = false
 [pull]
 	ff = only
+[commit]
+	template = ~/dotfiles/git/commit_template
 [push]
 	default = simple
 [alias]
