@@ -114,7 +114,7 @@ brew cask install google-chrome
 brew cask install firefox
 
 ## Editor
-brew cask install sublime-text3
+brew cask install sublime-text
 brew cask install coteditor
 
 ## IDE
