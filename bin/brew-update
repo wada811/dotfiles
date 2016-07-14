@@ -135,8 +135,7 @@ brew cask install dropbox
 brew cask install cyberduck
 brew cask install the-unarchiver
 brew cask install appcleaner
-brew cask install openoffice
-brew cask install gyazo
+brew cask install mysqlworkbench
 brew cask install gimp
 brew cask install imageoptim
 brew cask install slack
