@@ -122,7 +122,7 @@ brew cask install coteditor
 brew cask install java
 brew cask install java7
 brew cask install java6
-brew cask install android-studio
+brew cask install android-studio-canary
 
 ## Android
 brew cask install virtualbox
