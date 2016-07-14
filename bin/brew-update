@@ -107,39 +107,39 @@ brew install ffmpeg
 ########################
 
 ## Terminal
-brew cask install --appdir=/Applications iterm2
+brew cask install iterm2
 
 ## Browser
-brew cask install --appdir=/Applications google-chrome
-brew cask install --appdir=/Applications firefox
+brew cask install google-chrome
+brew cask install firefox
 
 ## Editor
-brew cask install --appdir=/Applications sublime-text3
-brew cask install --appdir=/Applications coteditor
+brew cask install sublime-text3
+brew cask install coteditor
 
 ## IDE
 # JDK6/JDK7 for Android Studio
-brew cask install --appdir=/Applications java
-brew cask install --appdir=/Applications java7
-brew cask install --appdir=/Applications java6
-brew cask install --appdir=/Applications android-studio
+brew cask install java
+brew cask install java7
+brew cask install java6
+brew cask install android-studio
 
 ## Android
-brew cask install --appdir=/Applications virtualbox
-brew cask install --appdir=/Applications genymotion
-brew cask install --appdir=/Applications jd-gui
+brew cask install virtualbox
+brew cask install genymotion
+brew cask install jd-gui
 
 ## Utils
-brew cask install --appdir=/Applications google-japanese-ime
-brew cask install --appdir=/Applications dropbox
-brew cask install --appdir=/Applications cyberduck
-brew cask install --appdir=/Applications the-unarchiver
-brew cask install --appdir=/Applications appcleaner
-brew cask install --appdir=/Applications openoffice
-brew cask install --appdir=/Applications gyazo
-brew cask install --appdir=/Applications gimp
-brew cask install --appdir=/Applications imageoptim
-brew cask install --appdir=/Applications slack
+brew cask install google-japanese-ime
+brew cask install dropbox
+brew cask install cyberduck
+brew cask install the-unarchiver
+brew cask install appcleaner
+brew cask install openoffice
+brew cask install gyazo
+brew cask install gimp
+brew cask install imageoptim
+brew cask install slack
 
 # Remove outdated versions
 brew cleanup
