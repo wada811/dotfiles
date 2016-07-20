@@ -139,6 +139,7 @@ brew cask install mysqlworkbench
 brew cask install gimp
 brew cask install imageoptim
 brew cask install slack
+brew cask install skype
 
 # Remove outdated versions
 brew cleanup
