@@ -1,35 +1,35 @@
 #!/usr/local/bin/zsh
 
-# Fix history
-echo "homebrew"
-cd /usr/local
-git reset --hard @^
-git pull --ff origin master
+# # Fix history
+# echo "homebrew"
+# cd /usr/local
+# git reset --hard @^
+# git pull --ff origin master
 
-echo "homebrew-cask"
-cd /usr/local/Library/Taps/caskroom/homebrew-cask/
-git reset --hard @^
-git pull --ff origin master
+# echo "homebrew-cask"
+# cd /usr/local/Homebrew/Library/Taps/caskroom/homebrew-cask/
+# git reset --hard @^
+# git pull --ff origin master
 
-echo "homebrew-versions"
-cd /usr/local/Library/Taps/caskroom/homebrew-versions/
-git reset --hard @^
-git pull --ff origin master
+# echo "homebrew-versions"
+# cd /usr/local/Homebrew/Library/Taps/caskroom/homebrew-versions/
+# git reset --hard @^
+# git pull --ff origin master
 
-echo "homebrew-binary"
-cd /usr/local/Library/Taps/homebrew/homebrew-binary/
-git reset --hard @^
-git pull --ff origin master
+# echo "homebrew-binary"
+# cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-binary/
+# git reset --hard @^
+# git pull --ff origin master
 
-echo "homebrew-dupes"
-cd /usr/local/Library/Taps/homebrew/homebrew-dupes/
-git reset --hard @^
-git pull --ff origin master
+# echo "homebrew-dupes"
+# cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-dupes/
+# git reset --hard @^
+# git pull --ff origin master
 
-echo "font/ritcy"
-cd /usr/local/Library/Taps/sanemat/homebrew-font/
-git reset --hard @^
-git pull --ff origin master
+# echo "font/ritcy"
+# cd /usr/local/Homebrew/Library/Taps/sanemat/homebrew-font/
+# git reset --hard @^
+# git pull --ff origin master
 
 # Update HomeBrew
 brew update
@@ -129,9 +129,12 @@ brew cask install virtualbox
 brew cask install genymotion
 brew cask install jd-gui
 
+## Cloud Storage
+brew cask install dropbox
+brew cask install google-drive
+
 ## Utils
 brew cask install google-japanese-ime
-brew cask install dropbox
 brew cask install cyberduck
 brew cask install the-unarchiver
 brew cask install appcleaner
