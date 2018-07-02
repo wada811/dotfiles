@@ -15,7 +15,7 @@
 
 ## [Install Homebrew](http://brew.sh/#install)
 
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 ## [Install Formulas and Applications via Homebrew and Homebrew-cask](http://wada811.blogspot.com/2014/05/brewfile-homebrew-cask.html)
 
