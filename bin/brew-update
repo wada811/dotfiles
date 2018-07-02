@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh
+#!/bin/zsh
 
 # # Fix history
 # echo "homebrew"
