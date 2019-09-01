@@ -16,6 +16,8 @@ alias la="ll -a"
 alias du="du -h"
 alias df="df -h"
 
+# Move ~/.Trash instead of removing file
+alias rm='(){mv -f $@ ~/.Trash/}'
 
 # グローバルエイリアス
 alias -g F='$(peco-git-changed-files)'

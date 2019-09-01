@@ -11,7 +11,7 @@
 	show = diff-highlight | less
 	diff = diff-highlight | less
 [help]
-	autocorrect = 20
+	autocorrect = 10
 [diff]
 	compactionHeuristic = true
 [diff "json"]
@@ -42,3 +42,15 @@
 	cancel-merge = reset --hard ORIG_HEAD
 	# Delete merged branches
 	delete-merged-branches = !git branch --merged | grep -v \\* | xargs -I % git branch -d %
+	# Ignore local and keep local
+	ignore = update-index --skip-worktree
+	# Unignore local
+	unignore = update-index --no-skip-worktree
+	# List ignore local
+	ignored = !git ls-files -v | grep "^S"
+	# Ignore local temporary and update by remote
+	ignore-temporary = update-index --assume-unchanged
+	# Unignore local
+	unignore-temporary = update-index --no-assume-unchanged
+	# List ignore local temporary
+	ignored-temporary = !git ls-files -v | grep "^[a-z]"
