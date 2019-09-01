@@ -1,41 +1,7 @@
-#!/bin/zsh
-
-# # Fix history
-# echo "homebrew"
-# cd /usr/local
-# git reset --hard @^
-# git pull --ff origin master
-
-# echo "homebrew-cask"
-# cd /usr/local/Homebrew/Library/Taps/caskroom/homebrew-cask/
-# git reset --hard @^
-# git pull --ff origin master
-
-# echo "homebrew-versions"
-# cd /usr/local/Homebrew/Library/Taps/caskroom/homebrew-versions/
-# git reset --hard @^
-# git pull --ff origin master
-
-# echo "homebrew-binary"
-# cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-binary/
-# git reset --hard @^
-# git pull --ff origin master
-
-# echo "homebrew-dupes"
-# cd /usr/local/Homebrew/Library/Taps/homebrew/homebrew-dupes/
-# git reset --hard @^
-# git pull --ff origin master
-
-# echo "font/ritcy"
-# cd /usr/local/Homebrew/Library/Taps/sanemat/homebrew-font/
-# git reset --hard @^
-# git pull --ff origin master
+#!/usr/local/bin/zsh -eu
 
 # Update HomeBrew
 brew update
-
-# Add Homebrew-binary
-brew tap homebrew/binary
 
 # Upgrade Formulas
 brew upgrade
@@ -43,7 +9,6 @@ brew upgrade
 # Install HomebrewCask
 brew tap caskroom/cask
 brew tap caskroom/versions
-brew install caskroom/cask/brew-cask
 
 ####################
 # Install Packages #
@@ -57,7 +22,6 @@ brew install sanemat/font/ricty
 brew install zsh
 brew install zsh-completions
 brew install terminal-notifier
-brew tap peco/peco
 brew install peco
 
 ## Git
@@ -68,10 +32,7 @@ brew install hub
 brew install hugo
 
 ## Android
-brew install android-sdk
-brew install android-ndk || (brew unlink android-ndk && brew install android-ndk)
 brew install dex2jar
-brew install jad
 
 ## Required
 brew install readline
@@ -81,7 +42,6 @@ brew install openssl
 brew install rbenv
 brew install ruby-build
 ### For nokogiri
-brew tap homebrew/dupes
 brew install libiconv
 brew install libxml2
 brew install libxslt
@@ -118,32 +78,26 @@ brew cask install sublime-text
 brew cask install coteditor
 
 ## IDE
-# JDK6/JDK7 for Android Studio
+# JDK for Android Studio
 brew cask install java
-brew cask install java7
-brew cask install java6
-brew cask install android-studio-canary
 
 ## Android
-brew cask install virtualbox
-brew cask install genymotion
 brew cask install jd-gui
 
 ## Cloud Storage
 brew cask install dropbox
 brew cask install google-drive
 
+## eBook Reader
+brew cask install calibre
+
 ## Utils
 brew cask install google-japanese-ime
 brew cask install cyberduck
 brew cask install the-unarchiver
 brew cask install appcleaner
-brew cask install mysqlworkbench
-brew cask install gimp
 brew cask install imageoptim
 brew cask install slack
-brew cask install skype
 
 # Remove outdated versions
 brew cleanup
-brew cask cleanup

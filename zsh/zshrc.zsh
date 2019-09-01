@@ -45,8 +45,11 @@ source ~/.zsh/hook.zsh
 # パス
 export JAVA_HOME=`/usr/libexec/java_home`
 export ANDROID_AVD_HOME=~/.android/avd
-export ANDROID_SDK_HOME=/usr/local/opt/android-sdk
-export ANDROID_NDK_HOME=/usr/local/opt/android-ndk
-PATH=~/bin:$ANDROID_SDK_HOME/tools:$ANDROID_SDK_HOME/platform-tools:$ANDROID_NDK_HOME:/usr/local/bin:/usr/local/share:$PATH
+export ANDROID_HOME=~/Library/Android/sdk
+PATH=~/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:/usr/local/bin:/usr/local/share:$PATH
 export PATH
 
+# anyenv
+eval "$(anyenv init -)"
+eval "$(direnv hook zsh)"
+export PATH="$HOME/.yarn/bin:$PATH"
