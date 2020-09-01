@@ -10,6 +10,8 @@ ln -s ~/dotfiles/.iterm2/ ~/.iterm2
 
 ln -s ~/dotfiles/zsh/ ~/.zsh
 ln -s ~/dotfiles/zsh/zshrc.zsh ~/.zshrc
+touch ~/dotfiles/zsh/zprofile.zsh
+ln -s ~/dotfiles/zsh/zprofile.zsh ~/.zprofile
 
 ln -s ~/dotfiles/.vim/ ~/.vim
 ln -s ~/dotfiles/.vimrc ~/.vimrc
