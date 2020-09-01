@@ -14,6 +14,7 @@
 	autocorrect = 10
 [diff]
 	compactionHeuristic = true
+	noprefix = true
 [diff "json"]
 	textconv = "jq ."
 [fetch]

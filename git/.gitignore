@@ -8,3 +8,7 @@
 Icon?
 ehthumbs.db
 Thumbs.db
+
+.bundle/
+.ruby-version
+bundle/

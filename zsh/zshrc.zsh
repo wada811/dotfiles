@@ -42,14 +42,22 @@ for f (~/.zsh/zsh-functions/*) source "${f}"
 # hook設定を読み込む
 source ~/.zsh/hook.zsh
 
+# direnv
+eval "$(direnv hook zsh)"
+
+# anyenv
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
+eval "$(direnv hook zsh)"
+export PATH="$HOME/.yarn/bin:$PATH"
+
 # パス
 export JAVA_HOME=`/usr/libexec/java_home`
 export ANDROID_AVD_HOME=~/.android/avd
 export ANDROID_HOME=~/Library/Android/sdk
-PATH=~/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:/usr/local/bin:/usr/local/share:$PATH
-export PATH
 
-# anyenv
-eval "$(anyenv init -)"
-eval "$(direnv hook zsh)"
-export PATH="$HOME/.yarn/bin:$PATH"
+ANDROID_LATEST_BUILD_TOOLS=$(ls -r $ANDROID_HOME/build-tools | head -1 | tr -d '/')
+export PATH=~/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_LATEST_BUILD_TOOLS:/usr/local/bin:/usr/local/share:$PATH
+
+
+# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

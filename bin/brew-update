@@ -1,14 +1,10 @@
-#!/usr/local/bin/zsh -eu
+#!/bin/bash
 
 # Update HomeBrew
 brew update
 
 # Upgrade Formulas
 brew upgrade
-
-# Install HomebrewCask
-brew tap caskroom/cask
-brew tap caskroom/versions
 
 ####################
 # Install Packages #
@@ -27,6 +23,7 @@ brew install peco
 ## Git
 brew install git
 brew install hub
+brew install github/gh/gh
 
 ## Blog
 brew install hugo
@@ -71,13 +68,11 @@ brew cask install iterm2
 
 ## Browser
 brew cask install google-chrome
-brew cask install firefox
 
 ## Editor
 brew cask install sublime-text
 brew cask install coteditor
 
-## IDE
 # JDK for Android Studio
 brew cask install java
 
