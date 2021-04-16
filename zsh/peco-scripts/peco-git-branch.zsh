@@ -1,3 +1,3 @@
 function peco-git-branch(){
-    git branch | peco | sed -e "s/^\*[ ]*//g"
+    git branch --sort=-authordate | peco | sed -e "s/^\*[ ]*//g"
 }
