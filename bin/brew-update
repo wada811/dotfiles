@@ -1,10 +1,14 @@
-#!/bin/bash
+#!/usr/local/bin/zsh -eux
 
 # Update HomeBrew
 brew update
 
 # Upgrade Formulas
 brew upgrade
+
+# Install HomebrewCask
+brew tap homebrew/cask
+brew tap homebrew/cask-versions
 
 ####################
 # Install Packages #
@@ -24,9 +28,6 @@ brew install peco
 brew install git
 brew install hub
 brew install github/gh/gh
-
-## Blog
-brew install hugo
 
 ## Android
 brew install dex2jar
@@ -53,7 +54,6 @@ brew install sqlite
 brew install tree
 brew install jq
 brew install rename
-brew install figlet
 
 ## Image and Video
 brew install imagemagick
@@ -64,35 +64,32 @@ brew install ffmpeg
 ########################
 
 ## Terminal
-brew cask install iterm2
+brew install iterm2
 
 ## Browser
-brew cask install google-chrome
+brew install google-chrome
 
 ## Editor
-brew cask install sublime-text
-brew cask install coteditor
-
-# JDK for Android Studio
-brew cask install java
+brew install sublime-text
+brew install coteditor
 
 ## Android
-brew cask install jd-gui
+brew install jd-gui
 
 ## Cloud Storage
-brew cask install dropbox
-brew cask install google-drive
+brew install dropbox
+brew install google-drive
 
 ## eBook Reader
-brew cask install calibre
+brew install calibre
 
 ## Utils
-brew cask install google-japanese-ime
-brew cask install cyberduck
-brew cask install the-unarchiver
-brew cask install appcleaner
-brew cask install imageoptim
-brew cask install slack
+brew install google-japanese-ime
+brew install cyberduck
+brew install the-unarchiver
+brew install appcleaner
+brew install imageoptim
+brew install slack
 
 # Remove outdated versions
 brew cleanup

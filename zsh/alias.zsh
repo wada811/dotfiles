@@ -17,7 +17,7 @@ alias du="du -h"
 alias df="df -h"
 
 # Move ~/.Trash instead of removing file
-alias rm='(){mv -f $@ ~/.Trash/}'
+alias rm='(){mv -f $@ ~/.Trash/ }'
 
 alias git="drop_git"
 
