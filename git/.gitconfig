@@ -4,6 +4,10 @@
 [core]
 	excludesfile = ~/.gitignore
 	precomposeunicode = true
+[credential]
+	helper = osxkeychain
+[init]
+	defaultBranch = main
 [color]
 	ui = true
 [pager]
@@ -24,17 +28,21 @@
 	ff = false
 [pull]
 	ff = only
+[rebase]
+	updateRefs = true
 [commit]
 	template = ~/dotfiles/git/commit_template
 [push]
 	default = simple
+	autoSetupRemote = true
 [alias]
 	st = status
 	ch = checkout
 	co = commit
 	lg = log --all --graph --decorate --oneline
 	cp = cherry-pick
-	fix = commit --amend --allow-empty-message
+	fix = commit --amend --no-edit
+	push-f = push --force-with-lease --force-if-includes
 	# Separate merged commit by `git commit --amend`
 	separate = reset HEAD@{1}
 	# Revert commit

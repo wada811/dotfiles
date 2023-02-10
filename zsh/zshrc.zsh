@@ -52,7 +52,7 @@ eval "$(direnv hook zsh)"
 export PATH="$HOME/.yarn/bin:$PATH"
 
 # パス
-export JAVA_HOME=`/usr/libexec/java_home`
+export JAVA_HOME=/Applications/"Android Studio.app"/Contents/jbr/Contents/Home
 export ANDROID_AVD_HOME=~/.android/avd
 export ANDROID_HOME=~/Library/Android/sdk
 
