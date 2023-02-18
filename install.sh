@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/zsh
 
 ln -s ~/dotfiles/git/.gitconfig ~/.gitconfig
 ln -s ~/dotfiles/git/.gitattributes ~/.gitattributes
@@ -10,10 +10,10 @@ ln -s ~/dotfiles/.iterm2/ ~/.iterm2
 
 ln -s ~/dotfiles/zsh/ ~/.zsh
 ln -s ~/dotfiles/zsh/zshrc.zsh ~/.zshrc
-touch ~/dotfiles/zsh/zprofile.zsh
 ln -s ~/dotfiles/zsh/zprofile.zsh ~/.zprofile
+ln -s ~/dotfiles/zsh/zshenv.zsh ~/.zshenv
 
-ln -s ~/dotfiles/.vim/ ~/.vim
+ln -s ~/dotfiles/.vim ~/.vim
 ln -s ~/dotfiles/.vimrc ~/.vimrc
 
 ln -s ~/dotfiles/bin/ ~/bin

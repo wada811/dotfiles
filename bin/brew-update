@@ -1,4 +1,4 @@
-#!/usr/local/bin/zsh -eux
+#!/bin/zsh -eux
 
 # Update HomeBrew
 brew update
@@ -15,8 +15,8 @@ brew tap homebrew/cask-versions
 ####################
 
 ## Font
-brew tap sanemat/font
-brew install sanemat/font/ricty
+brew tap wada811/adobe-fonts
+brew install wada811/adobe-fonts/font-source-han-code-jp
 
 ## Shell
 brew install zsh
@@ -35,6 +35,10 @@ brew install dex2jar
 ## Required
 brew install readline
 brew install openssl
+
+## Env
+brew install direnv
+brew install anyenv
 
 ## Ruby
 brew install rbenv
@@ -67,10 +71,10 @@ brew install ffmpeg
 brew install iterm2
 
 ## Browser
-brew install google-chrome
+# brew install google-chrome
 
 ## Editor
-brew install sublime-text
+brew install visual-studio-code
 brew install coteditor
 
 ## Android
@@ -84,12 +88,15 @@ brew install google-drive
 brew install calibre
 
 ## Utils
+sudo softwareupdate --install-rosetta --agree-to-license
 brew install google-japanese-ime
 brew install cyberduck
 brew install the-unarchiver
 brew install appcleaner
 brew install imageoptim
 brew install slack
+brew install 1password
+brew install 1password-cli
 
 # Remove outdated versions
 brew cleanup
