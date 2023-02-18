@@ -49,15 +49,3 @@ eval "$(direnv hook zsh)"
 export PATH="$HOME/.anyenv/bin:$PATH"
 eval "$(anyenv init -)"
 eval "$(direnv hook zsh)"
-export PATH="$HOME/.yarn/bin:$PATH"
-
-# パス
-export JAVA_HOME=/Applications/"Android Studio.app"/Contents/jbr/Contents/Home
-export ANDROID_AVD_HOME=~/.android/avd
-export ANDROID_HOME=~/Library/Android/sdk
-
-ANDROID_LATEST_BUILD_TOOLS=$(ls -r $ANDROID_HOME/build-tools | head -1 | tr -d '/')
-export PATH=~/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$ANDROID_HOME/build-tools/$ANDROID_LATEST_BUILD_TOOLS:/usr/local/bin:/usr/local/share:$PATH
-
-
-# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
