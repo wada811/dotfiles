@@ -1,9 +1,10 @@
 [user]
 	name = wada811
 	email = at.wada811@gmail.com
-[core]
+[common]
 	excludesfile = ~/.gitignore
 	precomposeunicode = true
+	autocrlf = input
 [credential]
 	helper = osxkeychain
 [init]
@@ -28,8 +29,10 @@
 	ff = false
 [pull]
 	ff = only
+	autostash = true
 [rebase]
 	updateRefs = true
+	autostash = true
 [commit]
 	template = ~/dotfiles/git/commit_template
 [push]

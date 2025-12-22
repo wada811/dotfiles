@@ -9,6 +9,7 @@ setopt complete_aliases
 # -F Display marks.
 # -l long listing
 # -a list entries starting with .
+
 alias ls="ls -GF"
 alias ll="ls -lh"
 alias la="ll -a"

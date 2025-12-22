@@ -1,6 +1,6 @@
 #!bash
 #
-# bash/zsh completion support for core Git.
+# bash/zsh completion support for common Git.
 #
 # Copyright (C) 2006,2007 Shawn O. Pearce <spearce@spearce.org>
 # Conceptually based on gitcompletion (http://gitweb.hawaga.org.uk/).
@@ -1415,8 +1415,8 @@ _git_help ()
 	esac
 	__git_compute_all_commands
 	__gitcomp "$__git_all_commands $(__git_aliases)
-		attributes cli core-tutorial cvs-migration
-		diffcore gitk glossary hooks ignore modules
+		attributes cli common-tutorial cvs-migration
+		diffcommon gitk glossary hooks ignore modules
 		namespaces repository-layout tutorial tutorial-2
 		workflows
 		"
@@ -2027,42 +2027,42 @@ _git_config ()
 		color.ui
 		commit.status
 		commit.template
-		core.abbrev
-		core.askpass
-		core.attributesfile
-		core.autocrlf
-		core.bare
-		core.bigFileThreshold
-		core.compression
-		core.createObject
-		core.deltaBaseCacheLimit
-		core.editor
-		core.eol
-		core.excludesfile
-		core.fileMode
-		core.fsyncobjectfiles
-		core.gitProxy
-		core.ignoreCygwinFSTricks
-		core.ignoreStat
-		core.ignorecase
-		core.logAllRefUpdates
-		core.loosecompression
-		core.notesRef
-		core.packedGitLimit
-		core.packedGitWindowSize
-		core.pager
-		core.preferSymlinkRefs
-		core.preloadindex
-		core.quotepath
-		core.repositoryFormatVersion
-		core.safecrlf
-		core.sharedRepository
-		core.sparseCheckout
-		core.symlinks
-		core.trustctime
-		core.warnAmbiguousRefs
-		core.whitespace
-		core.worktree
+		common.abbrev
+		common.askpass
+		common.attributesfile
+		common.autocrlf
+		common.bare
+		common.bigFileThreshold
+		common.compression
+		common.createObject
+		common.deltaBaseCacheLimit
+		common.editor
+		common.eol
+		common.excludesfile
+		common.fileMode
+		common.fsyncobjectfiles
+		common.gitProxy
+		common.ignoreCygwinFSTricks
+		common.ignoreStat
+		common.ignorecase
+		common.logAllRefUpdates
+		common.loosecompression
+		common.notesRef
+		common.packedGitLimit
+		common.packedGitWindowSize
+		common.pager
+		common.preferSymlinkRefs
+		common.preloadindex
+		common.quotepath
+		common.repositoryFormatVersion
+		common.safecrlf
+		common.sharedRepository
+		common.sparseCheckout
+		common.symlinks
+		common.trustctime
+		common.warnAmbiguousRefs
+		common.whitespace
+		common.worktree
 		diff.autorefreshindex
 		diff.external
 		diff.ignoreSubmodules
