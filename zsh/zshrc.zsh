@@ -42,10 +42,11 @@ for f (~/.zsh/zsh-functions/*) source "${f}"
 # hook設定を読み込む
 source ~/.zsh/hook.zsh
 
+# homebrew
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # direnv
 eval "$(direnv hook zsh)"
 
-# anyenv
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
-eval "$(direnv hook zsh)"
+# mise
+eval "$(mise activate zsh)"

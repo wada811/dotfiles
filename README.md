@@ -26,4 +26,4 @@
 
 ## Symlink diff-highlight
 
-    ln -s /opt/homebrew/opt/git/share/git-core/contrib/diff-highlight/diff-highlight /usr/local/bin
+    ln -s /opt/homebrew/opt/git/share/git-common/contrib/diff-highlight/diff-highlight /usr/local/bin

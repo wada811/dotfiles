@@ -12,7 +12,7 @@ fpath=($fpath `dirname $0`)
 # when the terminal is in background).
 function notify-error {
   local icon
-  icon="/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/AlertStopIcon.icns"
+  icon="/System/Library/commonServices/commonTypes.bundle/Contents/Resources/AlertStopIcon.icns"
   notify-if-background -t "Failed!" --image "$icon" < /dev/stdin &!
 }
 

@@ -6,6 +6,7 @@
 fpath=(/usr/local/share/zsh/functions $fpath)
 fpath=(/usr/local/share/zsh-completions $fpath)
 fpath=(~/zsh/git-completion $fpath)
+fpath=(~/zsh/npm-completion $fpath)
 
 # 補完機能を有効にする
 autoload -Uz compinit

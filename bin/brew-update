@@ -38,7 +38,6 @@ brew install openssl
 
 ## Env
 brew install direnv
-brew install anyenv
 
 ## Ruby
 brew install rbenv
