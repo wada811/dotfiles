@@ -41,6 +41,10 @@
 [alias]
 	st = status
 	ch = checkout
+	chf = "!f() { git checkout -b andy/feature/$1; }; f"
+	chb = "!f() { git checkout -b andy/bugfix/$1; }; f"
+	chi = "!f() { git checkout -b andy/internal/$1; }; f"
+	cho = "!f() { git checkout -b andy/other/$1; }; f"
 	co = commit
 	lg = log --all --graph --decorate --oneline
 	cp = cherry-pick
@@ -66,3 +70,5 @@
 	unignore-temporary = update-index --no-assume-unchanged
 	# List ignore local temporary
 	ignored-temporary = !git ls-files -v | grep "^[a-z]"
+[core]
+	excludesfile = /Users/andy/.gitignore
