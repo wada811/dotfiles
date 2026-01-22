@@ -43,7 +43,11 @@ for f (~/.zsh/zsh-functions/*) source "${f}"
 source ~/.zsh/hook.zsh
 
 # homebrew
-eval "$(/usr/local/bin/brew shellenv)"
+if [[ -f /opt/homebrew/bin/brew ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f /usr/local/bin/brew ]]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
 
 # direnv
 eval "$(direnv hook zsh)"
