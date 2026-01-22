@@ -9,6 +9,7 @@ ANDROID_LATEST_BUILD_TOOLS=$(ls -r $ANDROID_HOME/build-tools | head -1 | tr -d '
 
 typeset -gU path PATH
 path=(
+    ~/.local/bin(N-/)
     ~/bin(N-/)
     $ANDROID_HOME/emulator(N-/)
     $ANDROID_HOME/platform-tools(N-/)
