@@ -71,4 +71,4 @@
 	# List ignore local temporary
 	ignored-temporary = !git ls-files -v | grep "^[a-z]"
 [core]
-	excludesfile = /Users/andy/.gitignore
+	excludesfile = ~/.gitignore
