@@ -17,11 +17,10 @@ curl -fsSL https://raw.githubusercontent.com/wada811/dotfiles/master/bootstrap.s
 | ファイル | 役割 |
 |----------|------|
 | `bootstrap.sh` | **入口**。素の Mac で動く前提。Homebrew 導入 → HTTPS clone → `setup-mac.sh` 実行 |
-| `setup-mac.sh` | **本体（冪等）**。Brewfile 適用・macOS 設定・Git 設定・`install.sh` 実行・SSH/セキュリティ確認 |
+| `setup-mac.sh` | **本体（冪等）**。Brewfile 適用・macOS 設定・Git 設定・dotfiles の symlink・SSH/セキュリティ確認 |
 | `Brewfile` | 導入する CLI / アプリの定義（`brew bundle` で一括導入） |
-| `install.sh` | dotfiles をホームへ symlink（`.gitconfig` / `.zshrc` / `.vimrc` / iTerm2 等） |
 | `mac-setup-requirements.md` | セットアップの要件定義書 |
-| `bin/` | 自作スクリプト（`brew-update` など） |
+| `bin/` | 自作スクリプト（`git-pull-all` など） |
 
 ## 2 回目以降 / 部分的な再実行
 
@@ -33,7 +32,7 @@ cd ~/dotfiles
 ```
 
 - Brewfile を更新したらアプリ/CLI の追加導入: `brew bundle --file=~/dotfiles/Brewfile`
-- dotfiles の symlink だけ張り直す: `./install.sh`
+- dotfiles の symlink は `setup-mac.sh` 内で冪等に張り直される
 
 ## オプション
 
@@ -45,8 +44,8 @@ cd ~/dotfiles
 ## 補足
 
 - ターミナルは [cmux](https://github.com/manaflow-ai/cmux)（Ghostty ベース）を採用。
-- `bin/brew-update` は旧来の一括導入スクリプト。現在は `Brewfile` 方式が正で、
-  パッケージの追加は `Brewfile` への追記で管理する。
+- パッケージの追加は `Brewfile` への追記で管理する（旧 `bin/brew-update` は廃止）。
+- Ruby/Node/Python などの言語ランタイムは `mise` で管理する。
 
 ## 参考
 

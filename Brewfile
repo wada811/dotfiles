@@ -29,12 +29,9 @@ brew "hub"                         # GitHub 操作補助 (wada811 採用)
 # CLI: 環境・バージョン管理
 # ============================================================
 brew "direnv"                      # ディレクトリ単位の環境変数
-brew "mise"                        # 言語ランタイム統合管理 (asdf 互換)
-# --- mise を使わず個別管理する場合 (wada811 は rbenv を使用) ---
-# brew "rbenv"
-# brew "ruby-build"
-# brew "readline"
-# brew "openssl"
+brew "mise"                        # 言語ランタイム統合管理 (Ruby/Node/Python 等)
+# 注: Ruby も mise で管理する方針。rbenv や nokogiri ビルド依存
+#     (libxml2/libxslt 等) は不要。万一 gem ビルドで詰まったら個別に追加する。
 
 # ============================================================
 # CLI: データベース
