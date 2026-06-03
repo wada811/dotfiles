@@ -55,11 +55,12 @@ else
 fi
 
 # ---- 3. 本体セットアップを実行 ----
-if [[ -x "${DOTFILES_DIR}/setup-mac.sh" ]]; then
+# 実行ビットに依存しないよう bash で起動する（GitHub 上のファイルは 644 のことがある）。
+if [[ -f "${DOTFILES_DIR}/setup-mac.sh" ]]; then
   info "setup-mac.sh を実行します..."
-  ( cd "${DOTFILES_DIR}" && ./setup-mac.sh )
+  ( cd "${DOTFILES_DIR}" && bash setup-mac.sh )
 else
-  info "setup-mac.sh が見つからない/実行権限なし。手動で確認してください: ${DOTFILES_DIR}"
+  info "setup-mac.sh が見つかりません。手動で確認してください: ${DOTFILES_DIR}"
 fi
 
 # ---- 4. (任意) SSH 鍵を登録済みなら remote を SSH へ張り替え ----
