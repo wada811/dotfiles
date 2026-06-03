@@ -80,6 +80,7 @@ cask "slack"
 cask "notion"
 cask "raycast"
 cask "rectangle"                   # ウィンドウ管理
+cask "meetingbar"                  # カレンダーの予定をメニューバーに表示
 cask "1password"
 cask "1password-cli"               # 1password-cli は cask（formula ではない）
 
