@@ -21,6 +21,8 @@ autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 
 # cdr の設定
+# recent-dirs-file の保存先ディレクトリを用意（無いと初回 chpwd で警告が出る）
+[[ -d "$HOME/.cache/shell" ]] || mkdir -p "$HOME/.cache/shell"
 zstyle ':completion:*' recent-dirs-insert both
 zstyle ':chpwd:*' recent-dirs-max 500
 zstyle ':chpwd:*' recent-dirs-default true
