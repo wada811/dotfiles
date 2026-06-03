@@ -162,6 +162,20 @@ link ".sqliterc"          "${HOME}/.sqliterc"
 # 注: iTerm2 plist の symlink は廃止（ターミナルは cmux）。
 ok "dotfiles の symlink が完了"
 
+# ---- 5.6 diff-highlight の symlink ----
+# git の diff を見やすくする diff-highlight を PATH の通った場所へ張る。
+# 実体パスは git のバージョンで異なるため動的に探索。Apple Silicon でも
+# 書き込める "$(brew --prefix)/bin" に張る（/usr/local/bin への sudo 不要）。
+if command -v brew >/dev/null 2>&1; then
+  DH_SRC="$(find "$(brew --prefix git 2>/dev/null)/share" -name diff-highlight -type f 2>/dev/null | head -1)"
+  if [[ -n "${DH_SRC}" ]]; then
+    ln -sf "${DH_SRC}" "$(brew --prefix)/bin/diff-highlight"
+    ok "diff-highlight を symlink: $(brew --prefix)/bin/diff-highlight"
+  else
+    warn "diff-highlight が見つからないため symlink をスキップ（git 未導入の可能性）"
+  fi
+fi
+
 # ---- 6. SSH 鍵 (GitHub 用) ----
 SSH_KEY="${HOME}/.ssh/id_ed25519"
 if [[ -f "${SSH_KEY}" ]]; then
