@@ -80,7 +80,7 @@ cask "google-chrome"
 # ============================================================
 cask "slack"
 # cask "zoom"
-# cask "notion"
+cask "notion"
 cask "raycast"
 cask "rectangle"                   # ウィンドウ管理
 cask "1password"
