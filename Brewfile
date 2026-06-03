@@ -7,15 +7,13 @@
 # Taps
 # ============================================================
 tap "manaflow-ai/cmux"             # cmux ターミナル
-tap "wada811/adobe-fonts"          # Source Han Code JP フォント (任意)
 
 # ============================================================
 # CLI: シェル環境
 # ============================================================
 brew "zsh"
 brew "zsh-completions"
-brew "starship"                    # プロンプト (oh-my-zsh の代替)
-brew "peco"                        # インタラクティブ絞り込み (wada811 採用)
+brew "peco"                        # インタラクティブ絞り込み (zsh peco-scripts で使用)
 brew "terminal-notifier"           # 通知
 
 # ============================================================
@@ -109,7 +107,6 @@ cask "google-japanese-ime"         # Google 日本語入力
 # ============================================================
 # フォント
 # ============================================================
-# brew "wada811/adobe-fonts/font-source-han-code-jp"
 # cask "font-jetbrains-mono"
 # cask "font-hack-nerd-font"
 
