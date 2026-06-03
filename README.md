@@ -53,5 +53,5 @@ bash setup-mac.sh
 
 ## 参考
 
-- 隠しファイル表示: `defaults write com.apple.finder AppleShowAllFiles -boolean true && killall Finder`
-- diff-highlight の symlink: `ln -s /opt/homebrew/opt/git/share/git-common/contrib/diff-highlight/diff-highlight /usr/local/bin`
+- 隠しファイル表示は `setup-mac.sh` で設定済み（`defaults write com.apple.finder AppleShowAllFiles`）。
+- diff-highlight の symlink も `setup-mac.sh` が自動で張る（パスを動的探索し `$(brew --prefix)/bin` へ）。
