@@ -50,8 +50,3 @@ bash setup-mac.sh
 - ターミナルは [cmux](https://github.com/manaflow-ai/cmux)（Ghostty ベース）を採用。
 - パッケージの追加は `Brewfile` への追記で管理する（旧 `bin/brew-update` は廃止）。
 - Ruby/Node/Python などの言語ランタイムは `mise` で管理する。
-
-## 参考
-
-- 隠しファイル表示は `setup-mac.sh` で設定済み（`defaults write com.apple.finder AppleShowAllFiles`）。
-- diff-highlight の symlink も `setup-mac.sh` が自動で張る（パスを動的探索し `$(brew --prefix)/bin` へ）。
