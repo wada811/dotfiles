@@ -4,13 +4,17 @@
 
 ## クイックスタート（新しい Mac）
 
-素の Mac で、次の 1 行を実行するだけでセットアップが完結します。
+素の Mac で、次を実行するだけでセットアップが完結します。
 `bootstrap.sh` が Homebrew（Xcode CLT / git も同時導入）を入れ、このリポジトリを
 HTTPS で clone し、`setup-mac.sh` を実行します。
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/wada811/dotfiles/master/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/wada811/dotfiles/master/bootstrap.sh -o ~/bootstrap.sh && bash ~/bootstrap.sh
 ```
+
+> 注: `curl ... | bash` のようにパイプで渡すと標準入力が TTY でなくなり、
+> Homebrew がパスワード入力を受け付けられない。必ず上のように
+> 一度ファイルに保存してから実行する。
 
 ## 構成
 
