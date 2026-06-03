@@ -155,7 +155,6 @@ link "zsh"                "${HOME}/.zsh"
 link "zsh/zshrc.zsh"      "${HOME}/.zshrc"
 link "zsh/zshenv.zsh"     "${HOME}/.zshenv"
 link "bin"                "${HOME}/bin"
-link ".sqliterc"          "${HOME}/.sqliterc"
 # 注: ~/.zprofile は手順2で Homebrew PATH を追記するため、ここでは symlink しない（重複回避）。
 # 注: iTerm2 plist の symlink は廃止（ターミナルは cmux）。
 ok "dotfiles の symlink が完了"
