@@ -44,9 +44,3 @@ bash setup-mac.sh
   `INSTALL_ROSETTA=1 bash setup-mac.sh`
 - **SSH へ切り替え**（鍵を GitHub に登録後）:
   `git -C ~/dotfiles remote set-url origin git@github.com:wada811/dotfiles.git`
-
-## 補足
-
-- ターミナルは [cmux](https://github.com/manaflow-ai/cmux)（Ghostty ベース）を採用。
-- パッケージの追加は `Brewfile` への追記で管理する（旧 `bin/brew-update` は廃止）。
-- Ruby/Node/Python などの言語ランタイムは `mise` で管理する。
