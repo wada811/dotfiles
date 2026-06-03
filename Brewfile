@@ -84,7 +84,7 @@ cask "slack"
 cask "raycast"
 cask "rectangle"                   # ウィンドウ管理
 cask "1password"
-brew "1password-cli"
+cask "1password-cli"               # 1password-cli は cask（formula ではない）
 
 # ============================================================
 # GUI: ユーティリティ (wada811 採用ツール)

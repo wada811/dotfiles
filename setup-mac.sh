@@ -82,8 +82,12 @@ brew update
 # ---- 3. Brewfile を適用 ----
 if [[ -f "${BREWFILE}" ]]; then
   info "Brewfile を適用します: ${BREWFILE}"
-  brew bundle --file="${BREWFILE}"
-  ok "Brewfile の適用が完了"
+  # 1つのパッケージ失敗で全体を止めない（後続の設定処理を続行させる）
+  if brew bundle --file="${BREWFILE}"; then
+    ok "Brewfile の適用が完了"
+  else
+    warn "一部の Brewfile 依存の導入に失敗（ログを確認）。後続処理は続行します"
+  fi
 else
   warn "Brewfile が見つかりません (${BREWFILE})。アプリ導入をスキップします。"
 fi
