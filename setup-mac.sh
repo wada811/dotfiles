@@ -128,23 +128,23 @@ if command -v git >/dev/null 2>&1; then
   ok "Git のデフォルト設定を適用"
 fi
 
-# ---- 5.5 dotfiles (wada811/dotfiles 方式: clone + symlink) ----
-# 自分の dotfiles リポジトリ URL を設定すると、~/dotfiles に clone し install.sh を実行します。
-DOTFILES_REPO="${DOTFILES_REPO:-}"   # 例: export DOTFILES_REPO=git@github.com:you/dotfiles.git
-DOTFILES_DIR="${HOME}/dotfiles"
-if [[ -n "${DOTFILES_REPO}" ]]; then
-  if [[ -d "${DOTFILES_DIR}/.git" ]]; then
-    ok "dotfiles: 既存 (${DOTFILES_DIR})"
-  else
+# ---- 5.5 dotfiles の symlink (install.sh) ----
+# 本スクリプトが dotfiles リポジトリ内にある場合（bootstrap 経由の通常ケース）は、
+# 同梱の install.sh を実行して設定ファイルをホームへ symlink する。
+# リポジトリ外から単体実行された場合のみ DOTFILES_REPO を clone する。
+if [[ -x "${SCRIPT_DIR}/install.sh" ]]; then
+  info "install.sh で dotfiles を symlink します..."
+  ( cd "${SCRIPT_DIR}" && ./install.sh ) || warn "install.sh で一部失敗（既存 symlink の可能性。問題なければ無視可）"
+else
+  DOTFILES_REPO="${DOTFILES_REPO:-}"   # 例: export DOTFILES_REPO=git@github.com:wada811/dotfiles.git
+  DOTFILES_DIR="${HOME}/dotfiles"
+  if [[ -n "${DOTFILES_REPO}" && ! -d "${DOTFILES_DIR}/.git" ]]; then
     info "dotfiles を clone します: ${DOTFILES_REPO}"
     git clone "${DOTFILES_REPO}" "${DOTFILES_DIR}"
+    [[ -x "${DOTFILES_DIR}/install.sh" ]] && ( cd "${DOTFILES_DIR}" && ./install.sh ) || true
+  else
+    warn "install.sh が見つかりません。dotfiles の symlink をスキップ"
   fi
-  if [[ -x "${DOTFILES_DIR}/install.sh" ]]; then
-    info "dotfiles の install.sh を実行します..."
-    ( cd "${DOTFILES_DIR}" && ./install.sh ) || warn "install.sh の実行に失敗"
-  fi
-else
-  warn "DOTFILES_REPO 未設定。dotfiles の clone をスキップ (例: export DOTFILES_REPO=... して再実行)"
 fi
 
 # ---- 6. SSH 鍵 (GitHub 用) ----
