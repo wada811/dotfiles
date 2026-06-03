@@ -28,7 +28,7 @@ curl -fsSL https://raw.githubusercontent.com/wada811/dotfiles/master/bootstrap.s
 
 ```sh
 cd ~/dotfiles
-./setup-mac.sh
+bash setup-mac.sh
 ```
 
 - Brewfile を更新したらアプリ/CLI の追加導入: `brew bundle --file=~/dotfiles/Brewfile`
@@ -37,7 +37,7 @@ cd ~/dotfiles
 ## オプション
 
 - **Rosetta 2**（原則不要。amd64 専用 Docker イメージ等が必要な場合のみ）:
-  `INSTALL_ROSETTA=1 ./setup-mac.sh`
+  `INSTALL_ROSETTA=1 bash setup-mac.sh`
 - **SSH へ切り替え**（鍵を GitHub に登録後）:
   `git -C ~/dotfiles remote set-url origin git@github.com:wada811/dotfiles.git`
 
