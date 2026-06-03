@@ -154,8 +154,6 @@ link "git/.gitignore"     "${HOME}/.gitignore"
 link "zsh"                "${HOME}/.zsh"
 link "zsh/zshrc.zsh"      "${HOME}/.zshrc"
 link "zsh/zshenv.zsh"     "${HOME}/.zshenv"
-link ".vim"               "${HOME}/.vim"
-link ".vimrc"             "${HOME}/.vimrc"
 link "bin"                "${HOME}/bin"
 link ".sqliterc"          "${HOME}/.sqliterc"
 # 注: ~/.zprofile は手順2で Homebrew PATH を追記するため、ここでは symlink しない（重複回避）。
@@ -174,6 +172,15 @@ if command -v brew >/dev/null 2>&1; then
   else
     warn "diff-highlight が見つからないため symlink をスキップ（git 未導入の可能性）"
   fi
+fi
+
+# ---- 5.7 Claude Code (CLI) ----
+# ネイティブインストーラで導入（npm 版は非推奨）。~/.local/bin に入る。
+if command -v claude >/dev/null 2>&1; then
+  ok "Claude Code: 導入済み"
+else
+  info "Claude Code をインストールします..."
+  curl -fsSL https://claude.ai/install.sh | bash || warn "Claude Code の導入に失敗"
 fi
 
 # ---- 6. SSH 鍵 (GitHub 用) ----
