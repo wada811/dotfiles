@@ -5,7 +5,8 @@ export ANDROID_HOME=~/Library/Android/sdk
 export ANDROID_SDK_ROOT=~/Library/Android/sdk
 export GOOGLE_CLOUD_PROJECT=timetree-internal-tool
 
-ANDROID_LATEST_BUILD_TOOLS=$(ls -r $ANDROID_HOME/build-tools | head -1 | tr -d '/')
+# Android SDK 未インストール時はディレクトリが無いので stderr を抑制（空になり path からは除外される）
+ANDROID_LATEST_BUILD_TOOLS=$(ls -r $ANDROID_HOME/build-tools 2>/dev/null | head -1 | tr -d '/')
 
 typeset -gU path PATH
 path=(
