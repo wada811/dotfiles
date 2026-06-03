@@ -128,24 +128,35 @@ if command -v git >/dev/null 2>&1; then
   ok "Git のデフォルト設定を適用"
 fi
 
-# ---- 5.5 dotfiles の symlink (install.sh) ----
-# 本スクリプトが dotfiles リポジトリ内にある場合（bootstrap 経由の通常ケース）は、
-# 同梱の install.sh を実行して設定ファイルをホームへ symlink する。
-# リポジトリ外から単体実行された場合のみ DOTFILES_REPO を clone する。
-if [[ -x "${SCRIPT_DIR}/install.sh" ]]; then
-  info "install.sh で dotfiles を symlink します..."
-  ( cd "${SCRIPT_DIR}" && ./install.sh ) || warn "install.sh で一部失敗（既存 symlink の可能性。問題なければ無視可）"
-else
-  DOTFILES_REPO="${DOTFILES_REPO:-}"   # 例: export DOTFILES_REPO=git@github.com:wada811/dotfiles.git
-  DOTFILES_DIR="${HOME}/dotfiles"
-  if [[ -n "${DOTFILES_REPO}" && ! -d "${DOTFILES_DIR}/.git" ]]; then
-    info "dotfiles を clone します: ${DOTFILES_REPO}"
-    git clone "${DOTFILES_REPO}" "${DOTFILES_DIR}"
-    [[ -x "${DOTFILES_DIR}/install.sh" ]] && ( cd "${DOTFILES_DIR}" && ./install.sh ) || true
+# ---- 5.5 dotfiles の symlink ----
+# 設定ファイルをホームへ symlink する（旧 install.sh を統合・冪等化）。
+# 本スクリプトと同じディレクトリ（dotfiles リポジトリのルート）を基準にする。
+DOTFILES_DIR="${SCRIPT_DIR}"
+info "dotfiles を symlink します (${DOTFILES_DIR})..."
+
+# src(リポジトリ内) → dst(ホーム) を冪等に symlink する。src が無ければスキップ。
+link() {
+  local src="${DOTFILES_DIR}/$1" dst="$2"
+  if [[ -e "${src}" ]]; then
+    ln -sfn "${src}" "${dst}"
   else
-    warn "install.sh が見つかりません。dotfiles の symlink をスキップ"
+    warn "symlink 元が無いためスキップ: ${src}"
   fi
-fi
+}
+
+link "git/.gitconfig"     "${HOME}/.gitconfig"
+link "git/.gitattributes" "${HOME}/.gitattributes"
+link "git/.gitignore"     "${HOME}/.gitignore"
+link "zsh"                "${HOME}/.zsh"
+link "zsh/zshrc.zsh"      "${HOME}/.zshrc"
+link "zsh/zshenv.zsh"     "${HOME}/.zshenv"
+link ".vim"               "${HOME}/.vim"
+link ".vimrc"             "${HOME}/.vimrc"
+link "bin"                "${HOME}/bin"
+link ".sqliterc"          "${HOME}/.sqliterc"
+# 注: ~/.zprofile は手順2で Homebrew PATH を追記するため、ここでは symlink しない（重複回避）。
+# 注: iTerm2 plist の symlink は廃止（ターミナルは cmux）。
+ok "dotfiles の symlink が完了"
 
 # ---- 6. SSH 鍵 (GitHub 用) ----
 SSH_KEY="${HOME}/.ssh/id_ed25519"
