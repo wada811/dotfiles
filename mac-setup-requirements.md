@@ -68,7 +68,7 @@
 | CLI-07 | docker（colima/OrbStack） | コンテナ実行環境 |
 | CLI-08 | zsh + starship / oh-my-zsh | シェル環境 |
 
-> TimeTree のような iOS/Android アプリ開発を行う場合は、Xcode（App Store）、CocoaPods、fastlane、Android Studio、JDK なども追加候補。
+> iOS/Android アプリ開発を行う場合は、Xcode（App Store）、CocoaPods、fastlane、Android Studio、JDK なども追加候補。
 
 ### 4.4 GUI アプリ（Homebrew Cask）
 
