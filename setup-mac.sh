@@ -155,8 +155,9 @@ link "zsh"                "${HOME}/.zsh"
 link "zsh/zshrc.zsh"      "${HOME}/.zshrc"
 link "zsh/zshenv.zsh"     "${HOME}/.zshenv"
 link "bin"                "${HOME}/bin"
-# 注: ~/.zprofile は手順2で Homebrew PATH を追記するため、ここでは symlink しない（重複回避）。
-# 注: iTerm2 plist の symlink は廃止（ターミナルは cmux）。
+mkdir -p "${HOME}/.claude"
+link ".claude/settings.json"          "${HOME}/.claude/settings.json"
+link ".claude/statusline-command.sh"  "${HOME}/.claude/statusline-command.sh"
 ok "dotfiles の symlink が完了"
 
 # ---- 5.6 diff-highlight の symlink ----
