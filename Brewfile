@@ -98,7 +98,8 @@ cask "google-japanese-ime"         # Google 日本語入力
 # ============================================================
 # モバイルアプリ開発 (wada811 = Android/iOS 開発者構成)
 # ============================================================
-# cask "android-studio"
+cask "android-studio"             # 安定版
+cask "android-studio-preview@canary" # Canary 版 (Android Studio Preview Canary.app)
 # brew "dex2jar"                   # APK 解析
 # cask "jd-gui"                    # Java デコンパイラ
 # brew "cocoapods"                 # iOS 依存管理
