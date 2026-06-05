@@ -107,7 +107,7 @@ if [ -n "$proj" ]; then
     "$HOME")   proj_disp="~" ;;
     *)         proj_disp="$proj" ;;
   esac
-  line2="${cyan}root:${proj_disp}${reset}"
+  line2="${cyan}${proj_disp}${reset}"
 fi
 if [ -n "$git_root" ]; then
   [ -n "$line2" ] && line2="${line2} ${dim}|${reset} "
