@@ -4,6 +4,7 @@ input=$(cat)
 
 # ── Parse JSON fields ──────────────────────────────────────────────────────────
 cwd=$(printf "%s" "$input" | jq -r '.workspace.current_dir // .cwd // ""')
+proj=$(printf "%s" "$input" | jq -r '.workspace.project_dir // .cwd // ""')
 model=$(printf "%s" "$input" | jq -r 'if (.model | type) == "object" then (.model.display_name // "") else (.model // "") end')
 ctx_pct_raw=$(printf "%s" "$input" | jq -r '.context_window.used_percentage // 0')
 context_window_size=$(printf "%s" "$input" | jq -r '.context_window.context_window_size // 200000')
@@ -97,10 +98,16 @@ if [ -n "$cmux_workspace_name" ] || [ -n "$cmux_surface_name" ]; then
   [ -n "$line1" ] && printf "%b\n" "$line1"
 fi
 
-# ── Line 2: git root dir | current dir | branch | +N/-N ──────────────────────────
+# ── Line 2: launch root | git root dir | current dir | branch | +N/-N ─────────────
+# launch root（起動 root / プロジェクト root）は git の内外を問わず常に表示する
 line2=""
+if [ -n "$proj" ]; then
+  proj_base=$(basename "$proj")
+  line2="${cyan}root:${proj_base}${reset} ${dim}${proj}${reset}"
+fi
 if [ -n "$git_root" ]; then
-  line2="${cyan}${git_root}${reset}"
+  [ -n "$line2" ] && line2="${line2} ${dim}|${reset} "
+  line2="${line2}${cyan}${git_root}${reset}"
 fi
 if [ -n "$git_rel" ]; then
   [ -n "$line2" ] && line2="${line2} ${dim}|${reset} "
