@@ -102,8 +102,12 @@ fi
 # launch root（起動 root / プロジェクト root）は git の内外を問わず常に表示する
 line2=""
 if [ -n "$proj" ]; then
-  proj_base=$(basename "$proj")
-  line2="${cyan}root:${proj_base}${reset} ${dim}${proj}${reset}"
+  case "$proj" in
+    "$HOME"/*) proj_disp="~/${proj#"$HOME"/}" ;;
+    "$HOME")   proj_disp="~" ;;
+    *)         proj_disp="$proj" ;;
+  esac
+  line2="${cyan}root:${proj_disp}${reset}"
 fi
 if [ -n "$git_root" ]; then
   [ -n "$line2" ] && line2="${line2} ${dim}|${reset} "
