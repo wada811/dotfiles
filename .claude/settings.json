@@ -3,5 +3,17 @@
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
+  },
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "touch /Users/andy/Documents/self-evolving-agent/runs/.active 2>/dev/null"
+          }
+        ]
+      }
+    ]
   }
 }
