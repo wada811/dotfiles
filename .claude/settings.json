@@ -1,10 +1,24 @@
 {
   "theme": "dark",
+  "env": {
+    "COACH_HOLDOUT": "0.3"
+  },
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/andy/.claude/hooks/coach-report.ts --session-start",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "hooks": [
