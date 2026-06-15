@@ -5,6 +5,17 @@
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/andy/.claude/hooks/prompt-coach.ts",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "SessionEnd": [
       {
         "hooks": [
