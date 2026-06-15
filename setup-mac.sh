@@ -155,9 +155,11 @@ link "zsh"                "${HOME}/.zsh"
 link "zsh/zshrc.zsh"      "${HOME}/.zshrc"
 link "zsh/zshenv.zsh"     "${HOME}/.zshenv"
 link "bin"                "${HOME}/bin"
-mkdir -p "${HOME}/.claude"
+mkdir -p "${HOME}/.claude/hooks"
 link ".claude/settings.json"          "${HOME}/.claude/settings.json"
 link ".claude/statusline-command.sh"  "${HOME}/.claude/statusline-command.sh"
+link ".claude/hooks/prompt-coach.ts"  "${HOME}/.claude/hooks/prompt-coach.ts"
+link ".claude/hooks/coach-report.ts"  "${HOME}/.claude/hooks/coach-report.ts"
 ok "dotfiles の symlink が完了"
 
 # ---- 5.6 diff-highlight の symlink ----
