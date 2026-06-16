@@ -155,12 +155,22 @@ link "zsh"                "${HOME}/.zsh"
 link "zsh/zshrc.zsh"      "${HOME}/.zshrc"
 link "zsh/zshenv.zsh"     "${HOME}/.zshenv"
 link "bin"                "${HOME}/bin"
+link "iterm2"             "${HOME}/.iterm2"
 mkdir -p "${HOME}/.claude/hooks"
 link ".claude/settings.json"          "${HOME}/.claude/settings.json"
 link ".claude/statusline-command.sh"  "${HOME}/.claude/statusline-command.sh"
 link ".claude/hooks/prompt-coach.ts"  "${HOME}/.claude/hooks/prompt-coach.ts"
 link ".claude/hooks/coach-report.ts"  "${HOME}/.claude/hooks/coach-report.ts"
 ok "dotfiles の symlink が完了"
+
+# ---- 5.5b iTerm2: 設定を ~/.iterm2 (dotfiles) から読み込む ----
+# 上で ~/.iterm2 -> dotfiles/iterm2 を symlink 済み。iTerm2 に
+# 「カスタムフォルダから設定を読む」を有効化する（iTerm2 終了中に実行すること）。
+if [[ -d "${HOME}/.iterm2" ]]; then
+  defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
+  defaults write com.googlecode.iterm2 PrefsCustomFolder -string "~/.iterm2"
+  ok "iTerm2 の設定読み込み元を ~/.iterm2 に設定"
+fi
 
 # ---- 5.6 diff-highlight の symlink ----
 # git の diff を見やすくする diff-highlight を PATH の通った場所へ張る。

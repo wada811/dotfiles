@@ -75,7 +75,7 @@
 | 区分 | アプリ例 |
 |------|----------|
 | エディタ/IDE | Visual Studio Code, Cursor |
-| ターミナル | cmux（Ghostty ベース・AI コーディングエージェント向け） |
+| ターミナル | cmux（Ghostty ベース・AI コーディングエージェント向け）／ iTerm2（cmux が入らない・使い分けるマシン用）。マシンにより使い分ける |
 | ブラウザ | Google Chrome, Firefox |
 | 通信 | Slack, Zoom |
 | 生産性 | Notion, Raycast, Rectangle（ウィンドウ管理） |
@@ -162,7 +162,7 @@ wada811/dotfiles のように、設定ファイルを 1 つのリポジトリ（
 - **dotfiles の symlink 管理**: `git clone` 後に `install.sh` で `~/.gitconfig`・`~/.zshrc`・`~/.zprofile`・`~/.zshenv`・`~/.vimrc`・iTerm2 plist・`~/bin` をシンボリックリンク。
 - **Homebrew 一括導入**: `bin/brew-update` でパッケージとアプリをまとめて導入（本要件では `Brewfile` 化）。
 - **採用パッケージ**: zsh / zsh-completions / peco / terminal-notifier / git / hub / gh / direnv / rbenv + ruby-build / sqlite / jq / tree / rename / imagemagick / ffmpeg。
-- **採用アプリ**: VS Code / CotEditor / Slack / 1Password (+CLI) / The Unarchiver / AppCleaner / ImageOptim / Cyberduck / Google 日本語入力 / Dropbox / Google Drive。（wada811 は iTerm2 を採用しているが、本要件ではターミナルを cmux に変更）
+- **採用アプリ**: VS Code / CotEditor / Slack / 1Password (+CLI) / The Unarchiver / AppCleaner / ImageOptim / Cyberduck / Google 日本語入力 / Dropbox / Google Drive。（ターミナルはマシンにより cmux と iTerm2 を使い分ける。cmux が入らないマシンでは iTerm2 を使用し、設定は `~/.iterm2`→`dotfiles/iterm2` の symlink で管理）
 - **モバイル開発系**: dex2jar / jd-gui / adb 補助スクリプト（Android 開発者構成）。
 - **その他の初期手順**: 隠しファイル表示、diff-highlight の symlink。（wada811 は Rosetta 導入も行っているが、2026 年時点では原則不要のため本要件では任意扱い）
 
