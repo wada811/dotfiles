@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+#
+# iterm2-plist-clean - iTerm2 plist 用の git clean フィルタ
+#
+# stdin で受け取った (バイナリ or XML) plist を、
+#   1. XML 形式に正規化（バイナリ差分を避ける）
+#   2. 揮発キーを削除（マシン間で同期不要なもの）
+#   3. キーをソート
+# して stdout に出力する。git add 時に自動適用され、コミット内容を正規化する。
+# 作業ツリーのファイル自体は触らない（smudge=cat の identity 運用）。
+#
+# 削除対象プレフィックス:
+#   NoSync*                         iTerm2 が「同期しない」と意図する規約キー
+#   NSWindow Frame *                Cocoa のウィンドウ位置・サイズ
+#   NSSplitView Subview Frames *    スプリットビューの分割位置
+#   NSToolbar Configuration *       ツールバー状態
+set -euo pipefail
+
+tmp="$(mktemp -t itermplist)"
+trap 'rm -f "$tmp"' EXIT
+cat > "$tmp"
+
+python3 - "$tmp" <<'PY'
+import plistlib, sys
+path = sys.argv[1]
+with open(path, 'rb') as f:
+    data = plistlib.load(f)
+PREFIXES = (
+    'NoSync',
+    'NSWindow Frame ',
+    'NSSplitView Subview Frames ',
+    'NSToolbar Configuration ',
+)
+if isinstance(data, dict):
+    for k in list(data):
+        if k.startswith(PREFIXES):
+            del data[k]
+sys.stdout.buffer.write(plistlib.dumps(data, fmt=plistlib.FMT_XML, sort_keys=True))
+PY
