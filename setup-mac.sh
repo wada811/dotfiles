@@ -172,6 +172,12 @@ if [[ -d "${HOME}/.iterm2" ]]; then
   ok "iTerm2 の設定読み込み元を ~/.iterm2 に設定"
 fi
 
+# iTerm2 plist の clean フィルタを登録する（.gitattributes の filter=itermplist に対応）。
+# これにより commit 時に binary->XML 変換＋揮発キー削除が自動で行われる。
+# filter 定義は .git/config（非追跡）に置く必要があるため、ここで設定する。
+git -C "${DOTFILES_DIR}" config filter.itermplist.clean "bin/iterm2-plist-clean"
+ok "iTerm2 plist の git clean フィルタを登録"
+
 # ---- 5.6 diff-highlight の symlink ----
 # git の diff を見やすくする diff-highlight を PATH の通った場所へ張る。
 # 実体パスは git のバージョンで異なるため動的に探索。Apple Silicon でも
