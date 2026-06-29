@@ -1,9 +1,9 @@
 ---
-name: se-proc-agency-operations
+name: agency-operations
 description: "作成手順「agency-operations」（self-evolving-agent から自動同期）: 並列 agent を agency で安全に運用する手順(agency 運用知見)"
 ---
 
-<!-- auto-generated from self-evolving-agent/agent-config/procedures/agency-operations @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
+<!-- auto-generated from self-evolving-agent/agent-config/procedures/agency-operations @ genome 1.28.0, synced 2026-06-29T11:26:43.020Z. Do NOT hand-edit; re-sync overwrites. -->
 
 ## 並列 agent を agency で安全に運用する手順(agency 運用知見)
 
@@ -68,9 +68,9 @@ agent pane は**閉じれば dashboard 監視ループが自動 prune** する(t
 
 ---
 
-## agency agent が実リポに PR を出す手順(<repo> PR 分割作業の知見)
+## agency agent が実リポに PR を出す手順(android-app PR 分割作業の知見)
 
-**用途:** agency の agent pane が実リポ(例 <repo>)で元 PR を分割し、cherry-pick → 専用 worktree → draft PR → レビュー/CI 対応 → 人間承認後 merge まで回すとき。下記は 2026-06-10 の PR-1(共通クラスを共通モジュールへ移動)セッションで得た教訓。失敗も含む。
+**用途:** agency の agent pane が実リポ(例 android-app)で元 PR を分割し、cherry-pick → 専用 worktree → draft PR → レビュー/CI 対応 → 人間承認後 merge まで回すとき。下記は 2026-06-10 の PR-1(共通クラスを共通モジュールへ移動)セッションで得た教訓。失敗も含む。
 
 ### 7. push 済みブランチへの修正は「追加コミット」で。force push しない
 CI 指摘(spotless 等)やレビュー対応でコミットを直したくなっても、`git commit --amend` + `git push --force-with-lease` は**禁止**。
@@ -86,7 +86,7 @@ push / PR 作成の直後に worktree を撤去しない。**merge 完了後・�
 - **なぜ:** PR 作成は作業の終点ではなく、レビュー往復の起点。最初の指示に「push 後撤去可」とあっても、実運用ではユーザーは merge までの残置を期待する。
 
 ### 9. ホスト固有の壊れた CLI は REST API で迂回する
-<repo> では `gh pr edit`(assignee / reviewer / body の編集)が **Projects classic 廃止由来の `projectCards` GraphQL エラー**で失敗する。
+android-app では `gh pr edit`(assignee / reviewer / body の編集)が **Projects classic 廃止由来の `projectCards` GraphQL エラー**で失敗する。
 
 - assignee: `gh api -X POST /repos/<owner>/<repo>/issues/<n>/assignees -f "assignees[]=<user>"`
 - team reviewer: `gh api -X POST /repos/<owner>/<repo>/pulls/<n>/requested_reviewers -f "team_reviewers[]=<team>"`
@@ -106,7 +106,7 @@ merge・共有チャンネルへの投稿・リモートブランチ削除など
 - 宛先(サブチーム ID・チャンネル)や定型文は、チャンネルの**直近の同種投稿を読んで確認**してから送る。複数の似たグループがあるときは特に。
 - **なぜ:** 「レビュー依頼っぽい投稿」を 1 件だけ真似ると、用途違いの狭いグループを誤って叩く。送信は外向きで、間違えるとユーザーが手で直す手間を生む。
 
-**取り込み経緯(第2ブロック):** 2026-06-10 の <repo> PR-1 分割セッション(agency agent 視点)で得た転用可能な運用教訓。force push 叱責・projectCards 迂回・Slack 宛先誤り等の実体験が出典。文書作成系 eval では測れないため eval/evolve ループは起動せず、`ingest`(eval ゲート)→ 人間 merge を前提とする。
+**取り込み経緯(第2ブロック):** 2026-06-10 の android-app PR-1 分割セッション(agency agent 視点)で得た転用可能な運用教訓。force push 叱責・projectCards 迂回・Slack 宛先誤り等の実体験が出典。文書作成系 eval では測れないため eval/evolve ループは起動せず、`ingest`(eval ゲート)→ 人間 merge を前提とする。
 
 ---
 
@@ -142,4 +142,4 @@ PR-1 の #11 を更新。「android team にレビュー依頼」と言われた
 - **Slack へのレビュー依頼投稿は、明示的に「Slack で」と言われた時だけ**行う。勝手に チームのチャンネル へメンションしない(PR-3 で Slack に投稿したが、望まれていたのは GitHub team reviewer だった)。
 - **なぜ:** 依頼の宛先は「どの面で追跡したいか」の運用判断。既定面(GitHub)を外して別チャネル(Slack)に出すと、二重依頼・追跡漏れになる。送信は外向きで巻き戻しにくい。
 
-**取り込み経緯(第3ブロック):** 2026-06-10 の <repo> PR-3 分割セッション(agency agent 視点)。ローカル緑なのに CI 赤(別モジュール `:app-<product>` のテストが移動した layout の id を参照)・キャッシュヒットによる偽の compile 成功・cherry-pick が壊れた中間状態を再現・レビュー依頼先の誤り(Slack→GitHub team)が出典。文書作成系 eval では測れないため `ingest`(eval ゲート)→ 人間 merge を前提とする。
+**取り込み経緯(第3ブロック):** 2026-06-10 の android-app PR-3 分割セッション(agency agent 視点)。ローカル緑なのに CI 赤(別モジュール `:app-<product>` のテストが移動した layout の id を参照)・キャッシュヒットによる偽の compile 成功・cherry-pick が壊れた中間状態を再現・レビュー依頼先の誤り(Slack→GitHub team)が出典。文書作成系 eval では測れないため `ingest`(eval ゲート)→ 人間 merge を前提とする。
