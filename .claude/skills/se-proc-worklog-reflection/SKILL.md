@@ -1,13 +1,13 @@
 ---
 name: se-proc-worklog-reflection
-description: Andy の作成手順「worklog-reflection」（self-evolving-agent から自動同期）: Procedure: worklog-reflection
+description: 作成手順「worklog-reflection」（self-evolving-agent から自動同期）: Procedure: worklog-reflection
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/worklog-reflection @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
 
 ### Procedure: worklog-reflection
 
-## 日次ワークログ作成手順（Andy の EM 版）
+## 日次ワークログ作成手順（EM 版）
 
 **用途:** 毎日の業務終了時または翌朝に当日活動を記録し、`workspace/worklog-YYYYMMDD.md`
 または Notion 日次ページとして出力するとき。所要時間: 10〜15 分。
@@ -56,12 +56,12 @@ description: Andy の作成手順「worklog-reflection」（self-evolving-agent 
 ✅ 良い例:
 - PR #214 をレビューし Approve した（招待フローの認証ロジック）
 - タイムゾーン P1 の原因を特定し Mei に修正委譲した
-- 電通 MTG でログ仕様の宿題 1 件を持ち越した
+- パートナー MTG でログ仕様の宿題 1 件を持ち越した
 
 ❌ 避ける例:
 - P1 対応を頑張った          ← 「状態記述」で完了物がない
 - 色々レビューした           ← 何を・どう判断したか不明
-- 電通とミーティングした     ← 何が決まったか / 残ったかが消える
+- パートナーとミーティングした     ← 何が決まったか / 残ったかが消える
 ```
 
 **目安:** 1 日 3〜7 項目。多すぎる（8 以上）なら焦点が散漫。
@@ -111,7 +111,7 @@ description: Andy の作成手順「worklog-reflection」（self-evolving-agent 
 
 ```
 ✅ 良い例:
-- [ ] 電通チームとのログ仕様宿題を Slack に流す（月 2026-06-22 中）
+- [ ] パートナーチームとのログ仕様宿題を Slack に流す（月 2026-06-22 中）
 - [ ] Mei の P1 修正 PR を優先レビュー（上がり次第即日）
 - [ ] 新メンバーと 15 分フォローアップ（月 2026-06-22 中）
 ```
@@ -143,7 +143,7 @@ description: Andy の作成手順「worklog-reflection」（self-evolving-agent 
 
 ```
 🌱 Lesson「外部 MTG の宿題は当日中に責任者・期限を明文化する」
-   → 再発防止: 今日の電通 MTG で宿題が持ち越され、責任者未確定のまま埋もれかけた
+   → 再発防止: 今日のパートナー MTG で宿題が持ち越され、責任者未確定のまま埋もれかけた
    → 既存: Lesson A（プレースホルダー規律）と類似だが外部パートナー文脈で独立価値あり
 
 🌱 Procedure「オンボーディング認識ズレの早期発見 → 資料反映の手順」

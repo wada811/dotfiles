@@ -1,11 +1,11 @@
 ---
 name: se-proc-1on1-prep
-description: Andy の作成手順「1on1-prep」（self-evolving-agent から自動同期）: 1on1 準備手順（Andy の EM 版）
+description: 作成手順「1on1-prep」（self-evolving-agent から自動同期）: 1on1 準備手順（EM 版）
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/1on1-prep @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
 
-## 1on1 準備手順（Andy の EM 版）
+## 1on1 準備手順（EM 版）
 
 **用途:** メンバーとの 1on1 前（通常隔週）・採用面接前・フィードバック面談前に `workspace/1on1-prep-YYYYMMDD-[相手名].md` を作成するとき。所要時間: 10〜15 分。
 
@@ -34,7 +34,7 @@ description: Andy の作成手順「1on1-prep」（self-evolving-agent から自
 - 直近の業務での印象的な言動（良い点・気になる点）:
 - 今スプリントの状況（進捗・ブロッカー・チームとの関係）:
 - 本人のコンディション観察（表情・発言量・相談内容の変化）:
-- 今回 Andy が一番確認したいこと（1 つだけ）:
+- 今回 ユーザーが一番確認したいこと（1 つだけ）:
 ```
 
 ---
@@ -96,7 +96,7 @@ description: Andy の作成手順「1on1-prep」（self-evolving-agent から自
 |---|---|---|
 | 1 | 「この 3 ヶ月で、自分が一番成長できたと感じる場面はどこだった？」 | 本人の成長認識・自己評価の精度 |
 | 2 | 「今の仕事の中で、もっと時間をかけたいことと、そうでないことはどこ？」 | 内発的動機・役割の fit / misfit |
-| 3 | 「半年後、自分がどんなエンジニアになっていたいか、今のイメージは？」 | 中期ビジョン・Andy がサポートできる方向性 |
+| 3 | 「半年後、自分がどんなエンジニアになっていたいか、今のイメージは？」 | 中期ビジョン・ユーザーがサポートできる方向性 |
 
 ---
 
@@ -126,9 +126,9 @@ description: Andy の作成手順「1on1-prep」（self-evolving-agent から自
    （Listen for: [何を聞き取りたいか]）
 
 ## 個人コミットメント（前回確認）
-| 本人 | Andy |
+| 本人 | ユーザー |
 |---|---|
-| [前回のコミット内容] | [前回の Andy の約束] |
+| [前回のコミット内容] | [前回の ユーザーの約束] |
 
 ## 会話メモ（当日のリマインダー）
 - 強みの言及から入る（最初の 2 分で）
@@ -150,4 +150,4 @@ description: Andy の作成手順「1on1-prep」（self-evolving-agent から自
 
 ---
 
-**取り込み経緯:** 2026-06-14 の auto-kaizen セッションで「1on1 準備が全ドメイン中最大の手順空白（Lesson F の 2 段落ヒントのみ）」と自己診断。Andy の 2026 年最優先目標（EM 確立・1on1 実施率 100%）に直結する最高頻度タスクとして選定。`workspace/auto-kaizen.md` に作成後 procedure として昇格。
+**取り込み経緯:** 2026-06-14 の auto-kaizen セッションで「1on1 準備が全ドメイン中最大の手順空白（Lesson F の 2 段落ヒントのみ）」と自己診断。2026 年最優先目標（EM 確立・1on1 実施率 100%）に直結する最高頻度タスクとして選定。`workspace/auto-kaizen.md` に作成後 procedure として昇格。

@@ -9,7 +9,7 @@ description: claude-iterm2-agency の agent tab を起動・操作する。新�
 
 ENS は TypeScript 化済み。単一 CLI `node agency.ts <sub>` で操作する(state dir は `STATE` =
 `$CLAUDE_AGENCY_STATE_TS` 既定 `~/Documents/.agency-ts-state`):
-- `node agency.ts run <id> <repo> <prompt...>` — 新規 agent tab を inbox 経由で立てる(**要 git repo**。base は `detectBase` が repo ごとに自動判定。android-app は最新 milestone。worktree 隔離あり)。
+- `node agency.ts run <id> <repo> <prompt...>` — 新規 agent tab を inbox 経由で立てる(**要 git repo**。base は `detectBase` が repo ごとに自動判定。<repo> は最新 milestone。worktree 隔離あり)。
 - `node agency.ts open "<prompt>" [--repo PATH] [--name NAME] [--id ID]` — **worktree なしの対話/チャットセッション(kind:"chat")** を inbox 経由で立てる。`--repo` 省略時は principal の作業 dir(既定 `~/Documents`)で起動。git repo でない dir でも可。別タブ・RC-first・dashboard 追跡(`chats[]`/`💬`)・label 解決(focus/close 可)は run と同じ。
 - `node agency.ts send <id|session> -- <message...>` / `--file PATH` / `--stdin` — 稼働中 tab へ指示を送り Enter 確定。busy なら取りこぼし防止で見送る(`--force` で無視)。
 - `node agency.ts focus <id>` / `close <id>` — 稼働中 tab に focus / を閉じる。
@@ -17,7 +17,7 @@ ENS は TypeScript 化済み。単一 CLI `node agency.ts <sub>` で操作する
 
 ## 引数の形
 
-- `/agency new <repo> <指示...>` — repo は basename(`android-app` 等、`~/Documents/<name>` に解決)か絶対パス。id は repo basename を既定にし、衝突する場合だけ連番。**worktree 隔離ありの実作業向け**。
+- `/agency new <repo> <指示...>` — repo は basename(`<repo>` 等、`~/Documents/<name>` に解決)か絶対パス。id は repo basename を既定にし、衝突する場合だけ連番。**worktree 隔離ありの実作業向け**。
 - `/agency chat [dir|--repo PATH] [指示...]` — **worktree なしの対話/チャットセッション**。dir 省略時は `~/Documents`。git repo でない dir(横断作業・調査・素の対話)でも起動できる。`agency open` に委譲する。
 - `/agency send <id> <指示...>` — 既存 tab(window.json の agents[].id / chats[].id)へ委譲する。
 - `/agency list` — 稼働中 tab と状態を表示。
@@ -71,4 +71,4 @@ ENS は TypeScript 化済み。単一 CLI `node agency.ts <sub>` で操作する
 ## 注意
 - 出力・報告はすべて日本語。
 - 1-way door(push/PR/外部公開/不可逆)は agent 側が停止して principal へ報告する運用。principal から send で「push して」と委譲する前に、その規約に沿うか確認する。
-- agent tab の base ブランチ規約は `repo-base.json`(例 `android-app` = 最新 milestone)で管理。新 repo で base を変えたいときはそこに追記。
+- agent tab の base ブランチ規約は `repo-base.json`(例 `<repo>` = 最新 milestone)で管理。新 repo で base を変えたいときはそこに追記。

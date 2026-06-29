@@ -1,6 +1,6 @@
 ---
 name: se-proc-kaizen-report
-description: Andy の作成手順「kaizen-report」（self-evolving-agent から自動同期）: Procedure: kaizen-report
+description: 作成手順「kaizen-report」（self-evolving-agent から自動同期）: Procedure: kaizen-report
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/kaizen-report @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
@@ -146,7 +146,7 @@ Try 1 件につき M は 1 つ。
 
 > **スプリント期間:** YYYY-MM-DD（曜日）〜 YYYY-MM-DD（曜日）
 > **レトロ実施日:** [素材から読み取れる日付、不明なら プレースホルダー]
-> **作成者:** Andy
+> **作成者:** ユーザー
 
 ## 前スプリント Try の振り返り
 
