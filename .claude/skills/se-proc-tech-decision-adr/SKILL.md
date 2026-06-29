@@ -1,6 +1,6 @@
 ---
 name: se-proc-tech-decision-adr
-description: 作成手順「tech-decision-adr」（self-evolving-agent から自動同期）: 技術判断ドキュメント（ADR）作成手順
+description: "作成手順「tech-decision-adr」（self-evolving-agent から自動同期）: 技術判断ドキュメント（ADR）作成手順"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/tech-decision-adr @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

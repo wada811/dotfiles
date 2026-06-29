@@ -1,6 +1,6 @@
 ---
 name: se-proc-meeting-summary
-description: 作成手順「meeting-summary」（self-evolving-agent から自動同期）: 会議要約作成手順
+description: "作成手順「meeting-summary」（self-evolving-agent から自動同期）: 会議要約作成手順"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/meeting-summary @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

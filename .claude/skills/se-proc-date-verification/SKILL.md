@@ -1,6 +1,6 @@
 ---
 name: se-proc-date-verification
-description: 作成手順「date-verification」（self-evolving-agent から自動同期）: 日付・締切検証手順（date-verification）
+description: "作成手順「date-verification」（self-evolving-agent から自動同期）: 日付・締切検証手順（date-verification）"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/date-verification @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

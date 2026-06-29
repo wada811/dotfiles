@@ -1,6 +1,6 @@
 ---
 name: pr-setup
-description: 現在のリポジトリにPRワークフローの雛形を設置する。PULL_REQUEST_TEMPLATE・Issueテンプレート・CLAUDE.mdのワークフローセクションを生成する。「このリポジトリでpr-planなどのワークフローを使いたい」「リポジトリのPR設定をしたい」「pr-workflowをセットアップしたい」時に使う。
+description: "現在のリポジトリにPRワークフローの雛形を設置する。PULL_REQUEST_TEMPLATE・Issueテンプレート・CLAUDE.mdのワークフローセクションを生成する。「このリポジトリでpr-planなどのワークフローを使いたい」「リポジトリのPR設定をしたい」「pr-workflowをセットアップしたい」時に使う。"
 ---
 
 # pr-setup — リポジトリへのPRワークフロー設置

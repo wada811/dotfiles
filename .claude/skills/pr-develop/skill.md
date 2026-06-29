@@ -1,6 +1,6 @@
 ---
 name: pr-develop
-description: Issue番号を受け取り開発セッションを開始する。Issueのスコープを確認・要約し feature ブランチを作成する。「Issue #X の実装を始める」「開発セッションを開始する」「このIssueを実装したい」時に使う。
+description: "Issue番号を受け取り開発セッションを開始する。Issueのスコープを確認・要約し feature ブランチを作成する。「Issue #X の実装を始める」「開発セッションを開始する」「このIssueを実装したい」時に使う。"
 ---
 
 # pr-develop — 開発セッション開始

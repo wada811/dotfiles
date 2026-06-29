@@ -1,6 +1,6 @@
 ---
 name: pr-review
-description: PRをレビューしてインラインコメントをGitHubに投稿する。PR descriptionで意図を把握してからdiffをレビューし、What+Why+How形式・重大度ラベル付きのコメントをgh APIで各行に直接投稿する。「PRをレビューする」「コードレビューしたい」「このPRの品質を確認したい」時に使う。
+description: "PRをレビューしてインラインコメントをGitHubに投稿する。PR descriptionで意図を把握してからdiffをレビューし、What+Why+How形式・重大度ラベル付きのコメントをgh APIで各行に直接投稿する。「PRをレビューする」「コードレビューしたい」「このPRの品質を確認したい」時に使う。"
 ---
 
 # pr-review — 意図ファースト・インラインコメント付きレビュー

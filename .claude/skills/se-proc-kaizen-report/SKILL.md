@@ -1,6 +1,6 @@
 ---
 name: se-proc-kaizen-report
-description: 作成手順「kaizen-report」（self-evolving-agent から自動同期）: Procedure: kaizen-report
+description: "作成手順「kaizen-report」（self-evolving-agent から自動同期）: Procedure: kaizen-report"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/kaizen-report @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

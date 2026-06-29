@@ -1,6 +1,6 @@
 ---
 name: pr-create
-description: IssueとCommit履歴からPR descriptionを生成しgh pr createする。課題・解決策・やったこと・やらなかったこと・証跡を含む技術ブログ風のPR bodyを作る。「PRを作りたい」「プルリクエストを作成する」「変更をPRにまとめたい」時に使う。
+description: "IssueとCommit履歴からPR descriptionを生成しgh pr createする。課題・解決策・やったこと・やらなかったこと・証跡を含む技術ブログ風のPR bodyを作る。「PRを作りたい」「プルリクエストを作成する」「変更をPRにまとめたい」時に使う。"
 ---
 
 # pr-create — 意図と差分のセットでPRを生成
