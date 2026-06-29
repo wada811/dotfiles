@@ -1,6 +1,6 @@
 ---
 name: pr-respond
-description: PRのレビューコメント・CI失敗・Changes Requestedに批判的思考で対応を検討し自律的に実行する。スコープ内なら対応する・しないを判断してコード修正/返信、スコープ外ならIssueを作成してコメントする。「レビューコメントに対応して」「CIが落ちた」「Changes requestedに返信して」「指摘を直して」のときに使う。
+description: "PRのレビューコメント・CI失敗・Changes Requestedに批判的思考で対応を検討し自律的に実行する。スコープ内なら対応する・しないを判断してコード修正/返信、スコープ外ならIssueを作成してコメントする。「レビューコメントに対応して」「CIが落ちた」「Changes requestedに返信して」「指摘を直して」のときに使う。"
 ---
 
 # pr-respond — 批判的思考によるレビュー対応

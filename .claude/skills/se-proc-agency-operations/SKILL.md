@@ -1,6 +1,6 @@
 ---
 name: se-proc-agency-operations
-description: 作成手順「agency-operations」（self-evolving-agent から自動同期）: 並列 agent を agency で安全に運用する手順(agency 運用知見)
+description: "作成手順「agency-operations」（self-evolving-agent から自動同期）: 並列 agent を agency で安全に運用する手順(agency 運用知見)"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/agency-operations @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

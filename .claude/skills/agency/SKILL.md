@@ -1,6 +1,6 @@
 ---
 name: agency
-description: claude-iterm2-agency の agent tab を起動・操作する。新しい agent tab を立てる(new=worktree 隔離あり)、worktree なしの対話/チャット用途で立てる(chat)、既存 tab へ作業を委譲する(send)、稼働中 tab を一覧する(list)。Human Tab(principal)から実作業を agent tab へ委譲したいときに使う。
+description: "claude-iterm2-agency の agent tab を起動・操作する。新しい agent tab を立てる(new=worktree 隔離あり)、worktree なしの対話/チャット用途で立てる(chat)、既存 tab へ作業を委譲する(send)、稼働中 tab を一覧する(list)。Human Tab(principal)から実作業を agent tab へ委譲したいときに使う。"
 ---
 
 # agency — agent tab を起動・操作する

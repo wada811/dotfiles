@@ -1,6 +1,6 @@
 ---
 name: se-proc-worklog-reflection
-description: 作成手順「worklog-reflection」（self-evolving-agent から自動同期）: Procedure: worklog-reflection
+description: "作成手順「worklog-reflection」（self-evolving-agent から自動同期）: Procedure: worklog-reflection"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/worklog-reflection @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

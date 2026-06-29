@@ -1,6 +1,6 @@
 ---
 name: se-proc-code-review-execution
-description: 作成手順「code-review-execution」（self-evolving-agent から自動同期）: コードレビュー実行手順（EM 視点）
+description: "作成手順「code-review-execution」（self-evolving-agent から自動同期）: コードレビュー実行手順（EM 視点）"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/code-review-execution @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

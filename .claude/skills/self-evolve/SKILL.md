@@ -1,6 +1,6 @@
 ---
 name: self-evolve
-description: Drive the self-evolving-agent project (~/Documents/self-evolving-agent) — run a self-improvement generation, check genome status, refresh the user's profile, or gate an external proposal. Use when the user wants to evolve/improve the agent, run a loop/work/eval generation, inspect or roll back the genome (agent-config), refresh about-andy, ingest an orch branch, or manage the daily auto-loop automation.
+description: "Drive the self-evolving-agent project (~/Documents/self-evolving-agent) — run a self-improvement generation, check genome status, refresh the user's profile, or gate an external proposal. Use when the user wants to evolve/improve the agent, run a loop/work/eval generation, inspect or roll back the genome (agent-config), refresh about-andy, ingest an orch branch, or manage the daily auto-loop automation."
 ---
 
 # self-evolve

@@ -1,6 +1,6 @@
 ---
 name: se-proc-1on1-prep
-description: 作成手順「1on1-prep」（self-evolving-agent から自動同期）: 1on1 準備手順（EM 版）
+description: "作成手順「1on1-prep」（self-evolving-agent から自動同期）: 1on1 準備手順（EM 版）"
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/1on1-prep @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

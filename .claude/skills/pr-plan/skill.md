@@ -1,6 +1,6 @@
 ---
 name: pr-plan
-description: 実装を始める前に計画をGitHub Issueとして記録する。grilling形式で要求・要件を徹底的に掘り下げてからgh issue createする。「実装計画を立てたい」「コードを書く前にIssueを作りたい」「この機能の計画を立てたい」「何かを実装したい（まだコードは書いていない）」時に使う。
+description: "実装を始める前に計画をGitHub Issueとして記録する。grilling形式で要求・要件を徹底的に掘り下げてからgh issue createする。「実装計画を立てたい」「コードを書く前にIssueを作りたい」「この機能の計画を立てたい」「何かを実装したい（まだコードは書いていない）」時に使う。"
 ---
 
 # pr-plan — grilling形式の要求定義 → Issue化
