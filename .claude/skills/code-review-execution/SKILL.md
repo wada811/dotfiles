@@ -1,9 +1,9 @@
 ---
-name: se-proc-code-review-execution
+name: code-review-execution
 description: "作成手順「code-review-execution」（self-evolving-agent から自動同期）: コードレビュー実行手順（EM 視点）"
 ---
 
-<!-- auto-generated from self-evolving-agent/agent-config/procedures/code-review-execution @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
+<!-- auto-generated from self-evolving-agent/agent-config/procedures/code-review-execution @ genome 1.28.0, synced 2026-06-29T11:26:43.020Z. Do NOT hand-edit; re-sync overwrites. -->
 
 ## コードレビュー実行手順（EM 視点）
 
@@ -50,7 +50,7 @@ EM がレビューで見る優先順位は個人実装者（IC）と異なる。
 | **成長機会の有無** | このコードはチームメンバーの良いお手本になるか | EM はレビューを学習素材にする |
 | **再発リスク** | 同クラスのバグが他の PR・他のファイルにも潜んでいないか | 一件指摘より根本対処を考える |
 
-**EM が自分でレビューしない（委任する）判断基準（`pr-triage` と連動）:** アーキテクチャ構造・チームパターンに影響しない実装詳細はシニアに委任し、ユーザーはスポットチェック（1〜2 点の確認）のみ。
+**EM が自分でレビューしない（委任する）判断基準（`pr-triage` と連動）:** アーキテクチャ構造・チームパターンに影響しない実装詳細はシニアに委任し、Andy はスポットチェック（1〜2 点の確認）のみ。
 
 ---
 
@@ -144,4 +144,4 @@ IC がレビュー通過を目標とするのに対し、EM は**コメントを
 
 ---
 
-**取り込み経緯:** 2026-06-27 の auto-kaizen セッションで「コードレビューは eval（`eval-code-review.md`）・Lesson H（コメント書式）・`pr-triage`（優先順位）が揃うのに実行フロー procedure だけがゼロ」と自己診断。About ユーザーに「コードレビューのボトルネック対策」が継続課題として記録されていることが観察可能な選定根拠。`android-self-review` スキル（AI 一次チェック）との役割分担を明確にする価値もある。
+**取り込み経緯:** 2026-06-27 の auto-kaizen セッションで「コードレビューは eval（`eval-code-review.md`）・Lesson H（コメント書式）・`pr-triage`（優先順位）が揃うのに実行フロー procedure だけがゼロ」と自己診断。About Andy に「コードレビューのボトルネック対策」が継続課題として記録されていることが観察可能な選定根拠。`android-self-review` スキル（AI 一次チェック）との役割分担を明確にする価値もある。
