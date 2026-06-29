@@ -1,6 +1,6 @@
 ---
 name: se-proc-ringi
-description: Andy の作成手順「ringi」（self-evolving-agent から自動同期）: Procedure: ringi
+description: 作成手順「ringi」（self-evolving-agent から自動同期）: Procedure: ringi
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/ringi @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->

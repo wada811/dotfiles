@@ -147,7 +147,7 @@ function sessionStartDigest(): void {
   try { writeFileSync(REPORT_PATH, render(m)); } catch { /* noop */ }
   try { writeFileSync(STAMP_PATH, String(Math.floor(now))); } catch { /* noop */ }
   const ctx = `[prompt-coach 週次] 過去30日: 対象 ${m.eligible}/${m.total} 件・注入 ${m.coached} 件。` +
-    `詳細は ${REPORT_PATH}。セッション冒頭でこの1行を Andy に伝え、必要なら測定結果を要約して。`;
+    `詳細は ${REPORT_PATH}。セッション冒頭でこの1行を ユーザーに伝え、必要なら測定結果を要約して。`;
   process.stdout.write(JSON.stringify({ hookSpecificOutput: { hookEventName: "SessionStart", additionalContext: ctx } }));
 }
 

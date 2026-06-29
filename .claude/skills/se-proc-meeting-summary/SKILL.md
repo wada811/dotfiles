@@ -1,6 +1,6 @@
 ---
 name: se-proc-meeting-summary
-description: Andy の作成手順「meeting-summary」（self-evolving-agent から自動同期）: 会議要約作成手順
+description: 作成手順「meeting-summary」（self-evolving-agent から自動同期）: 会議要約作成手順
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/meeting-summary @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
@@ -19,7 +19,7 @@ description: Andy の作成手順「meeting-summary」（self-evolving-agent か
 |---|---|---|
 | **1on1** | メンバーとの隔週 1on1 | 個人コミットメント、次回確認事項 |
 | **プロダクト定例** | EVD 企画定例・スプリントプランニング | KPI 影響、スプリント連携 |
-| **外部パートナー同期** | 電通定例、外部 API チームとの同期 | 社内側 / 外部側 責任分担表 |
+| **外部パートナー同期** | パートナー定例、外部 API チームとの同期 | 社内側 / 外部側 責任分担表 |
 | **技術ディスカッション** | アーキテクチャ検討、技術選定 | 却下した代替案と理由、再検討トリガー |
 | **採用** | 面接振り返り、採用判断会議 | 評価サマリー、次ステップ判断 |
 | **インシデント対応** | 障害対応、P1 バグ緊急会議 | 暫定対応・影響範囲（詳細は postmortem-document 手順に委ねる） |
@@ -111,7 +111,7 @@ print(d, d.strftime('%A'))
 **1on1 の場合:**
 ```markdown
 ## 個人コミットメント（次回 1on1 まで）
-| 本人 | Andy |
+| 本人 | ユーザー |
 |---|---|
 | … | … |
 （「次回までにこれだけ試してみて」の合意内容。曖昧な励ましより具体的な約束。）

@@ -1,6 +1,6 @@
 ---
 name: se-proc-research-synthesis
-description: Andy の作成手順「research-synthesis」（self-evolving-agent から自動同期）: Procedure: research-synthesis
+description: 作成手順「research-synthesis」（self-evolving-agent から自動同期）: Procedure: research-synthesis
 ---
 
 <!-- auto-generated from self-evolving-agent/agent-config/procedures/research-synthesis @ genome 1.28.0, synced 2026-06-29T00:07:39.323Z. Do NOT hand-edit; re-sync overwrites. -->
@@ -9,7 +9,7 @@ description: Andy の作成手順「research-synthesis」（self-evolving-agent 
 
 ## リサーチ統合作成手順
 
-**用途:** Andy が任意のリサーチ（競合分析・SNS 動向・ユーザー調査・技術トレンド）を実施し、
+**用途:** ユーザーが任意のリサーチ（競合分析・SNS 動向・ユーザー調査・技術トレンド）を実施し、
 プロダクト意思決定に直結するアウトプットとして Notion/Slack に共有するとき。
 `workspace/research-YYYYMMDD-[テーマ略称].md` または Notion の所定リサーチページに作成。
 
@@ -89,7 +89,7 @@ description: Andy の作成手順「research-synthesis」（self-evolving-agent 
 競合B: 法人向けプランを新設
 AppStore レビュー: 「使いにくい」という声が多い
 ```
-→「で、TimeTree は何をすべきか」の答えが出てこない。
+→「で、プロダクト は何をすべきか」の答えが出てこない。
 
 **✅ 正しい統合（テーマ別）:**
 ```
@@ -122,7 +122,7 @@ AppStore レビュー: 「使いにくい」という声が多い
 ### 解釈（💭 推測）
 [なぜそれが起きているか・何を意味するか。「〇〇から類推」を必ず添える]
 
-### EVD/TimeTree への影響
+### EVD/プロダクト への影響
 | 脅威/機会 | 内容 |
 |---|---|
 | 脅威 ⚠️ | [放置するとどうなるか] |
@@ -146,7 +146,7 @@ AppStore レビュー: 「使いにくい」という声が多い
 | 項目 | 値 |
 |---|---|
 | 作成日 | [今日の日付] |
-| 作成者 | Andy（EM / Discovery チーム）|
+| 作成者 | ユーザー（EM / Discovery チーム）|
 | リサーチタイプ | [競合分析 / SNS 動向 / ユーザー調査統合 / 技術トレンド / クロス型] |
 | リサーチ問い | [Step 1 で定義した 1 文] |
 | 想定読者 | [チーム / PM（Oz・Meicy）/ 本部長 など] |
@@ -216,6 +216,6 @@ AppStore レビュー: 「使いにくい」という声が多い
 
 **取り込み経緯:** 2026-06-23 の auto-kaizen セッションで「research-synthesis が 10 ドメイン中で
 唯一 Procedure ゼロ・Lesson ゼロかつ、競合分析以外のタイプ（SNS 動向・ユーザー調査・技術トレンド）
-に対する品質担保がゼロ」と自己診断。Andy の優先事項 #4「プロダクト戦略の深化」に直結し、
+に対する品質担保がゼロ」と自己診断。優先事項 #4「プロダクト戦略の深化」に直結し、
 週次リファインメントで毎回使う高頻度タスクとして選定。`workspace/auto-kaizen.md` に作成後
 procedure として昇格。
