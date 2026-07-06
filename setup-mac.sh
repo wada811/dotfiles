@@ -160,7 +160,15 @@ link ".claude/settings.json"          "${HOME}/.claude/settings.json"
 link ".claude/statusline-command.sh"  "${HOME}/.claude/statusline-command.sh"
 mkdir -p "${HOME}/.claude/output-styles"
 link ".claude/output-styles/fable-like.md" "${HOME}/.claude/output-styles/fable-like.md"
-link ".claude/skills" "${HOME}/.claude/skills"
+link ".claude/CLAUDE.md" "${HOME}/.claude/CLAUDE.md"
+# CLAUDE.md が import するマシン固有ファイル（git 管理外）。無ければ空で作る
+[[ -f "${HOME}/.claude/machine.md" ]] || touch "${HOME}/.claude/machine.md"
+# skills はマシン固有 skill（実体ディレクトリ）と共存させるため skill 単位で symlink する
+mkdir -p "${HOME}/.claude/skills"
+for skill_dir in "${DOTFILES_DIR}/.claude/skills"/*/; do
+  skill_name=$(basename "${skill_dir}")
+  ln -sfn "${DOTFILES_DIR}/.claude/skills/${skill_name}" "${HOME}/.claude/skills/${skill_name}"
+done
 link ".claude/hooks"  "${HOME}/.claude/hooks"
 link ".claude/norms"  "${HOME}/.claude/norms"
 ok "dotfiles の symlink が完了"
