@@ -160,6 +160,9 @@ link ".claude/settings.json"          "${HOME}/.claude/settings.json"
 link ".claude/statusline-command.sh"  "${HOME}/.claude/statusline-command.sh"
 mkdir -p "${HOME}/.claude/output-styles"
 link ".claude/output-styles/fable-like.md" "${HOME}/.claude/output-styles/fable-like.md"
+link ".claude/skills" "${HOME}/.claude/skills"
+link ".claude/hooks"  "${HOME}/.claude/hooks"
+link ".claude/norms"  "${HOME}/.claude/norms"
 ok "dotfiles の symlink が完了"
 
 # ---- 5.6 diff-highlight の symlink ----
