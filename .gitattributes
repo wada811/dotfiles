@@ -1,0 +1,5 @@
+# iTerm2 の設定 plist は clean フィルタで正規化してコミットする。
+#   バイナリ -> XML へ変換し、NoSync* / ウィンドウ位置などの揮発キーを削除。
+# フィルタ定義 (filter.itermplist.clean) は .git/config に必要で、setup-mac.sh が設定する。
+# フィルタ未設定の環境ではこの行は no-op となり、ファイルはそのまま格納される（クローン直後でも安全）。
+iterm2/com.googlecode.iterm2.plist filter=itermplist

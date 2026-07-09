@@ -72,3 +72,9 @@
 	ignored-temporary = !git ls-files -v | grep "^[a-z]"
 [core]
 	excludesfile = ~/.gitignore
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/local/bin/gh auth git-credential
