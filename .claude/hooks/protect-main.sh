@@ -22,10 +22,11 @@ if echo "$cmd" | grep -qE 'git (commit|push)'; then
   # 現在のブランチ名を取得して main/master ならブロック
   branch=$(git symbolic-ref --short HEAD 2>/dev/null)
   if [ "$branch" = "main" ] || [ "$branch" = "master" ]; then
-    # dotfiles リポジトリ（~/.dotfiles or ~/dotfiles）は除外
+    # dotfiles・work（remote なし・PR ワークフロー未使用）は除外
     repo_root=$(git rev-parse --show-toplevel 2>/dev/null)
     case "$repo_root" in
       */dotfiles) exit 0 ;;
+      */work) exit 0 ;;
     esac
     echo '{"decision":"block","reason":"main/master への直接 commit/push は禁止です。/pr-develop #<issue番号> でブランチを切ってから作業してください。"}'
     exit 2

@@ -77,32 +77,40 @@ gh pr review <番号> \
 
 各指摘をGitHubのインラインコメントとして投稿する。
 
-### コミットSHAの取得
+`gh api` の `-f`/`-F` はオブジェクトの配列（`comments[]`）を正しく組み立てられないため、
+JSONファイルを `--input` で渡す方式を使う（バッククォート・日本語のシェル展開も回避できる）。
 
-```bash
-gh pr view <番号> --json headRefOid --jq '.headRefOid'
-```
-
-### インラインコメントの投稿（ファイル・行ごと）
-
-```bash
-gh api repos/{owner}/{repo}/pulls/<番号>/reviews \
-  --method POST \
-  -f commit_id="<headRefOid>" \
-  -f body="<レビュー全体のサマリー>" \
-  -f event="COMMENT" \
-  -F "comments[][path]=<ファイルパス>" \
-  -F "comments[][line]=<行番号>" \
-  -f "comments[][body]=<コメント本文>" \
-  -F "comments[][path]=<別ファイルパス>" \
-  -F "comments[][line]=<別行番号>" \
-  -f "comments[][body]=<別コメント本文>"
-```
-
-### owner/repo の取得
+### 1. owner/repo とコミットSHAの取得
 
 ```bash
 gh repo view --json owner,name --jq '"\(.owner.login)/\(.name)"'
+gh pr view <番号> --json headRefOid --jq '.headRefOid'
+```
+
+### 2. レビューJSONを作成
+
+`tmp/pr<番号>-review.json` を作る（`side: "RIGHT"`、`line` は新ファイル側の行番号）:
+
+```json
+{
+  "commit_id": "<headRefOid>",
+  "event": "COMMENT",
+  "body": "<レビュー全体のサマリー>",
+  "comments": [
+    {
+      "path": "<ファイルパス>",
+      "line": 35,
+      "side": "RIGHT",
+      "body": "<コメント本文>"
+    }
+  ]
+}
+```
+
+### 3. 投稿
+
+```bash
+gh api --method POST /repos/<owner>/<repo>/pulls/<番号>/reviews --input tmp/pr<番号>-review.json --jq '{id: .id, state: .state, html_url: .html_url}'
 ```
 
 ### コメント本文の形式
