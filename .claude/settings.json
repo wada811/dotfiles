@@ -1,4 +1,7 @@
 {
+  "env": {
+    "COACH_HOLDOUT": "0.3"
+  },
   "model": "sonnet",
   "outputStyle": "fable-like",
   "statusLine": {
@@ -22,10 +25,20 @@
       }
     }
   },
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "hooks": {
     "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/andy/.claude/hooks/coach-report.ts --session-start",
+            "timeout": 10
+          }
+        ]
+      },
       {
         "matcher": "compact",
         "hooks": [
@@ -33,6 +46,22 @@
             "type": "command",
             "command": "bash ~/.claude/hooks/session-start-compact.sh",
             "timeout": 5
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node /Users/andy/.claude/hooks/prompt-coach.ts",
+            "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "node /Users/andy/.claude/hooks/agency-route.ts",
+            "timeout": 10
           }
         ]
       }
@@ -55,8 +84,23 @@
         "hooks": [
           {
             "type": "command",
+            "command": "bash /Users/andy/.claude/hooks/protect-main.sh",
+            "timeout": 5
+          },
+          {
+            "type": "command",
             "command": "bash ~/.claude/hooks/pre-tool-use-bash.sh",
             "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "touch /Users/andy/Documents/self-evolving-agent/runs/.active 2>/dev/null"
           }
         ]
       }
