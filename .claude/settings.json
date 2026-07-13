@@ -3,31 +3,6 @@
     "COACH_HOLDOUT": "0.3"
   },
   "model": "sonnet",
-  "outputStyle": "fable-like",
-  "statusLine": {
-    "type": "command",
-    "command": "sh ~/.claude/statusline-command.sh"
-  },
-  "enabledPlugins": {
-    "user-context-toolkit@jubilee-works-plugins-local": true
-  },
-  "extraKnownMarketplaces": {
-    "jubilee-works-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "jubilee-works/claude-plugins-playground"
-      }
-    },
-    "jubilee-works-plugins-local": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/andy/Documents/work/repos/claude-plugins-playground"
-      }
-    }
-  },
-  "tui": "fullscreen",
-  "skipWorkflowUsageWarning": true,
-  "theme": "dark",
   "hooks": {
     "SessionStart": [
       {
@@ -105,5 +80,30 @@
         ]
       }
     ]
-  }
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "sh ~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "user-context-toolkit@jubilee-works-plugins-local": true
+  },
+  "extraKnownMarketplaces": {
+    "jubilee-works-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "jubilee-works/claude-plugins-playground"
+      }
+    },
+    "jubilee-works-plugins-local": {
+      "source": {
+        "source": "directory",
+        "path": "/Users/andy/Documents/work/repos/claude-plugins-playground"
+      }
+    }
+  },
+  "outputStyle": "fable-like",
+  "tui": "fullscreen",
+  "skipWorkflowUsageWarning": true,
+  "theme": "dark"
 }
