@@ -20,7 +20,7 @@ argument-hint: "[--days N] (デフォルト: 全期間)"
 ### 1. セッションデータ抽出
 
 ```bash
-npx tsx .claude/skills/session-analyzer/scripts/extract-sessions.ts > tmp/sessions-output.txt 2>&1
+npx tsx "$HOME/.claude/skills/session-analyzer/scripts/extract-sessions.ts" > tmp/sessions-output.txt 2>&1
 ```
 
 出力が大きいため `tmp/sessions-output.txt` に保存してから読む。
