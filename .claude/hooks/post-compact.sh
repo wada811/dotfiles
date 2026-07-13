@@ -8,4 +8,12 @@
 LOG_DIR="tmp/compact-state"
 mkdir -p "$LOG_DIR"
 printf '%s compacted\n' "$(date '+%Y-%m-%d %H:%M:%S')" >> "${LOG_DIR}/compact-events.log"
+
+# compact-warn-reminder.sh の cooldown をリセット（次に閾値を超えたら再度通知できるように）
+input=$(cat)
+session_id=$(printf "%s" "$input" | jq -r '.session_id // ""' 2>/dev/null)
+[ -z "$session_id" ] && session_id="$CLAUDE_CODE_SESSION_ID"
+if [ -n "$session_id" ]; then
+  rm -f "${TMPDIR:-/tmp}/claude-compact-warn/${session_id}" "${TMPDIR:-/tmp}/claude-compact-warned/${session_id}" 2>/dev/null
+fi
 exit 0

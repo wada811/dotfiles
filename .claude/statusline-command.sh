@@ -133,6 +133,17 @@ fi
 line3=""
 [ -n "$model" ] && line3="${bold}${model}${reset}"
 ctx_pct=$(printf "%d" "${ctx_pct_raw:-0}" 2>/dev/null || printf "0")
+
+# ── compact 閾値 marker（compact-plus のアイデアを移植: 60%で /compact-prep を促す） ──
+# 60% の根拠: 自動compact発火点（90〜95%）から30%程度のマージンを確保（1M context 前提）
+session_id=$(printf "%s" "$input" | jq -r '.session_id // ""')
+[ -z "$session_id" ] && session_id="$CLAUDE_CODE_SESSION_ID"
+if [ -n "$session_id" ] && [ "$ctx_pct" -ge "${COMPACT_WARN_THRESHOLD:-60}" ]; then
+  warn_dir="${TMPDIR:-/tmp}/claude-compact-warn"
+  mkdir -p "$warn_dir" 2>/dev/null
+  touch "${warn_dir}/${session_id}" 2>/dev/null
+fi
+
 if [ "$ctx_pct" -gt 0 ]; then
   ctx_used=$(awk -v p="$ctx_pct" -v t="$context_window_size" 'BEGIN{printf "%d", p*t/100}')
   ctx_bar=$(draw_bar "$ctx_pct" 100 10)
