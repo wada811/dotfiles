@@ -62,6 +62,11 @@
             "type": "command",
             "command": "node /Users/andy/.claude/hooks/agency-route.ts",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/compact-warn-reminder.sh",
+            "timeout": 5
           }
         ]
       }
