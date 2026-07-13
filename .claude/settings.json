@@ -91,11 +91,6 @@
             "type": "command",
             "command": "bash /Users/andy/.claude/hooks/protect-main.sh",
             "timeout": 5
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/pre-tool-use-bash.sh",
-            "timeout": 5
           }
         ]
       }
