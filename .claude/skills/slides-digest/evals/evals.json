@@ -1,0 +1,53 @@
+{
+  "skill_name": "slides-digest",
+  "evals": [
+    {
+      "id": 0,
+      "name": "url-direct",
+      "prompt": "https://speakerdeck.com/yanzm/nav2-nav3-dot-dot-dot-or-build-your-own-understanding-nav3-s-design-intent-by-building-it-from-scratch これ DroidKaigi の Nav3 のやつなんだけど現地行けてなくて。読んで内容まとめといて。あとで oven-android の Navigation どうするか考えるときに見返したい",
+      "expected_output": "資料全体から抽出した主張を見出しにして、裏づけスライド画像を貼った markdown。画像の描写や散文の段落がない",
+      "files": [],
+      "assertions": [
+        "資料のスライド画像が1枚以上貼られている",
+        "全てのスライド画像の番号が範囲内（全129ページ）で slides_id も正しい",
+        "画像の描写（「左に」「円環図」など）が本文にない",
+        "本文が見出し・画像・箇条書きだけで構成され、散文の段落がない",
+        "メッセージ単位の見出しが5〜8個ある",
+        "資料の Speaker Deck URL が本文に含まれている",
+        "見出しが名詞句ではなく主張の言い切りになっている"
+      ]
+    },
+    {
+      "id": 1,
+      "name": "title-only-search",
+      "prompt": "DroidKaigi で「LLMは4年分のCompose移行を再現できるのか」ってセッションあったよね。資料出てたら要点まとめて",
+      "expected_output": "Speaker Deck をタイトルで検索して資料を特定し、同じ形式の記事にする",
+      "files": [],
+      "assertions": [
+        "タイトル検索で正しい資料を特定できている",
+        "資料のスライド画像が1枚以上貼られている",
+        "全てのスライド画像の番号が範囲内（全55ページ）で slides_id も正しい",
+        "画像の描写（「左に」「円環図」など）が本文にない",
+        "本文が見出し・画像・箇条書きだけで構成され、散文の段落がない",
+        "メッセージ単位の見出しが5〜8個ある",
+        "見出しが名詞句ではなく主張の言い切りになっている"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "nontechnical-audience",
+      "prompt": "https://speakerdeck.com/zozotech/study-group-design-with-ai この勉強会設計の資料、チームに共有したいから内容分かるようにまとめて。Android 以外のメンバーも読むので専門用語はきつめに噛み砕いてほしい",
+      "expected_output": "同じ形式に加え、業界用語に「（＝〜のこと）」の補足が入っている",
+      "files": [],
+      "assertions": [
+        "資料のスライド画像が1枚以上貼られている",
+        "全てのスライド画像の番号が範囲内（全88ページ）で slides_id も正しい",
+        "画像の描写（「左に」「円環図」など）が本文にない",
+        "本文が見出し・画像・箇条書きだけで構成され、散文の段落がない",
+        "メッセージ単位の見出しが5〜8個ある",
+        "専門用語に「（＝〜のこと）」形式の補足が入っている",
+        "見出しが名詞句ではなく主張の言い切りになっている"
+      ]
+    }
+  ]
+}
