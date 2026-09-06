@@ -1,0 +1,23 @@
+[
+  {"query": "https://speakerdeck.com/yanzm/nav2-nav3-dot-dot-dot-or-build-your-own これ DroidKaigi の Nav3 のやつなんだけど現地行けてなくて。読んで内容まとめといて", "should_trigger": true},
+  {"query": "DroidKaigi で「LLMは4年分のCompose移行を再現できるのか」ってセッションあったよね。資料出てたら要点まとめて", "should_trigger": true},
+  {"query": "きのすけさんの PdEConf の発表、資料公開されてたら中身教えて。1way door の話らしいんだけど実況だけだとよくわからんかった", "should_trigger": true},
+  {"query": "tmp/slides/kogiso.pdf これ登壇資料なんだけど、全体で何を言ってる発表なのか抜き出して。スライド画像も貼ってほしい", "should_trigger": true},
+  {"query": "https://speakerdeck.com/zozotech/study-group-design-with-ai この勉強会設計の資料、チームに共有したいから内容分かるようにまとめて。Android 以外のメンバーも読む", "should_trigger": true},
+  {"query": "PdEConf の未公開だった資料が3本出てたから、記事にして notion に上げといて", "should_trigger": true},
+  {"query": "slack に流れてきたこのスライド、あとで見返せる形にしたい https://speakerdeck.com/cscengineer/unvalued-sre-security-growth-engine", "should_trigger": true},
+  {"query": "nwiizo さんの資料、68ページもあって読む時間ないから主張だけ抜いて。画像つきの記事にしてくれると助かる", "should_trigger": true},
+  {"query": "このカンファレンスの資料まとめてイベントレポートにしたい。セッションごとに1本ずつで、それぞれスライド画像入れて", "should_trigger": true},
+  {"query": "speakerdeck の https://speakerdeck.com/kgsi/pdeconf2026-design-harness 、デザインハーネスって何なのか資料から説明して", "should_trigger": true},
+
+  {"query": "https://docs.google.com/presentation/d/1boOlGmb9mdCoD7rTWe7vdReNmVRDcZkw/edit この社内の組織再編の資料、中身読んで教えて", "should_trigger": false},
+  {"query": "https://docs.google.com/spreadsheets/d/1lqOR5fTOzCpUpMxEJCutaOGfoX8XIoQxVAqjpXjhSVY/edit この採用のトラッキングシート、いまの進捗どうなってる", "should_trigger": false},
+  {"query": "https://zenn.dev/odacchi/articles/claude-code-prompt-cache-ttl この記事読んで、うちの進め方に活かせるところある？", "should_trigger": false},
+  {"query": "organizations/social-implementation/mitsukeru-issue-tree.md から Google スライド作りたいんだけど、scripts/create-slides-from-markdown.ts でいけるっけ", "should_trigger": false},
+  {"query": "来週の全社共有で使うスライドの構成考えたい。伝えたいのは Android チームの今期の成果と来期の投資判断", "should_trigger": false},
+  {"query": "この pdf、業務委託の契約書なんだけど、責任範囲のところだけ要約して tmp/contracts/2026-09.pdf", "should_trigger": false},
+  {"query": "https://speakerdeck.com/kgsi/pdeconf2026-design-harness ここに載ってる登壇者の所属だけ知りたい", "should_trigger": false},
+  {"query": "昨日の EVD 定例の録画、議事メモにまとめて。決まったことと保留になったことを分けて", "should_trigger": false},
+  {"query": "notion の「2026/9月期組織について」ってページ取ってきて中身見せて", "should_trigger": false},
+  {"query": "oven-android の PR #20319 のレビューコメント見て、対応が必要なやつ教えて", "should_trigger": false}
+]
