@@ -35,6 +35,45 @@ def load(path):
     return re.sub(r"\A---\n.*?\n---\n", "", text, flags=re.S)
 
 
+# 主張の数に数えない、決まった節
+FIXED_HEADINGS = {"この発表の主張", "早見表", "持ち帰れること", "会場の反応", "用語ミニ辞典"}
+
+MAX_PROSE_RUN = 2  # 続けてよい地の文の行数
+MAX_PROSE_LEN = 120  # 1行の地の文の長さ（文字）
+
+
+def long_prose(body):
+    """長すぎる地の文だけを拾う。
+
+    見出し・箇条書き・表・図・引用・画像は表現手段として認める。読みづらさは
+    「段落で説明していること」から来るので、続く行数と1行の長さで判定する。
+    """
+    problems = []
+    run = []
+    fence = False
+    for ln in body.splitlines() + [""]:
+        s = ln.strip()
+        if s.startswith("```"):
+            fence = not fence
+            continue
+        structural = (
+            not s
+            or fence
+            or re.match(r"^(#{1,6} |[-*+] |> |!\[|\||\d+\. |---)", s)
+        )
+        if structural:
+            if len(run) > MAX_PROSE_RUN:
+                problems.append(
+                    f"地の文が {len(run)} 行続いている: {run[0][:50]}"
+                )
+            run = []
+        else:
+            run.append(s)
+            if len(s) > MAX_PROSE_LEN:
+                problems.append(f"1行が長い地の文（{len(s)} 字）: {s[:50]}")
+    return problems
+
+
 def check(path, pages, slides_id):
     text = load(path)
     problems = []
@@ -60,25 +99,22 @@ def check(path, pages, slides_id):
                 problems.append(f"画像の描写らしい記述（「{w}」）: {line.strip()[:60]}")
                 break
 
-    # 見出し・画像・箇条書き・引用・コード以外の行 = 散文の段落。
+    # 問題なのは長い散文であって、箇条書き以外ではない。表・図・コードは通す。
     # 最初の ## より前（タイトル・登壇者・資料リンク）は本文ではないので見ない。
     first = re.search(r"^## ", text, re.M)
-    body = text[first.start():] if first else text
-    prose = [
-        ln for ln in body.splitlines()
-        if ln.strip()
-        and not re.match(r"^(#{1,6} |[-*] |> |!\[|\||`|\[|\d+\. )", ln.strip())
-        and not ln.strip().startswith("---")
+    problems += long_prose(text[first.start():] if first else text)
+
+    # 決まった節は主張の数に数えない。早見表は参照用なので上限の外に置く
+    msgs = [
+        h for h in re.findall(r"^## +(.+?)\s*$", text, re.M)
+        if h.strip() not in FIXED_HEADINGS
     ]
-    if prose:
-        problems.append(f"散文の段落が {len(prose)} 行ある: {prose[0][:60]}")
+    # 目安の 5〜8 をそのまま見る。ここを緩めると「7個を超えたら統合する」という
+    # 指示が空文になり、節が増えて主張がぼやけるのを検知できない
+    if not (5 <= len(msgs) <= 8):
+        problems.append(f"メッセージの節が {len(msgs)} 個（5〜8 に収める）")
 
-    msgs = [h for h in headings(text) if h not in ("この発表の主張", "持ち帰れること")]
-    h2 = len(re.findall(r"^## ", text, re.M)) - 2
-    if not (4 <= h2 <= 9):
-        problems.append(f"メッセージの節が {h2} 個（5〜8 が目安）")
-
-    print(f"画像 {len(imgs)} 枚 / メッセージ節 {h2} 個 / 見出し {len(msgs)} 本")
+    print(f"画像 {len(imgs)} 枚 / メッセージ節 {len(msgs)} 個 / 表 {len(re.findall(r'^\|', text, re.M))} 行")
     return problems
 
 
