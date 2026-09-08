@@ -48,6 +48,7 @@ brew "bat"
 brew "fzf"
 brew "wget"
 brew "coreutils"
+brew "cliclick"                     # OS ネイティブのマウス・キー操作（ブラウザ自動化で使う）
 
 # ============================================================
 # CLI: 画像・動画
