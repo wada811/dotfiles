@@ -8,7 +8,7 @@
 ## Bash コマンド規約
 
 - **`for` ループより個別 Bash call を優先**: 複数要素の並列処理は subagent（Agent tool）で行う
-- **`rm` 禁止・`trash` を使う**: ファイル削除は `rm` ではなく `trash` コマンドを使う（Brewfile で全マシンに導入済み）
+- **`rm` 禁止・`trash` を使う**: ファイル削除は `rm` ではなく `trash` コマンドを使う（macOS 同梱の `/usr/bin/trash`。Brewfile には入っていない）
 - **`npx` 不在時は `mise exec -- npx` にフォールバック**: mise 経由のコマンドは非インタラクティブシェルでは PATH が通らないため
 
 ## コミットメッセージ
