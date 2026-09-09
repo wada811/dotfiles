@@ -171,6 +171,9 @@ def main():
     env.setdefault("HOME", str(Path.home()))
     env.setdefault("USER", Path.home().name)
     env.setdefault("LOGNAME", Path.home().name)
+    # 使い捨て実行なので 1 時間 TTL は要らない。書き込み単価が 1.6 倍高いだけで
+    # 保つ先がない（実測: この経路の実行は 3〜4 分、リクエスト間隔は 1 分未満）。
+    env["CLAUDE_CODE_PROMPT_CACHE_TTL"] = "5m"
 
     cmd = [claude_bin(), "-p", prompt, "--permission-mode", "auto"]
     if args.model:
