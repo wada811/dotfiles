@@ -5,9 +5,10 @@
 ただし**使用量の枠は同じアカウントで共有される**ので、サブプロセスにしても
 使う量は減らない。減らせるのは読むページ数だけ。
 
-そこで、テキストが取り出せる資料は pdftotext の結果を「目次」として渡し、
-画像として読むのは裏づけスライドだけに絞る。129 ページの資料で全ページを
-画像で読ませて枠を使い切った実測があり、その対策。
+減らし方は2つある。テキストが取り出せる資料は pdftotext の結果を「目次」として渡し、
+画像として読むのは裏づけスライドだけに絞る（129 ページの資料で全ページを画像で読ませて
+枠を使い切った実測があり、その対策）。もう1つは1ページあたりの単価で、画像のトークン数は
+画素数に比例するため、横幅を固定して描画すると全ページ読んでも安くなる。
 
     python3 slides-digest.py --pdf tmp/slides/x.pdf --slides-id <32hex> \\
         --pages 129 --slides-url <url> --out tmp/digest/x.md
@@ -57,6 +58,29 @@ def extract_text(pdf, dest):
     return len("".join(dest.read_text(errors="ignore").split()))
 
 
+def render_pages(pdf, dest, width):
+    """ページを横幅固定の JPEG にする。画像のトークン数は画素数にほぼ比例し、
+    Read に PDF を直接渡すと長辺 1568px まで描画されて 1ページ 1,840 トークン前後になる。
+    横 960px なら 16:9 で 691 トークンで、読めるかは実機で確認済み（コード中心のスライドも可）。
+    生成できなければ None を返し、呼び出し側は PDF を直接読む経路に落ちる。"""
+    dest.mkdir(parents=True, exist_ok=True)
+    try:
+        subprocess.run(
+            ["pdftoppm", "-jpeg", "-scale-to-x", str(width), "-scale-to-y", "-1",
+             str(pdf), str(dest / "p")],
+            capture_output=True, timeout=600, check=True,
+        )
+    except (FileNotFoundError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        return None
+    # pdftoppm のゼロ埋め桁数はページ数で変わるので 3 桁に揃える
+    files = sorted(dest.glob("p-*.jpg"))
+    for f in files:
+        n = f.stem.split("-")[-1]
+        if len(n) != 3:
+            f.rename(dest / f"p-{int(n):03d}.jpg")
+    return dest if files else None
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--pdf", required=True)
@@ -70,6 +94,12 @@ def main():
         type=int,
         default=30,
         help="画像として読んでよいページ数の上限。使用量はここにほぼ比例する",
+    )
+    ap.add_argument(
+        "--image-width",
+        type=int,
+        default=960,
+        help="ページ画像の横幅ピクセル。トークン数はこれの2乗にほぼ比例する",
     )
     ap.add_argument("--model", help="サブプロセスのモデル（省略時は既定）")
     ap.add_argument(
@@ -104,6 +134,18 @@ def main():
         f"（画像で読む上限 {budget} ページ / 全 {args.pages}）"
     )
 
+    img_dir = render_pages(Path(args.pdf), out.parent / f"{out.stem}-pages", args.image_width)
+    if img_dir:
+        n = len(list(img_dir.glob("p-*.jpg")))
+        print(f"ページ画像 {n} 枚を横 {args.image_width}px で生成: {img_dir}")
+        read_how = (
+            f"`{img_dir}/p-<3桁ゼロ埋めのページ番号>.jpg` を Read する"
+            "（例: 12 ページ目は `p-012.jpg`）。複数ページ見るときは Read を1ターンで並べて呼ぶ"
+        )
+    else:
+        print("pdftoppm が使えないので PDF を直接読ませる（1ページあたり約2.7倍かかる）")
+        read_how = "Read ツールの `pages` 引数で 20 ページ以内に区切って PDF を読む"
+
     context_block = (
         f"- 補助資料（引用元・文脈）: {args.context}" if args.context else ""
     )
@@ -116,6 +158,7 @@ def main():
         "{{OUT}}": args.out,
         "{{PAGES}}": str(args.pages),
         "{{MAX_VISUAL}}": str(budget),
+        "{{READ_INSTRUCTION}}": read_how,
         "{{TITLE}}": args.title or "(PDF から読み取る)",
         "{{SLIDES_URL}}": args.slides_url or "(不明。資料リンクの行は省く)",
         "{{CONTEXT_BLOCK}}": context_block,
