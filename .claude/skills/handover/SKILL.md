@@ -1,6 +1,5 @@
 ---
 name: handover
-effort: medium
 description: |
   現在のセッションの作業内容を次のセッションへ引き継ぐための引き継ぎドキュメントを生成する。
   Use when the user asks to summarize the session for handover, says "引き継ぎ",

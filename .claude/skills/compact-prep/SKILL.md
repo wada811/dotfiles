@@ -1,6 +1,5 @@
 ---
 name: compact-prep
-effort: medium
 description: |
   /compact の前に、圧縮の要約から抜け落ちやすい「判断構造」と「セッション状態」を
   tmp/compact-state/latest.md に固定フォーマットで保存する。
