@@ -1,6 +1,5 @@
 ---
 name: session-analyzer
-effort: high
 description: |
   全 Claude セッションをスキャンし、ユーザーが何をしているかを分析して、
   スキル・MCP プラグイン・エージェント・CLAUDE.md のどれに最適化すべきかを分類し、
