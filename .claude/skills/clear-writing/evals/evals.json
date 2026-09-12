@@ -1,0 +1,26 @@
+{
+  "skill_name": "clear-writing",
+  "evals": [
+    {
+      "id": 0,
+      "name": "request-to-individual",
+      "prompt": "oven-webapp の PR レビューを juru にお願いしたい。Slack で送る文面を作って。今週中に見てほしい",
+      "expected_output": "依頼型。してほしいこと・期限・判断材料が分かれており、冒頭で用件が分かる Slack 文面",
+      "files": []
+    },
+    {
+      "id": 1,
+      "name": "explain-to-nontechnical",
+      "prompt": "Baseline Profile を導入すると何が嬉しいのか、PdM 向けに説明する文章を書いて",
+      "expected_output": "理解させる型。非技術の読み手向けに専門語を説明し、効果と限界が分かる文章",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "share-decision",
+      "prompt": "起動時ダイアログの RemoteConfig 対応を見送った件をチームに共有したい。理由は取得の遅延が 12 時間あり、activate のレースで旧値を読むこと",
+      "expected_output": "判断の共有型。決めたこと・理由・影響範囲・対応不要の明示が揃った文章",
+      "files": []
+    }
+  ]
+}
