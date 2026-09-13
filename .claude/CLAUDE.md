@@ -38,7 +38,7 @@
 
 - 出力の三点セット（本文／確かめる項目／想定読者）。第三者に送る下書きの形式であり、
   会話の返信には付けない
-- 目的の五分類に構成を合わせること。返信の構成は用件に従う
+- 目的の五分類に構成を合わせること。返信の構成は答えるべきことに従う
 
 <!-- BEGIN self-evolving-agent (auto-generated; do NOT edit between these markers) -->
 <!-- source: self-evolving-agent/agent-config/lessons.md @ genome 1.28.0, synced 2026-06-29T11:26:43.020Z -->
