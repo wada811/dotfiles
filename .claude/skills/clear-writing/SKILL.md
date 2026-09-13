@@ -1,13 +1,14 @@
 ---
 name: clear-writing
 description: >
-  読みやすく分かりやすい文章を書く。読者と目的 → 文意 → 構造 → 節 → 文 の五層を上から作り、
-  上から直す。一度に全文を書かず、上の層が決まってから下の層に進む。
-  Use when the user asks to write, draft, or improve a piece of writing addressed to readers —
-  記事・解説・報告・依頼・相談・共有・メール・Slack 投稿・提案・説明文など。
-  Do NOT use when a dedicated format skill owns the deliverable (meeting-summary / ringi /
-  tech-decision-adr / postmortem-document / sprint-review-document)。それらで素材を組んだうえで、
-  読み手に合わせて整えるときに併用する。
+  読みやすく分かりやすい文章を書く。読み手を特定し、何を載せ何を落とすかを決め、構造と文を組み立て、
+  評価して直すところまでを担う。
+  Use whenever the user asks to write, draft, rewrite, or improve anything another person will read —
+  記事・解説・報告・依頼・相談・共有・提案・説明文・メール・Slack 投稿など。
+  「書いて」「下書きして」「文章にして」「分かりやすくして」と言われたときはもちろん、
+  skill 名を挙げられなくても、人に渡す文章を作る場面では使う。
+  例外は、必須セクションが決まっている定型文書（会議要約・稟議・ADR・ポストモーテムなど）。
+  その型を持つ skill が優先で、そちらで中身を組んだあと、読み手に合わせて整える段でこの skill を使う。
 ---
 
 # 読みやすく分かりやすい文章を書く
