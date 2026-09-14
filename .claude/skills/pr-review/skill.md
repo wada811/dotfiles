@@ -57,6 +57,13 @@ gh pr review <番号> \
 - 存在するか（なければ理由を確認）
 - ふるまいを表現しているか（実装詳細でなく仕様を）
 - エッジケースが含まれているか
+- diff に MockK 特有の記法が含まれるか機械的に確認する:
+  ```bash
+  gh pr diff <番号> | grep -E "every \{|verify \{|coEvery|coVerify|mockk\(|spyk\("
+  ```
+  1件でもヒットしたら、そのテストコードを評価する**前に必ず** `mockk-testing` skill を
+  Skill ツールで読み込む（「該当するなら読み込む」という任意判断にしない）。読み込んでから
+  該当箇所の assertion を評価する
 
 **Layer 2: 公開API / インターフェース**
 - 型・関数シグネチャが適切か
