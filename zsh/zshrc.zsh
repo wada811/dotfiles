@@ -54,3 +54,6 @@ eval "$(direnv hook zsh)"
 
 # mise
 eval "$(mise activate zsh)"
+
+# maestro
+export PATH=$PATH:$HOME/.maestro/bin
