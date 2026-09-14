@@ -2,7 +2,6 @@
   "env": {
     "COACH_HOLDOUT": "0.3"
   },
-  "model": "sonnet",
   "hooks": {
     "SessionStart": [
       {
@@ -85,9 +84,7 @@
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
   },
-  "enabledPlugins": {
-    "user-context-toolkit@jubilee-works-plugins-local": true
-  },
+  "enabledPlugins": {},
   "extraKnownMarketplaces": {
     "jubilee-works-plugins": {
       "source": {
