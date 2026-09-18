@@ -90,20 +90,6 @@
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {},
-  "extraKnownMarketplaces": {
-    "jubilee-works-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "jubilee-works/claude-plugins-playground"
-      }
-    },
-    "jubilee-works-plugins-local": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/andy/Documents/work/repos/claude-plugins-playground"
-      }
-    }
-  },
   "outputStyle": "fable-like",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
