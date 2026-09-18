@@ -8,7 +8,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node /Users/andy/.claude/hooks/coach-report.ts --session-start",
+            "command": "node ~/.claude/hooks/coach-report.ts --session-start",
             "timeout": 10
           },
           {
@@ -34,12 +34,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node /Users/andy/.claude/hooks/prompt-coach.ts",
+            "command": "node ~/.claude/hooks/prompt-coach.ts",
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "node /Users/andy/.claude/hooks/agency-route.ts",
+            "command": "node ~/.claude/hooks/agency-route.ts",
             "timeout": 10
           },
           {
@@ -68,7 +68,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash /Users/andy/.claude/hooks/protect-main.sh",
+            "command": "bash ~/.claude/hooks/protect-main.sh",
             "timeout": 5
           }
         ]
@@ -79,7 +79,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "touch /Users/andy/Documents/self-evolving-agent/runs/.active 2>/dev/null"
+            "command": "touch ~/Documents/self-evolving-agent/runs/.active 2>/dev/null"
           }
         ]
       }
