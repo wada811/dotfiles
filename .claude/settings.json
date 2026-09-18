@@ -97,35 +97,38 @@
   "autoMode": {
     "soft_deny": [
       "$defaults",
-      "Bash(rm:*) in /Users/andy/Documents/work — CLAUDE.md mandates `trash` instead of `rm` for file deletion in this repo",
-      "Writes to people/hiring/ or people/feedback/ containing full names or other non-codenamed PII (per this repo's PII handling rules)"
+      "Local file deletion with `rm` [named+specifics — **must name:** using `rm` on that target] — covers `rm` the agent itself puts in a command (in any position of a chain or pipe, including through `xargs`) or writes into a script it then runs, and equivalents such as `find -delete`, `unlink`, or `shutil.rmtree`. The user's global CLAUDE.md mandates the recoverable `trash` instead, on every project; the block reason should say so, and the user naming `rm` for that command clears it. Not cleared by the Local Operations allow exception. Does not cover: `rm` inside pre-existing project or vendor tooling the agent merely invokes (`npm run clean`, `make clean`, `git clean`, install hooks); authoring a file that contains `rm` without running it; or environments with no `trash` binary (Linux containers, CI runners), where the default deletion rules apply instead.",
+      "Personal Data In Repo [named+specifics — **must name:** writing that person's real name or details]: putting a real person's name, contact details, exact date of birth, school, or employer into a tracked file. The user's repos identify people by codename; real details stay in gitignored tmp/."
     ],
     "environment": [
       "### Org-wide",
       "**Organization**: None configured",
       "**Cloud provider(s)**: None configured",
-      "**Repository visibility**: Not queryable via gh (no origin remote configured on this repo — local-only checkout); assume private",
+      "**Repository visibility**: assume private unless the remote host and repo name indicate otherwise, or a visibility check in the transcript shows public; the work repo has no remote at all (local-only checkout) — treat it as private",
       "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
-      "**Secrets management**: None configured (repo uses local .env / .secrets/ files, gitignored)",
-      "**Default / protected branches**: Not queryable via gh (no origin remote); unknown",
+      "**Secrets management**: None configured — repos keep credentials in gitignored .env and .secrets/ files",
       "**CI/CD deploy targets**: None configured",
       "**Network posture**: None configured",
-      "**Source control**: The trusted repo (/Users/andy/Documents/work) only — no remotes configured, no additional orgs configured",
+      "**Host containment**: None configured — assume Claude Code runs on an ordinary developer machine or CI runner with open internet; if it runs inside a container/VM/pod with an egress allow-list, no network, or neighbours it must not touch, say so here (network setting and allowed hosts, whether the cloud metadata endpoint is meant to be reachable, which cloud project/cluster/registry the task operates and as what identity). Whatever is configured, instance-metadata credential paths and node/cluster credentials of the hosting layer are never task credentials unless this entry says the agent operates that identity (see Containment Escape). The classifier sees commands, not their output, so a declared-sealed box that is actually open cannot be caught here — enforce that in network configuration.",
+      "**Source control**: The trusted repo and its remote(s) only (no additional orgs configured) — as scoped by the Trusted repo and Repository visibility entries",
+      "**Trusted repo**: The git repository the agent started in (its working directory) and its configured remote(s). When the repo's public/private visibility is given — by the Repository visibility entry or the user's own message — use it to scope what is OK to commit or push there: confidential material is fine in a private repo; in a public one, only that repo's own work is — and content ported, repointed, or first read from outside this session's repo is not its own work, whoever directed the port. Visibility scopes confidential material only: secrets and sensitive data (personal & entrusted) are never cleared into any repo by its visibility (see Definitions). Note: the work repo has no configured remote, so its trust boundary is the local checkout.",
       "**Trusted internal domains**: None configured",
       "**Trusted cloud buckets**: None configured",
-      "**Key internal services**: Notion API (api.notion.com / app.notion.com), Slack (internal workspace), Google Calendar/Drive APIs — as used by this repo's worklog scripts",
+      "**Key internal services**: Notion API (api.notion.com / app.notion.com), a private Slack workspace, and Google Calendar/Drive APIs — used by the work repo's worklog automation scripts",
       "**Internal package registry**: None configured",
-      "**Sensitive data locations & audiences**: people/hiring/, people/feedback/, and people/members/ (candidate and staff PII — must use codenames per CLAUDE.md, never real names); .secrets/ and .env files (credentials); tmp/ for transient PII — never commit; share only with audiences cleared per repo's PII handling rules",
+      "**Sensitive data locations & audiences**: the work repo's people/ tree holds personal data about job applicants and colleagues and must stay codenamed — never real names; .env and .secrets/ hold credentials; tmp/ holds transient personal data and is never committed. Beyond those, the general bar: any file or store holding personal data, confidential business data, credentials, or regulated data; preserve exact handles when known. Audiences: nothing read from these locations leaves the user's organization or goes into an external service or third-party endpoint; inside the organization, share only with audiences cleared at the [named+specifics] bar.",
       "**Data retention / declassification**: None configured",
-      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited — e.g. matches `prod-db`, not `producer`)",
       "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
       "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
-      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited)",
       "### User-specific",
-      "**Primary use of Claude Code**: worklog and team-management automation for /Users/andy/Documents/work (this repo), including Slack/Notion/Calendar integration scripts and a self-evolving-agent lessons sync",
-      "**Trusted repo**: /Users/andy/Documents/work (no git remote configured — local-only checkout); treat as private",
-      "**Org-specific CLIs**: cmux, mise, herdr (seen in this project's usage / shell history)",
-      "**routine under /Users/andy/Documents/work/ prefix**: worktree operations under repos/<repo>--<branch>/ (e.g. repos/oven-android--*), worklog fetch/apply/summary npm scripts, tasks/ and people/ file management"
+      "**Primary use of Claude Code**: software development, plus worklog and team-management automation in the local-only work repo (Slack / Notion / Google Calendar integration scripts, and a lessons sync from a self-improving agent repo)",
+      "**Org-specific CLIs**: cmux, mise",
+      "**Routine operations in the work repo**: git worktree work under repos/<repo>--<branch>/, worklog fetch/apply/summary npm scripts, and file management under tasks/ and people/"
+    ],
+    "allow": [
+      "$defaults",
+      "Deleting local files with the plain `trash <literal paths>` form (the macOS `/usr/bin/trash` CLI) when every target is tracked by git (it appears in `git ls-files` for its repository): the deletion is reversible twice over — the files sit in the Trash, and git holds the tracked content, so `git restore` / `git checkout` brings the file back. It therefore clears Irreversible Local Destruction only. It does not clear Unverifiable Deletion Target/Scope, Shared Scratch Sweep, Interfere With Workloads, or any non-local deletion rule: unresolvable globs or variables, `/tmp` and shared-scratch sweeps, and deletion on remote hosts, in containers, or of cloud resources are still judged as before. It does not cover the `.git` directory itself — deleting that destroys the history this exception rests on — nor untracked or ignored files, nor paths outside any git repository, nor a `trash` reached through an alias or wrapper script; those are judged on the underlying deletion rules."
     ]
   }
 }
