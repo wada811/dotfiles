@@ -10,6 +10,11 @@
             "type": "command",
             "command": "node /Users/andy/.claude/hooks/coach-report.ts --session-start",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/session-surface-map.sh",
+            "timeout": 8
           }
         ]
       },
@@ -102,5 +107,39 @@
   "outputStyle": "fable-like",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
-  "theme": "dark"
+  "theme": "dark",
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(rm:*) in /Users/andy/Documents/work — CLAUDE.md mandates `trash` instead of `rm` for file deletion in this repo",
+      "Writes to people/hiring/ or people/feedback/ containing full names or other non-codenamed PII (per this repo's PII handling rules)"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: None configured",
+      "**Cloud provider(s)**: None configured",
+      "**Repository visibility**: Not queryable via gh (no origin remote configured on this repo — local-only checkout); assume private",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: None configured (repo uses local .env / .secrets/ files, gitignored)",
+      "**Default / protected branches**: Not queryable via gh (no origin remote); unknown",
+      "**CI/CD deploy targets**: None configured",
+      "**Network posture**: None configured",
+      "**Source control**: The trusted repo (/Users/andy/Documents/work) only — no remotes configured, no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: Notion API (api.notion.com / app.notion.com), Slack (internal workspace), Google Calendar/Drive APIs — as used by this repo's worklog scripts",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: people/hiring/, people/feedback/, and people/members/ (candidate and staff PII — must use codenames per CLAUDE.md, never real names); .secrets/ and .env files (credentials); tmp/ for transient PII — never commit; share only with audiences cleared per repo's PII handling rules",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries `prod` or `production` as a whole word or name segment",
+      "**Sensitive remote targets**: any namespace, host, or container whose name carries `prod` or `production` as a whole word or name segment (hyphen/underscore/dot-delimited)",
+      "### User-specific",
+      "**Primary use of Claude Code**: worklog and team-management automation for /Users/andy/Documents/work (this repo), including Slack/Notion/Calendar integration scripts and a self-evolving-agent lessons sync",
+      "**Trusted repo**: /Users/andy/Documents/work (no git remote configured — local-only checkout); treat as private",
+      "**Org-specific CLIs**: cmux, mise, herdr (seen in this project's usage / shell history)",
+      "**routine under /Users/andy/Documents/work/ prefix**: worktree operations under repos/<repo>--<branch>/ (e.g. repos/oven-android--*), worklog fetch/apply/summary npm scripts, tasks/ and people/ file management"
+    ]
+  }
 }
