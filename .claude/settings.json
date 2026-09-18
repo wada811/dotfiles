@@ -90,20 +90,6 @@
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {},
-  "extraKnownMarketplaces": {
-    "example-org-plugins": {
-      "source": {
-        "source": "github",
-        "repo": "example-org/claude-plugins-playground"
-      }
-    },
-    "example-org-plugins-local": {
-      "source": {
-        "source": "directory",
-        "path": "/Users/andy/Documents/work/repos/claude-plugins-playground"
-      }
-    }
-  },
   "outputStyle": "fable-like",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
