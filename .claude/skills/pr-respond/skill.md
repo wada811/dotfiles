@@ -1,33 +1,32 @@
 ---
 name: pr-respond
-description: "PRのレビューコメント・CI失敗・Changes Requestedに批判的思考で対応を検討し、判断・修正・コミット・返信まで一気通貫で実行する。スコープ内なら対応する/しないを判断してコード修正と返信、スコープ外ならIssueを作成して追跡を通知する。bot（claude / Copilot）のinlineコメントも漏らさず扱い、コンフリクトがあれば解消する。「レビューコメントに対応して」「CIが落ちた」「Changes requestedに返信して」「指摘を直して」「PRに対応」のときに使う。初回レビューをする側は pr-review。"
-argument-hint: "[PR番号 or URL] (省略時: 会話コンテキストのPR → 現在のブランチ → open PR 一覧)"
+description: "自分の PR が受けたレビューコメント（bot の inline コメントを含む）・CI 失敗・Changes Requested・コンフリクトに対応する。「レビューコメントに対応して」「CIが落ちた」「Changes requestedに返信して」「指摘を直して」「PRに対応」のときに使う。他者の PR を初めてレビューする側は pr-review、状況を確認するだけなら pr-status。"
+argument-hint: "[PR番号 or URL] [--repo owner/name] (省略時: 会話コンテキストのPR → 現在のブランチ → open PR 一覧)"
 ---
 
 # pr-respond — 批判的思考によるレビュー対応
 
-レビューコメントを批判的思考で評価し、スコープ判定に基づいて対応を決定・実行する。「妥当か」「スコープ内か」を先に判断してから動く。
+レビューコメントを批判的思考で評価し、スコープ判定に基づいて対応を決定・実行する。「妥当か」「スコープ内か」を先に判断してから動く。指摘をそのまま受け入れると、スコープが膨らんだり、誤った指摘でコードが悪くなったりするため。
 
 ```
-PR 特定 → 収集 → 批判的評価 → [要確認はユーザーに確認] → 対応計画 → 修正・コミット → 返信 → サマリー
+PR 特定 → 収集 → 批判的評価 → [要確認はユーザーに確認] → 対応計画（返信の下書き・Issue 案を含む）の承認 → 修正・コミット → Issue 作成 → push → 返信 → サマリー
 ```
 
-自信度が高い判断は自動で実行する。自信度が低いものはユーザーに提示して確認を取ってから進める。
+コードをどう直すかの判断は、自信度が高ければ自動で進めてよい（ローカルのコミットは後から直せる）。外部への書き込み（push・返信・Issue 作成）は取り消せないため、必ず Step 4 の承認の後に行う。
 
 ## Step 1: PR 特定
 
-次の順で対象を決める。
+- PR番号（`#42` / `42`）または PR の URL → その PR を対象にする
+- `--repo owner/name` → 対象リポジトリを指定する
+- 省略 → 下の順で対象を決める
 
-1. **引数**: PR番号（`#42` / `42`）または URL が指定されていればそれを使う
-2. **会話コンテキスト**: 引数がなければ、このセッションで直前に扱っていた PR の番号を対象にする（直前に確認・対応していた PR、ユーザーが会話中に挙げた番号など）。対応を始める前に「コンテキストから #42 を対象にした」と一行で明示し、取り違えていればユーザーがすぐ指摘できるようにする
-3. **現在のブランチ**: 引数もコンテキストもなければブランチの PR を検出する（`gh pr view --json number,title,url`）
-4. **一覧から確認**: それでも特定できなければ、自分の open PR を一覧してユーザーに確認する
+URL（`https://github.com/<owner>/<repo>/pull/<番号>`）が渡された場合は owner / repo / 番号をそこから抽出する。リポジトリの既定をプロジェクトの CLAUDE.md で定めている場合はそれに従う。
 
-```bash
-gh pr list --author @me --state open --limit 30
-```
+省略時は次の順で対象を決める。
 
-stack PR のように open PR が多いリポジトリでは `--limit 10` だと目的の PR が漏れるため、`--limit 30` を使う。
+1. **会話コンテキスト**: このセッションで直前に扱っていた PR の番号を対象にする（直前に確認・対応していた PR、ユーザーが会話中に挙げた番号など）。対応を始める前に「コンテキストから #42 を対象にした」と一行で明示し、取り違えていればユーザーがすぐ指摘できるようにする
+2. **現在のブランチ**: コンテキストもなければブランチの PR を検出する（`gh pr view --json number,title,url`）
+3. **一覧から確認**: それでも特定できなければ、自分の open PR を一覧してユーザーに確認する（`gh pr list --author @me --state open --limit 30`。stack PR のように open PR が多いリポジトリでは `--limit 10` だと目的の PR が漏れる）
 
 **着手の直前に PR の状態を取り直す**。セッションが複数日にまたがると、対象の PR が既にマージ・クローズされていることがある。
 
@@ -42,21 +41,17 @@ gh pr view <PR番号> --json title,body,state,reviewDecision,mergeable,mergeStat
 | 1 | レビュー決定（APPROVED / CHANGES_REQUESTED / REVIEW_REQUIRED） | 上記の `reviewDecision` |
 | 2 | CI チェック（PASS / FAIL） | 上記の `statusCheckRollup` |
 | 3 | マージ可否（MERGEABLE / CONFLICTING / UNKNOWN） | 上記の `mergeable` / `mergeStateStatus` |
-| 4 | inline コメント（bot のものを含む） | `gh api repos/<owner>/<repo>/pulls/<PR番号>/comments --jq '[.[] \| {id, user: .user.login, path, line, in_reply_to: .in_reply_to_id, body}]'` |
+| 4 | inline コメント（bot のものを含む） | `gh api --paginate repos/<owner>/<repo>/pulls/<PR番号>/comments --jq '.[] \| {id, user: .user.login, path, line, in_reply_to: .in_reply_to_id, body}'` |
 | 5 | 一般コメント（PR 本体へのコメント） | 上記の `comments` |
 
-CI が失敗している場合は失敗内容まで取る:
-
-```bash
-gh pr checks <PR番号>
-gh run view <failed-run-id> --log-failed 2>/dev/null | head -100
-```
+CI が失敗している場合は失敗内容まで取る。GitHub Actions なら `gh run view <run-id> --log-failed` で取れる。Actions 以外のチェックは、`statusCheckRollup` の details URL か、プロジェクトの CLAUDE.md が定める手順でログを取得する。
 
 **注意**:
+- inline コメントの REST API は既定で 30 件ずつしか返さず、古い順に並ぶため、`--paginate` がないと新しいコメントほど落ちる。
 - `checks` は `gh pr view --json` に存在しないフィールド（`Unknown JSON field` エラーになる）。CI は `statusCheckRollup` で取得する。
 - `reviewDecision` は inline コメントを反映しない。CI が green でも未対応の inline コメントが残っていることがあるため、必ず #4 を確認する。
 - **未対応かどうかはスレッドの最終発言者で判定する**。未解決スレッド数は過大にカウントされるため、`in_reply_to_id` で親子を辿り、最後に発言したのが自分以外のスレッドを未対応とみなす。
-- `mergeable: CONFLICTING` の場合、**コメントが全件対応済みでもマージできない**。コメントには現れず、一般コメントの催促として現れることがある。base ブランチをマージして解消し push する。`UNKNOWN` は判定中なので少し待って取り直す。
+- `mergeable: CONFLICTING` の場合、**コメントが全件対応済みでもマージできない**。コメントには現れず、一般コメントの催促として現れることがある。base ブランチをマージして解消する。解消結果の push も、他の push と同じく Step 4 の承認の後に行う。`UNKNOWN` は判定中なので少し待って取り直す。
 - `gh ... | jq` のパイプは使わず、`gh --jq` フラグを使う。
 - bot のレビュー workflow がトリガーされたのに SKIPPED で終わっている場合、bot の返信は来ない。待たずに自分で対応する。
 
@@ -70,7 +65,7 @@ gh run view <failed-run-id> --log-failed 2>/dev/null | head -100
 
 **③ プリモーテム（無視した場合のリスク）** — 無視してマージしたら1ヶ月後に何が起きるか。クラッシュ・データ破損・保守困難・混乱のどれか。
 
-**④ スコープ判定（最重要）** — この PR の Issue で定義した「やること」の範囲内か。
+**④ スコープ判定（最重要）** — この PR が「やること」として定めた範囲内か。範囲は、リンクされた Issue の定義で判定する。Issue がなければ、PR 本文の変更内容と、スコープ外・やらないことを書いた節で判定する。
 
 ### 評価結果の分類
 
@@ -84,13 +79,21 @@ gh run view <failed-run-id> --log-failed 2>/dev/null | head -100
 
 **自信度の判断基準:**
 - 高い（自動判断）: 技術的に明らかに正しい・間違いが明確・提案がそのまま採用できる
-- 低い（要確認）: トレードオフがある・仕様判断が必要・コンテキストが不足している・不採用が妥当か微妙
+- 低い（要確認）: 次のいずれかに当たる
+  - トレードオフがある・仕様判断が必要・コンテキストが不足している・不採用が妥当か微妙
+  - レビュアー間で意見が矛盾していて、どちらを採用するか判断できない
+  - 対応するとアーキテクチャの根本変更が必要で、この PR の変更量を大きく超える
+  - セキュリティ・データモデルの変更を伴う指摘で、影響範囲が不明
 
-「要確認」は **AskUserQuestion ツール**で確認する。1件ずつではなく、まとめて1回の質問で全件を提示する。各コメントについて引用と、A. 対応する / B. 対応しない / C. 後回し（別 PR）の選択肢を、それぞれの方針・理由とともに示す。
+「要確認」は **AskUserQuestion ツール**で確認する。1件ずつではなく、まとめて1回の質問で全件を提示する。各コメントについて引用と、A. 対応する / B. 対応しない / C. 後回し（別 PR）の選択肢を、それぞれの方針・理由とともに示す。確認を1回にまとめるのは、何度も割り込むとユーザーが全体を見て判断できないため。
 
-## Step 4: 実行前に対応計画を表示
+## Step 4: 対応計画の承認
 
-分類ごとに、コメントの引用・評価（第一原理とプリモーテムの結論）・これからやることを列挙する。ASCII 罫線ではなく見出しと箇条書きで書く。
+分類ごとに、コメントの引用・評価（第一原理とプリモーテムの結論）・これからやることを列挙し、次を含めてユーザーの承認を得る。ASCII 罫線ではなく見出しと箇条書きで書く。
+
+- 各コメントへの返信の下書き（対応した場合のコミットハッシュは修正後に埋める）
+- 起票する Issue のタイトルと本文の案
+- push するブランチ（コンフリクト解消を含む）
 
 ```
 評価結果（N件）
@@ -99,15 +102,18 @@ gh run view <failed-run-id> --log-failed 2>/dev/null | head -100
   1. @reviewer (src/auth/token.ts:42) "SimpleDateFormat はスレッドセーフでない"
      評価: 正当。プリモーテム: 本番で競合状態によるクラッシュが起きる
      → DateTimeFormatter に修正する
+     返信案: "<hash> で DateTimeFormatter に置き換えました。"
 
 🚫 対応しない（N件）
   2. @reviewer (src/api/client.kt:88) "このメソッドを static にした方がいい"
      評価: 好みの問題。DI 可能にするため instance メソッドが必要
      → 根拠を返信する（コード変更なし）
+     返信案: "..."
 
 📋 Issue化（スコープ外）（N件）
   3. @reviewer "エラーメッセージを i18n 対応にすべき"
-     → Issue を作成し、コメントで追跡を通知する
+     → Issue 案: タイトル "..." / 本文の要点 "..."
+     返信案: "スコープ外のため #<番号> で追跡します。"
 
 🔧 CI修正（N件）
   4. CI失敗: AuthTokenTest で NullPointerException
@@ -115,13 +121,11 @@ gh run view <failed-run-id> --log-failed 2>/dev/null | head -100
      → テストのセットアップを修正する
 ```
 
+承認後の作業で方針が変わり、返信や Issue の内容が下書きから実質的に変わった場合は、書き込む前に改めて見せる。ハッシュや Issue 番号を埋めるだけなら再確認は要らない。
+
 ## Step 5a: コード修正（対応する・CI修正）
 
-作業を始める前に worktree を用意する。プロジェクトが worktree 運用をしている場合は、その入口となる skill（`/worktree-start` など）を使う。
-
-```bash
-git worktree list
-```
+作業を始める前に worktree を用意する。プロジェクトが worktree 運用をしている場合は、その入口となる skill を使う。
 
 ファイルを編集し、**関連する変更ごとにまとめて `/commit` skill でコミット**する。
 
@@ -129,39 +133,39 @@ git worktree list
 - 無関係な変更（別ファイル・別指摘）は別コミットにする
 - コミット後、短縮ハッシュを控える（返信で使う）
 
-```bash
-git log --oneline -1
-```
-
 CI 失敗の場合は、修正の前にローカルで再現を試みる。最初に思いついた原因をそのまま実装せず、エラーログ・スタックトレース・依存関係を確認してから修正に入る。
 
 ## Step 5b: Issue 作成（スコープ外）
 
-Issue 作成用の skill がプロジェクトにあればそれを使う（類似 issue の検索 → 既存があれば再利用）。なければ直接作成する。
-
-```bash
-gh issue create --title "<レビューコメントの要点>" --body-file tmp/issue_body.md
-```
+Step 4 で承認された案で起票する。Issue 作成用の skill がプロジェクトにあればそれを使う（類似 issue の検索 → 既存があれば再利用）。なければ `gh issue create --body-file` で直接作成する。
 
 body には、経緯（どの PR のどのコメントが発端か）・提案内容の引用・スコープ外と判断した理由・元コメントの URL を書く。
 
+## Step 5c: push
+
+コミット（コンフリクト解消を含む）を push する。push の手順は commit skill に従う。
+
+返信より先に push する。返信にはコミットハッシュを書くため、push 前に返信すると、レビュアーが remote に存在しないコミットを指す返信を読むことになる。
+
 ## Step 6: コメントへの返信
+
+Step 4 で承認された下書きに、ハッシュと Issue 番号を埋めて投稿する。
 
 **inline コメントへの返信（スレッドに返す）:**
 
 ```bash
-gh api repos/<owner>/<repo>/pulls/<PR番号>/comments/<comment_id>/replies --method POST --field body=@tmp/reply_<comment_id>.txt
+gh api repos/<owner>/<repo>/pulls/<PR番号>/comments/<comment_id>/replies --method POST --field body=@<tmp>/reply_<comment_id>.txt
 ```
 
 **一般コメントへの返信:**
 
 ```bash
-gh api repos/<owner>/<repo>/issues/<PR番号>/comments --method POST --field body=@tmp/reply_issue_<id>.txt
+gh api repos/<owner>/<repo>/issues/<PR番号>/comments --method POST --field body=@<tmp>/reply_issue_<id>.txt
 ```
 
 **注意**:
 - `gh pr review --reply` は存在しない。上の `gh api` を使う。パスは `/pulls/<PR番号>/comments/<comment_id>/replies` であり、`/pulls/comments/<comment_id>/replies` ではない。
-- 本文は**必ずファイル経由で渡す**。`-f body="..."` に改行やバッククォートを含めると、シェルがコマンド置換として展開したり、フックにブロックされたりする。Write ツールで `tmp/` にファイルを作ってから `--field body=@<path>` で参照する。
+- 本文は**必ずファイル経由で渡す**。`-f body="..."` に改行やバッククォートを含めると、シェルがコマンド置換として展開したり、フックにブロックされたりする。Write ツールで `<tmp>/`（プロジェクトの一時ファイル置き場。規約がなければセッションの scratchpad）にファイルを作ってから `--field body=@<path>` で参照する。
 
 **返信のトーン・内容:**
 
@@ -173,22 +177,12 @@ gh api repos/<owner>/<repo>/issues/<PR番号>/comments --method POST --field bod
 
 ## Step 7: 完了サマリー
 
-対応した指摘・対応しなかった指摘（と根拠）・Issue 化したもの・作成したコミット・次のアクションを Markdown で報告する。ASCII 罫線の枠は使わない。
+対応した指摘・対応しなかった指摘（と根拠）・Issue 化したもの・作成したコミット・push の有無・次のアクションを Markdown で報告する。ASCII 罫線の枠は使わない。
 
 報告に書いた作業は、実際に実行した結果と一致させる。返信を投稿したなら投稿済みと書き、未実行なら未実行と書く。
-
-## 人間に委ねるケース
-
-次は自動判定せず確認する。
-
-- レビュアー間で意見が**矛盾**している（どちらを採用するか判断できない）
-- 対応するとアーキテクチャの**根本変更**が必要（この PR の変更量を大きく超える）
-- セキュリティ・データモデルの変更を伴う指摘で影響範囲が不明
-
-「この指摘は確認が必要です：〈理由〉。対応方針を教えてください。」と1回だけ確認する。
 
 ## やらないこと
 
 - ❌ 初回レビューの実施（`pr-review` の役割）
-- ❌ 外部への書き込みをユーザー確認なしで行う（プロジェクトが確認を求めている場合）
+- ❌ push・返信・Issue 作成を Step 4 の承認なしで行う
 - ❌ `gh ... | jq` のパイプ（`gh --jq` を使う）

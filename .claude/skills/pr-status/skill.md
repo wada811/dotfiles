@@ -1,6 +1,6 @@
 ---
 name: pr-status
-description: "PRの状況を読み取り専用で確認する。マージ状態（未/済・クローズ済み）・コンフリクト・CI・レビュー決定・ラベル・inlineコメント・本体コメントを取得し、Markdownテーブルで整形して「次に何をすべきか」「もう何もしなくてよいか」を判断できる形で提示する。--wait でCI完了まで待機できる。「PRどうなってる？」「CIは通った？」「レビューきた？」「PR #XXXX の状態」「何か対応が必要？」のときに使う。コメントへの対応・返信は行わない（pr-respond の役割）。"
+description: "PR の状況を読み取り専用で確認し、次に何をすべきか・もう何もしなくてよいかを伝える。CI の完了待ち（--wait）もできる。「PRどうなってる？」「CIは通った？」「レビューきた？」「PR #XXXX の状態」「何か対応が必要？」のときに使う。コメントへの対応・CI 失敗の原因調査は pr-respond、他者の PR のレビューは pr-review。"
 argument-hint: "[PR番号 or URL] [--repo owner/name] [--wait] (省略時: 会話コンテキストのPR → 現在のブランチ → open PR 一覧)"
 ---
 
@@ -16,7 +16,7 @@ PR の状態を集約して表示し、**次に何をすべきか / もう何も
 
 - PR番号（`#42` / `42`）または PR の URL → その PR を対象にする
 - `--repo owner/name` → 対象リポジトリを指定する
-- `--wait` → CI が完了するまでポーリングする（Step 5）
+- `--wait` → CI が完了するまで待つ（Step 5）
 - 省略 → Step 1 の順で対象を決める
 
 URL（`https://github.com/<owner>/<repo>/pull/<番号>`）が渡された場合は owner / repo / 番号をそこから抽出する。
@@ -41,7 +41,7 @@ gh pr list --author @me --state open --limit 30
 
 stack PR のように open PR が多いリポジトリでは `--limit 10` だと目的の PR が漏れるため、`--limit 30` を使う。複数あればユーザーに確認し、1件なら自動でそれを対象にする。一覧も空なら「このブランチには PR がありません。`/pr-create` で PR を作成してください。」と伝えて終了する。
 
-リポジトリの既定をプロジェクト側の CLAUDE.md で定めている場合はそれに従う。
+リポジトリの既定をプロジェクトの CLAUDE.md で定めている場合はそれに従う。
 
 ## Step 2: 状態の取得
 
@@ -50,13 +50,13 @@ stack PR のように open PR が多いリポジトリでは `--limit 10` だと
 **(1) 本体の状態:**
 
 ```bash
-gh pr view <PR番号> --repo <owner>/<repo> --json number,title,url,state,isDraft,mergedAt,mergedBy,closedAt,baseRefName,headRefName,labels,reviewDecision,reviewRequests,mergeable,mergeStateStatus,statusCheckRollup,comments
+gh pr view <PR番号> --repo <owner>/<repo> --json number,title,url,state,isDraft,mergedAt,mergedBy,closedAt,baseRefName,headRefName,labels,reviewDecision,reviewRequests,latestReviews,mergeable,mergeStateStatus,statusCheckRollup,comments
 ```
 
 **(2) inline コメント（bot のものを含む）:**
 
 ```bash
-gh api repos/<owner>/<repo>/pulls/<PR番号>/comments --jq '[.[] | {id, user: .user.login, path, line, in_reply_to: .in_reply_to_id, body}]'
+gh api --paginate repos/<owner>/<repo>/pulls/<PR番号>/comments --jq '.[] | {id, user: .user.login, path, line, in_reply_to: .in_reply_to_id, body}'
 ```
 
 | # | 確認項目 | ソース |
@@ -65,7 +65,7 @@ gh api repos/<owner>/<repo>/pulls/<PR番号>/comments --jq '[.[] | {id, user: .u
 | 2 | **コンフリクト状態**（MERGEABLE / CONFLICTING / UNKNOWN と詳細） | (1) の `mergeable` / `mergeStateStatus` |
 | 3 | **ラベル** | (1) の `labels` |
 | 4 | CI ステータス（PASS / FAIL / PENDING / SKIPPED） | (1) の `statusCheckRollup` |
-| 5 | レビュー決定（APPROVED / CHANGES_REQUESTED / REVIEW_REQUIRED） | (1) の `reviewDecision` / `reviewRequests` |
+| 5 | レビュー決定（APPROVED / CHANGES_REQUESTED / REVIEW_REQUIRED） | (1) の `reviewDecision` / `reviewRequests` / `latestReviews` |
 | 6 | inline コメント（bot のものを含む） | (2) |
 | 7 | 本体コメント（PR 全体へのコメント） | (1) の `comments` |
 
@@ -79,21 +79,23 @@ gh api repos/<owner>/<repo>/pulls/<PR番号>/comments --jq '[.[] | {id, user: .u
 
 `mergeable` は「コンフリクトの有無」しか示さない。**何がマージを止めているか**は `mergeStateStatus` で判断する。
 
-| 値 | 意味 | 次にやること |
+| 値 | 意味 | 伝えること |
 |---|---|---|
-| `CLEAN` | マージ可能 | マージする |
-| `DIRTY` | コンフリクトあり | base ブランチをマージして解消する |
-| `BLOCKED` | 必須レビュー未承認・必須チェック未完了などでブロック | レビュー依頼・承認待ち |
-| `BEHIND` | base に遅れており更新が必須の設定 | base ブランチを取り込む |
-| `UNSTABLE` | CI が失敗または実行中（マージ自体は可能な設定） | CI の結果を確認する |
-| `DRAFT` | Draft のため | Ready for review にする |
-| `UNKNOWN` | GitHub が判定中 | 少し待って取り直す |
+| `CLEAN` | マージ可能 | マージ可能であること |
+| `DIRTY` | コンフリクトあり | base ブランチとのコンフリクト解消が必要（pr-respond） |
+| `BLOCKED` | 必須レビュー未承認・必須チェック未完了などでブロック | 何が止めているか（レビュー・チェック） |
+| `BEHIND` | base に遅れており更新が必須の設定 | base ブランチの取り込みが必要 |
+| `UNSTABLE` | CI が失敗または実行中（マージ自体は可能な設定） | CI の状態（Step 4 の CI の行） |
+| `DRAFT` | Draft のため | Draft であり、レビュー依頼の前段階であること |
+| `UNKNOWN` | GitHub が判定中 | 判定中のため、少し待って取り直す |
 
 **注意**:
 - `reviewDecision` は inline コメントを反映しない。CI が green でも未対応の inline コメントが残っていることがあるため、必ず (2) を確認する。`reviewDecision` が空文字のこともある（レビュー未決定）。
 - `checks` は `gh pr view --json` に存在しないフィールド（`Unknown JSON field` エラーになる）。CI は `statusCheckRollup` で取得する。
 - 未対応の inline コメントは、スレッドの**最終発言者**で判定する。未解決スレッド数は過大にカウントされるため、`in_reply_to_id` で親子を辿り、最後に発言したのが自分以外のスレッドを未対応とみなす。
 - ラベルは運用状態を表していることが多い（作者の対応待ち・レビュー待ち・自動付与の停滞通知など）。プロジェクトのラベル運用があれば、次アクションの判断に使う。ただしラベルは自動付与で実態とずれることがあるため、コメントや CI の実データと食い違う場合は実データを優先し、ずれていることを明示する。
+- inline コメントの REST API は既定で 30 件ずつしか返さず、古い順に並ぶため、`--paginate` がないと新しいコメントほど落ちる。
+- `reviewRequests` はレビューが提出されると空になるため、空であることだけでは「依頼が未送信」と言えない。`latestReviews` も空（レビューが一件もない）のときだけ未依頼とみなす。
 - `gh ... | jq` のパイプは使わず、`gh --jq` フラグを使う。
 
 ## Step 3: 報告の整形
@@ -118,35 +120,30 @@ Markdown テーブルで出力する。ASCII 罫線の表（`━━━` や `+--
 - [@user] path:line — <要約>（コメントへのリンク）
 ```
 
-マージ済み・クローズ済みの場合はこの表を出さず、1〜2 行で終了を報告する。inline / 本体コメントが 0 件の場合はその旨を1行で記載する。CI が失敗している場合は、失敗したジョブ名と簡潔なエラーサマリーを添える。
+マージ済み・クローズ済みの場合はこの表を出さず、1〜2 行で終了を報告する。inline / 本体コメントが 0 件の場合はその旨を1行で記載する。CI が失敗している場合は、失敗したチェック名と、`statusCheckRollup` の details URL（`detailsUrl` / `targetUrl`）を添える。ログの取得と原因調査は pr-respond の役割で、この skill では行わない。
 
 ## Step 4: 次アクションの提示
 
-**最初に「作業が必要か」を一文で述べる。** そのうえで、必要なら次に取るべきアクションを 1〜2 件提示する。
+**最初に「作業が必要か」を一文で述べる。** そのうえで、必要なら次にすべきことを 1〜2 件、担当する skill とともに伝える。この skill は読み取り専用なので、伝えた作業をここで実行したり、実行するかを持ちかけたりはしない。
 
 - **MERGED / CLOSED** → 作業不要。それ以上の調査もしない
-- **DIRTY（コンフリクト）** → base ブランチとのコンフリクト解消を最優先で提案する
-- **CHANGES_REQUESTED / 未対応 inline コメントあり** → `/pr-respond <PR番号>` を提案する
-- **CI 失敗** → 失敗チェックの詳細確認を提案する
-- **CI 実行中** → `/pr-status --wait` で完了を待てることを伝える
-- **BEHIND** → base ブランチの取り込みを提案する
-- **CLEAN かつ APPROVED** → マージ可能。マージするか確認する
-- **BLOCKED / レビュー依頼が未送信**（`reviewRequests` が空） → レビュアーへの依頼を提案する
-- **Draft** → Ready for review にするかを確認する
+- **DIRTY（コンフリクト）** → base ブランチとのコンフリクト解消が最優先で必要（`/pr-respond <PR番号>`）
+- **CHANGES_REQUESTED / 未対応 inline コメントあり** → コメント対応が必要（`/pr-respond <PR番号>`）
+- **CI 失敗** → 失敗したチェックの原因調査と修正が必要（`/pr-respond <PR番号>`）
+- **CI 実行中** → 完了待ち。`/pr-status --wait` で完了を待てる
+- **BEHIND** → base ブランチの取り込みが必要（`/pr-respond <PR番号>`）
+- **CLEAN かつ APPROVED** → マージ可能。マージとその方法はプロジェクトの規約に従い、この skill では実行しない
+- **BLOCKED / レビュー依頼が未送信**（`latestReviews` も `reviewRequests` も空） → レビュアーへの依頼が必要
+- **Draft** → Draft のまま。レビューを受けるには Ready for review への変更が必要
 - **上記のいずれでもない** → レビュー待ち。アクション不要（待機）
 
 bot のレビュー workflow がトリガーされたのに SKIPPED で終わっている場合、bot の返信は来ない。待機ではなく自分で対応する必要があるため、その旨を明示する。
 
 ## Step 5: --wait モード
 
-`--wait` が指定された場合、CI 完了まで 30 秒ごとにポーリングする（最大 20 分）。
+`--wait` が指定された場合、`gh pr checks <PR番号> --repo <owner>/<repo> --watch --interval 30` で CI の完了を待つ（最大 20 分が目安）。前景での `sleep` によるポーリングは使えないため、`--watch` に待機を任せる。Bash のタイムアウトを付けて前景で実行するか、上限を超えて待つならバックグラウンドで実行して終了の通知を待つ。
 
-```
-🔄 CI の完了を待っています...（30秒ごとに確認）
-   開始から X 分経過
-```
-
-CI が完了（passed / failed）したらポーリングを止め、Step 3 のステータスを表示する。20 分経過しても終わらない場合は「タイムアウトしました。`/pr-status` で再確認してください。」と伝えて終了する。マージ済み・クローズ済みの PR には `--wait` を使わず、即座に終了を報告する。
+CI が完了（passed / failed）したら Step 2 から取り直し、Step 3 のステータスを表示する。20 分経過しても終わらない場合は「タイムアウトしました。`/pr-status` で再確認してください。」と伝えて終了する。マージ済み・クローズ済みの PR には `--wait` を使わず、即座に終了を報告する。
 
 ## やらないこと
 
