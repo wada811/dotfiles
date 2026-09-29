@@ -1,6 +1,6 @@
 ---
 name: pr-body
-description: "PR の本文（description）を、リポジトリの PR テンプレートに沿って新規に書く、または既存 PR の本文を今の差分に合わせて書き直す。「PR の本文を書いて」「PR description を作って」「PR 本文を更新して」「本文を直して」「description が古い」「PR の説明を今の差分に合わせて」のときに使う。PR の作成そのもの（ブランチ・push・gh pr create）は pr-create、レビューコメントへの対応は pr-respond。"
+description: "PR の本文（description）を、リポジトリの PR テンプレートに沿って新規に書く、または既存 PR の本文を今の差分に合わせて書き直す。「PR の本文を書いて」「PR description を作って」「PR 本文を更新して」「本文を直して」「description が古い」「PR の説明を今の差分に合わせて」のときに使う。PR の作成そのもの（push・base の指定・gh pr create）は pr-create、レビューコメントへの対応は pr-respond。"
 argument-hint: "[PR番号 or URL] [--repo owner/name] (省略時: 会話コンテキストのPR → 現在のブランチのPR → 新規PR用の本文)"
 ---
 

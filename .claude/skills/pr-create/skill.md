@@ -1,72 +1,52 @@
 ---
 name: pr-create
-description: "IssueとCommit履歴からPR descriptionを生成しgh pr createする。本文は pr-body skill で、リポジトリの PR テンプレートに沿って PR が保証すること・理由・対応しないことを書く。「PRを作りたい」「プルリクエストを作成する」「変更をPRにまとめたい」時に使う。"
+description: "今のブランチから PR を作る。push・正しい base の指定・タイトル・gh pr create を行い、本文は pr-body skill に任せる。「PRを作りたい」「プルリクエストを作成する」「変更をPRにまとめたい」「PR を出して」時に使う。本文だけを書く・更新するときは pr-body、開発フロー全体を進めるときは pr-process。"
 ---
 
-# pr-create — 意図と差分のセットでPRを生成
+# pr-create — 正しい base に PR を出す
 
-IssueにあるWhy（意図）とコミット履歴のWhat（差分）を紐付け、レビュアーがコードを読む前に全体像を把握できるPR bodyを生成する。
+今のブランチの変更を、レビュアーがすぐ読める状態で、正しい base に向けた PR にする。本文の中身は pr-body が決めるので、この skill は PR を出すまでの前提（push・base・タイトル・作成前の手順）と、ユーザーの確認に責任を持つ。
 
-## Step 1: コンテキスト収集
+プロジェクトの CLAUDE.md が base ブランチ・PR タイトル・作成前の手順を決めていれば、それに従う。
 
-```bash
-# 現在のブランチ名からIssue番号を抽出
-git branch --show-current
+## Step 1: 前提を揃える
 
-# コミット履歴（mainとの差分）
-git log main...HEAD --oneline
+- **base:** プロジェクトの CLAUDE.md が決める base ブランチを使う。決めていなければリポジトリの既定ブランチ。`gh pr create` は `--base` を省くと既定ブランチに向けるので、必ず明示する
+- **作成前の手順:** CLAUDE.md が PR 作成前のセルフレビュー等を決めていれば、このセッションで済んでいるか確かめる。済んでいなければ、先に実行するかユーザーに聞く。作成後に自分の PR へ指摘を投稿する形にはしない
+- **Issue:** ブランチ名・コミット・会話に Issue があれば読む。なくても止まらない（背景の素材は pr-body が集める）
 
-# 変更ファイルのサマリー
-git diff main...HEAD --stat
-```
+## Step 2: 本文を作る
 
-ブランチ名に Issue番号が含まれる場合（`feature/#42-...` 形式）は自動抽出。
-含まれない場合はユーザーに Issue番号を確認する。
+`pr-body` skill の新規モードで本文を作る。本文の規則は pr-body に従い、ここでは重ねて定義しない。Issue があれば素材として渡す:
 
-```bash
-# Issueの内容を取得
-gh issue view <番号>
-```
+- 課題・解決策の意図とリンク（`Closes #<番号>`）→ 背景の役割の節
+- 「やらないこと」欄 → スコープ外の役割の節に引用する
 
-## Step 2: PR bodyの生成
+pr-body は本文を `tmp/pr-body-<branch>.md` に書き出したところで止まる。
 
-本文は `pr-body` skill の新規モードで作る。テンプレートの扱い・中身の規則・事前チェックは pr-body に従い、ここでは重ねて定義しない。
+## Step 3: タイトルを決める
 
-pr-body には Step 1 で集めた素材を渡す:
+CLAUDE.md に規則がなければ、`gh pr list --state all --limit 20` で既存の PR タイトルを見て、言語と形式（Conventional Commits の prefix の有無など）を合わせる。形式を決め打ちすると、リポジトリの慣習とずれる。
 
-- Issue の課題・解決策の意図 → 背景の役割の節の素材にする。Issue へのリンク（`Closes #<番号>`）もそこに入れる
-- Issue の「やらないこと」欄 → スコープ外の役割の節に必ず引用する。実装中に追加で除外したものがあれば理由付きで足す
-- コミット履歴と diff → 変更内容の役割の節の素材にする。コミット単位で並べず、PR が保証することに書き直す
+## Step 4: 確認する（1 回だけ）
 
-pr-body は Step 4 の 1（`tmp/pr-body-<branch>.md` への書き出し）まで行う。確認と反映はこの skill の Step 4・5 で一度だけ行う。
+次をまとめて一度に見せ、承認を得る。PR の作成は外部への公開なので、承認なしに進めない。
 
-## Step 3: スクリーンショットの確認
+- base・タイトル・本文
+- ユーザーが埋める項目（未チェックのボックス・プレースホルダ）
+- UI の変更が含まれるなら、スクリーンショットが要ること（作成前に添付するか、作成後に追記するか）
+- ブランチが未 push なら、push すること
 
-変更にUI要素が含まれる場合（コンポーザブル・画面・ダイアログ等）:
+## Step 5: push して PR を作る
 
-> UI変更が含まれています。PRを作成する前にスクリーンショットを撮影してください。
-> テンプレートのスクリーンショット（証跡）の節に画像を添付してから `/pr-create` を再実行するか、PR作成後に画像を追記してください。
-
-## Step 4: レビュアーへの確認
-
-`tmp/pr-body-<branch>.md` の本文を表示し「このPR bodyでよいですか？」と確認する。ユーザーが埋める項目（未チェックのボックス・プレースホルダ）があれば先頭に列挙する。
-
-## Step 5: PR作成
+未 push なら push してから作成する。push は取り消せないので、Step 4 の承認に含めた場合だけ行い、force push はしない。
 
 ```bash
-gh pr create \
-  --title "<type>(<scope>): <subject>" \
-  --body-file tmp/pr-body-<branch>.md \
-  --assignee "@me"
+gh pr create --base <base> --title "<タイトル>" --body-file tmp/pr-body-<branch>.md --assignee "@me"
 ```
 
-ドラフトとして作成したい場合は `--draft` を追加する。
+ドラフトを求められたら `--draft` を足す。
 
-## Step 6: 完了後の案内
+## Step 6: 読み戻して報告する
 
-> PR #<番号> を作成しました: <URL>
->
-> 次のステップ:
-> - レビュアーをアサインしてください（`gh pr edit <番号> --add-reviewer <user>`）
-> - セルフレビューするなら `/pr-review #<番号>` を使ってください
-> - CI が通るまで待ちましょう
+`gh pr view <番号> --json baseRefName,title,body,url` で読み戻し、base・タイトル・本文が Step 4 で承認したものと一致することを確かめてから、PR の URL を報告する。レビュアーのアサインなど、ユーザーが次にすることがあれば添える。
