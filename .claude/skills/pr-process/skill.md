@@ -1,6 +1,6 @@
 ---
 name: pr-process
-description: "PRワークフロー全体（計画→実装開始→コミット→セルフレビュー→PR作成→CI・レビュー待ち→コメント対応）をオーケストレートする。git/GitHub の状態を見て今どこにいるかを判断し、そのステージを担当する skill を呼び出す。「実装したい」「PRを出したい」「どこから始めればいい」「実装終わった」「続きをやって」など、開発フローの任意の場面で使う。/pr-plan・/pr-develop・/commit・/pr-create・/pr-status・/pr-respond を個別に呼ぶ代わりにこれ一本で済む。"
+description: "計画から PR のコメント対応までの開発フローを、今どの段階かを判断して先へ進める。「どこから始めればいい」「実装終わった」「続きをやって」「PR まで進めて」など、開発フローのどこにいるか分からない・まとめて進めたい場面で使う。PR を 1 本出すだけなら pr-create、Issue を作るだけなら pr-plan、状態を見るだけなら pr-status。"
 ---
 
 # pr-process — PRワークフローオーケストレーター
@@ -20,25 +20,21 @@ git と GitHub の状態を読んで「今どのステージか」を判断し�
 
 ## Step 1: 現在のステージを検出
 
-```bash
-git status --short
-git branch --show-current
-git log <base>...HEAD --oneline 2>/dev/null
-gh issue list --assignee @me --state open --limit 5 2>/dev/null
-gh pr view --json number,state,url,reviewDecision 2>/dev/null
-```
+まず対象の作業ツリーを決める。引数・会話の文脈（直前に作業していた worktree やブランチ）から決め、判定のコマンドはそこで実行する。セッションを起動した場所と作業している worktree が違うことがあり、起動した場所で判定すると別のリポジトリを見て誤る。
 
-base はプロジェクトの CLAUDE.md が決める base ブランチ（なければ `main`）。
+その作業ツリーで、ブランチ・未コミットの変更・base からのコミット・このブランチの PR（状態も）を見る。base はプロジェクトの CLAUDE.md が決める base ブランチ、なければリポジトリの既定ブランチ。「作業用のブランチ」は base 以外のブランチを指す。
 
 | ステージ | 条件 | 呼ぶ skill |
 |---------|------|-----------|
-| **A: 計画** | 引数に目標テキストがある、またはfeatureブランチも未コミット変更もない | `pr-plan` |
-| **B: 実装開始** | Issue番号が引数にある、またはIssueはあるがfeatureブランチがない | `pr-develop` |
-| **C: コミット** | featureブランチにいて未コミット変更がある | `commit` |
-| **D: セルフレビュー** | featureブランチにコミットがあり、PRがない | プロジェクトのセルフレビュー（下記） |
+| **A: 計画** | 引数に目標テキストがある、または base にいて Issue 番号も未コミットの変更もない | `pr-plan` |
+| **B: 実装開始** | 引数か A から Issue 番号を受け取り、作業用のブランチがまだない | `pr-develop` |
+| **C: コミット** | 作業用のブランチにいて、未コミットの変更がある | `commit` |
+| **D: セルフレビュー** | 作業用のブランチにコミットがあり、PR がない | プロジェクトのセルフレビュー（下記） |
 | **E: PR作成** | D が指摘なしで終わった | `pr-create` |
-| **F: CI・レビュー待ち** | PRがある | `pr-status` |
-| **G: コメント対応** | CI失敗・Changes requested・未対応のコメントがある | `pr-respond` |
+| **F: CI・レビュー待ち** | PR がある | `pr-status` |
+| **G: コメント対応** | CI失敗・Changes requested・未対応のコメント・コンフリクトがある | `pr-respond` |
+
+B を割り当て済みの Issue の有無で判定しないのは、無関係な Issue で B に入ったり、作ったばかりの Issue を見落としたりするため。Issue 番号は引数か A の結果で受け渡す。
 
 ---
 
@@ -46,7 +42,7 @@ base はプロジェクトの CLAUDE.md が決める base ブランチ（なけ�
 
 ### A: 計画 → `pr-plan`
 
-`$ARGUMENTS` の目標テキストを渡して pr-plan を実行する。Issue が作られたら、その番号を持って B へ進む。
+`$ARGUMENTS` の目標テキストを渡し、呼び出し元がこの skill であることを伝えて pr-plan を実行する。Issue が作られたら、pr-plan が返した番号を持って B へ進む。
 
 ### B: 実装開始 → `pr-develop`
 
@@ -77,23 +73,18 @@ PR 番号を渡して pr-status を実行し、結果で分岐する。
 |------|-----------|
 | CI実行中・レビュー待ち | 「CIとレビューを待っています。完了したら `/pr-process` で再開してください。」と伝えて終了 |
 | CI失敗・Changes requested・未対応のコメント・コンフリクト | G へ進む |
+| MERGED・CLOSED | 「#<番号> は完了しています」と伝えて終了 |
 | Approved + CI通過 | 「マージできます」と伝えて終了。マージ方法はプロジェクトの規約に従い、マージは実行しない |
 
 ### G: コメント対応 → `pr-respond`
 
-PR 番号を渡して pr-respond を実行する。返信の投稿は pr-respond の手順どおり、下書きを確認してから行う。対応が終わったら F に戻る。
+PR 番号を渡して pr-respond を実行する。push・返信・Issue 作成の前の確認は pr-respond とプロジェクトの CLAUDE.md に従う。対応が終わったら F に戻る。
 
 ---
 
 ## 人間が入る場面
 
-担当 skill が確認する場面を、ステージ順に並べると次のとおり。これ以外は自動で次のステージへ進む。
-
-1. A: スコープの確認（pr-plan）
-2. B の後: 実装
-3. C: push の確認（commit）
-4. E: UI スクリーンショットと PR 本文の確認（pr-create）
-5. G: 返信の下書きの確認（pr-respond）
+各担当 skill が確認を求める所で止まり、承認を得てから次へ進む。確認の場所は担当 skill が持つので、ここでは列挙しない（列挙すると、担当 skill が確認を足したときに古くなる）。B の後の実装だけは、この skill が止めて人間またはエージェントに渡す。
 
 ---
 

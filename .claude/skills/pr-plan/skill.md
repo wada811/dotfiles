@@ -1,6 +1,6 @@
 ---
 name: pr-plan
-description: "実装を始める前に計画をGitHub Issueとして記録する。grilling形式で要求・要件を徹底的に掘り下げてからgh issue createする。「実装計画を立てたい」「コードを書く前にIssueを作りたい」「この機能の計画を立てたい」「何かを実装したい（まだコードは書いていない）」時に使う。"
+description: "実装を始める前に計画をGitHub Issueとして記録する。grilling形式で要求・要件を徹底的に掘り下げてからgh issue createする。「実装計画を立てたい」「コードを書く前にIssueを作りたい」「この機能の計画を立てたい」「何かを実装したい（まだコードは書いていない）」時に使う。Issue が既にあって実装を始めるなら pr-develop、開発フロー全体を進めるなら pr-process。"
 ---
 
 # pr-plan — grilling形式の要求定義 → Issue化
@@ -77,10 +77,14 @@ mattpocock の grilling アプローチ（1問ずつ・推奨回答付き・決�
 
 Grilling の結果をまとめ、作成するIssueの内容を提示する。
 
+- **書式:** リポジトリに Issue テンプレート（`.github/ISSUE_TEMPLATE/`）があればそれに沿う。なければ下の書式を使う。下の見出しは pr-develop がスコープを読む手がかりになる
+- **タイトル:** プロジェクトの CLAUDE.md に規則があれば従い、なければ既存の Issue タイトルの言語と形式に合わせる
+- **重複:** 作る前に、似た Issue が既にないかを検索し、あれば提示して、使い回すか新しく作るかを聞く
+
 ```
 作成するIssue:
 
-タイトル: <type>: <subject>
+タイトル: <タイトル>
 
 ## 課題
 <背景と動機>
@@ -111,13 +115,10 @@ Grilling の結果をまとめ、作成するIssueの内容を提示する。
 
 ## Phase 3: Issue 作成
 
+プロジェクトに Issue 作成の skill があれば、それに下書きを渡して作る。なければ次で作る。本文にはバッククォートが入るので、プロジェクトの一時ファイル置き場（規約がなければセッションの scratchpad）に書き出して `--body-file` で渡す（`--body` に直接書くとシェルが展開して消えるため）。作った Issue は自分に割り当てる。後続の skill が割り当てで探すことがあるため。
+
 ```bash
-gh issue create \
-  --title "<タイトル>" \
-  --body "<生成したbody>"
+gh issue create --title "<タイトル>" --body-file <本文ファイル> --assignee "@me"
 ```
 
-作成後：
-
-> Issue #<番号> を作成しました。
-> 次は `/pr-develop #<番号>` で開発セッションを開始してください。
+作成後、Issue 番号と URL を報告する。呼び出し元（pr-process 等）があれば番号を返して終わる。なければ「次は `/pr-develop #<番号>` で開発セッションを開始できます」と添える。

@@ -5,69 +5,42 @@ description: "現在のリポジトリにPRワークフローの雛形を設置�
 
 # pr-setup — リポジトリへのPRワークフロー設置
 
-`/pr-plan`, `/pr-develop`, `/commit`, `/pr-create`, `/pr-review` スキルシリーズが機能するための
-リポジトリ側の雛形（テンプレート・CLAUDE.md）を一括セットアップする。
+`/pr-plan`・`/pr-develop`・`/commit`・`/pr-create`・`/pr-process` などの PR 系 skill が機能するための、リポジトリ側の雛形（テンプレート・CLAUDE.md）を一括セットアップする。
 
-## Step 1: リポジトリ確認
+PR 系 skill は、base ブランチ・ブランチ名・PR タイトル・PR 作成前の手順を「プロジェクトの CLAUDE.md に従う」として参照する。この skill の役目は、その参照先をリポジトリに用意すること。値は決め打ちせず、リポジトリの実態から推測してユーザーに確かめる。
 
-```bash
-git rev-parse --show-toplevel
-git remote get-url origin 2>/dev/null || echo "(no remote)"
-```
+## Step 1: 既存のものを確かめる
 
-git リポジトリでない場合は「git リポジトリのルートで実行してください」と伝えて終了する。
+git リポジトリのルートで実行する（そうでなければ伝えて終了）。次の既存ファイルがあれば中身を読み、上書き・追記してよいかを確認してから進む。既存のテンプレートや規約を黙って置き換えると、チームの合意を壊すため。
 
-## Step 2: 既存ファイルの確認
+- `.github/pull_request_template.md`（`.github/PULL_REQUEST_TEMPLATE.md`・`.github/PULL_REQUEST_TEMPLATE/` も）
+- `.github/ISSUE_TEMPLATE/plan.md`
+- `CLAUDE.md`
 
-```bash
-ls .github/PULL_REQUEST_TEMPLATE.md 2>/dev/null
-ls .github/ISSUE_TEMPLATE/plan.md 2>/dev/null
-ls CLAUDE.md 2>/dev/null
-```
+## Step 2: PR テンプレートを置く
 
-既存ファイルがある場合は「上書きしますか？」と確認してから進む。
-
-## Step 3: ディレクトリ作成
-
-```bash
-mkdir -p .github/ISSUE_TEMPLATE
-mkdir -p .claude
-```
-
-## Step 4: PULL_REQUEST_TEMPLATE.md を生成
-
-`.github/PULL_REQUEST_TEMPLATE.md` を以下の内容で作成する:
+PR テンプレートがなければ `.github/pull_request_template.md` を作る。見出しは pr-body の 4 つの役割（背景・変更内容・スコープ外・見てほしい点）に合わせる。pr-body がこのテンプレートを読んで本文を書くため。
 
 ```markdown
-## 課題
-<!-- なぜこの変更が必要か。背景と動機を1〜2行で。 -->
-<!-- /pr-plan で作成した Issue をリンク: Closes #NNN -->
+## 背景
+<!-- この PR が要る理由。Issue があればリンク（Closes #NNN） -->
 
-Closes #
+## 変更内容
+<!-- この PR が保証すること。関数名などの実装の説明は diff に任せる -->
 
-## 解決策・意図
-<!-- どのアプローチを選んだか、なぜか。代替案と選ばなかった理由があれば記載。 -->
+## スコープ外
+<!-- やらないことと、その理由 -->
 
-## やったこと
-<!-- コミット単位のサマリー。/commit で意図別に分割したコミット一覧から引用。 -->
--
+## 見てほしい点
+<!-- 自信のない点。なければ「特になし」 -->
 
-## やらなかったこと
-<!-- Issue の「スコープ外」欄から引用。実装中に追加で除外したものも記載。 -->
-<!-- これがあることでレビュアーが「なぜ実装されていないのか」を疑問に思わなくて済む。 -->
--
-
-## 証跡
-<!-- UI変更: スクリーンショット必須。API変更: レスポンス例またはテスト結果。 -->
-
-## 参考
-<!-- 関連 Issue・Slack スレッド・外部ドキュメント -->
--
+## スクリーンショット
+<!-- UI 変更があれば添付。なければこの節を削除 -->
 ```
 
-## Step 5: Issue テンプレートを生成
+## Step 3: Issue テンプレートを置く
 
-`.github/ISSUE_TEMPLATE/plan.md` を以下の内容で作成する:
+`.github/ISSUE_TEMPLATE/plan.md` を以下の内容で作成する。pr-plan が作る Issue と、pr-develop が読むスコープの形式に合わせてある:
 
 ```markdown
 ---
@@ -85,7 +58,6 @@ assignees: ''
 
 ## やること
 - [ ]
-- [ ]
 
 ## やらないこと（スコープ外）
 <!-- 今回除外する内容と除外理由。「次回以降」「別 Issue」など明示する。 -->
@@ -94,36 +66,36 @@ assignees: ''
 ## 完了条件
 <!-- 何ができたら完了とみなすか。テスト・観察で確認可能な形で書く。 -->
 - [ ]
-- [ ]
 ```
 
-## Step 6: CLAUDE.md にワークフローセクションを追記
+## Step 4: CLAUDE.md に規約を書く
 
-`CLAUDE.md` が存在すれば末尾に追記、なければ新規作成する。
+PR 系 skill が参照する項目を、`CLAUDE.md` の「開発ワークフロー」節に書く（なければ新規作成、あれば末尾に追記）。各値はリポジトリの実態から推測し、ユーザーに確かめてから書く。推測の材料と一緒に見せると、ユーザーは直すだけで済む。
 
-追記する内容:
+| 項目 | 推測の材料 |
+|---|---|
+| base ブランチ | リポジトリの既定ブランチ、直近の PR の base（`gh pr list --state merged --limit 20 --json baseRefName`） |
+| ブランチ名の形式 | `git branch -r` の既存ブランチ名 |
+| PR タイトルの形式 | 直近の PR タイトル |
+| PR 作成前の手順 | lint・テスト・セルフレビューのコマンド（ユーザーに聞く） |
+
+書く内容の形:
 
 ```markdown
 ## 開発ワークフロー
 
-### フロー（この順番で行う）
+`/pr-process` で計画から PR 作成・コメント対応までを進める。個別には `/pr-plan` → `/pr-develop` → `/commit` → （作成前の手順）→ `/pr-create` の順。
 
-1. **計画** — `/pr-plan` で実装前に Issue を作成する（コードより意図を先に記録）
-2. **開始** — `/pr-develop #<番号>` でスコープを確認し feature ブランチを切る
-3. **実装** — コミットは意図単位で。`/commit` が複数意図を検出して分割を提案する
-4. **PR作成** — `/pr-create` で Issue と紐付けた PR body を自動生成する
-5. **レビュー** — `/pr-review #<番号>` でセルフレビューする
-
-### ルール
-
-- `main`/`master` への直接 commit/push は禁止（hook でブロックされる）
-- Issue なしでのコード実装は禁止
-- ブランチ名: `feature/#<issue番号>-<kebab-case>`
-- コミット形式: Conventional Commits（`feat(scope): subject`）
+- base ブランチ: <値>
+- ブランチ名: <形式>
+- PR タイトル: <形式>
+- PR 作成前の手順: <コマンドや skill>。PR を出してから自分の PR に指摘を投稿する形にはしない
 - スコープ外の作業が必要になったら実装を止め、新しい Issue を `/pr-plan` で作成する
 ```
 
-## Step 7: .claude/settings.json にプロジェクト固有 hook を提案
+コミットメッセージの様式は commit skill が既存のログから決めるので、ここには書かない。
+
+## Step 5: .claude/settings.json にプロジェクト固有 hook を提案
 
 lint・型チェックのコマンドをユーザーに確認し、`.claude/settings.json` を生成する。
 
@@ -154,29 +126,6 @@ lint・型チェックのコマンドをユーザーに確認し、`.claude/sett
 }
 ```
 
-## Step 8: セットアップ完了の報告
+## Step 6: 報告する
 
-```
-セットアップ完了:
-
-✓ .github/PULL_REQUEST_TEMPLATE.md
-✓ .github/ISSUE_TEMPLATE/plan.md
-✓ CLAUDE.md（ワークフローセクション追記）
-[✓ .claude/settings.json（lint hook）]
-
-使い方:
-  /pr-plan          — 実装前に Issue を作成
-  /pr-develop #<N>  — 開発セッション開始
-  /commit           — 意図単位でコミット
-  /pr-create        — PR を作成
-  /pr-review #<N>   — PR をレビュー
-```
-
-作成したファイルを git に追加するか確認する:
-
-```bash
-git add .github/PULL_REQUEST_TEMPLATE.md \
-        .github/ISSUE_TEMPLATE/plan.md \
-        CLAUDE.md \
-        .claude/settings.json 2>/dev/null || true
-```
+作成・追記したファイルと、CLAUDE.md に書いた値を一覧で報告する。作成したファイルを git に追加するかはユーザーに確認する。

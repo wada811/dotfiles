@@ -11,18 +11,16 @@ description: "今のブランチから PR を作る。push・正しい base の�
 
 ## Step 1: 前提を揃える
 
+- **既存の PR:** このブランチに PR がまだないことを `gh pr view` で確かめる。あれば作らずに伝える（本文を直すなら pr-body、状態を見るなら pr-status）。重複した PR は作成で失敗するため
 - **base:** プロジェクトの CLAUDE.md が決める base ブランチを使う。決めていなければリポジトリの既定ブランチ。`gh pr create` は `--base` を省くと既定ブランチに向けるので、必ず明示する
 - **作成前の手順:** CLAUDE.md が PR 作成前のセルフレビュー等を決めていれば、このセッションで済んでいるか確かめる。済んでいなければ、先に実行するかユーザーに聞く。作成後に自分の PR へ指摘を投稿する形にはしない
 - **Issue:** ブランチ名・コミット・会話に Issue があれば読む。なくても止まらない（背景の素材は pr-body が集める）
 
 ## Step 2: 本文を作る
 
-`pr-body` skill の新規モードで本文を作る。本文の規則は pr-body に従い、ここでは重ねて定義しない。Issue があれば素材として渡す:
+`pr-body` skill に、新規であることと Step 1 で決めた base を明示して本文を作らせる。明示しないと、pr-body は会話で扱っていた別の PR を更新対象にしうる。Issue があれば素材として渡し、どの節に何を置くかは pr-body に任せる。
 
-- 課題・解決策の意図とリンク（`Closes #<番号>`）→ 背景の役割の節
-- 「やらないこと」欄 → スコープ外の役割の節に引用する
-
-pr-body は本文を `tmp/pr-body-<branch>.md` に書き出したところで止まる。
+pr-body は本文を書き出したところで止まり、書き出し先のパスを報告する。以降はそのパスを使う。
 
 ## Step 3: タイトルを決める
 
@@ -42,7 +40,7 @@ CLAUDE.md に規則がなければ、`gh pr list --state all --limit 20` で既�
 未 push なら push してから作成する。push は取り消せないので、Step 4 の承認に含めた場合だけ行い、force push はしない。
 
 ```bash
-gh pr create --base <base> --title "<タイトル>" --body-file tmp/pr-body-<branch>.md --assignee "@me"
+gh pr create --base <base> --title "<タイトル>" --body-file <pr-body が報告したパス> --assignee "@me"
 ```
 
 ドラフトを求められたら `--draft` を足す。
