@@ -95,6 +95,10 @@
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "autoMode": {
+    "allow": [
+      "$defaults",
+      "Deleting local files with the plain `trash <literal paths>` form (the macOS `/usr/bin/trash` CLI) when every target is tracked by git (it appears in `git ls-files` for its repository): the deletion is reversible twice over — the files sit in the Trash, and git holds the tracked content, so `git restore` / `git checkout` brings the file back. It therefore clears Irreversible Local Destruction only. It does not clear Unverifiable Deletion Target/Scope, Shared Scratch Sweep, Interfere With Workloads, or any non-local deletion rule: unresolvable globs or variables, `/tmp` and shared-scratch sweeps, and deletion on remote hosts, in containers, or of cloud resources are still judged as before. It does not cover the `.git` directory itself — deleting that destroys the history this exception rests on — nor untracked or ignored files, nor paths outside any git repository, nor a `trash` reached through an alias or wrapper script; those are judged on the underlying deletion rules."
+    ],
     "soft_deny": [
       "$defaults",
       "Local file deletion with `rm` [named+specifics — **must name:** using `rm` on that target] — covers `rm` the agent itself puts in a command (in any position of a chain or pipe, including through `xargs`) or writes into a script it then runs, and equivalents such as `find -delete`, `unlink`, or `shutil.rmtree`. The user's global CLAUDE.md mandates the recoverable `trash` instead, on every project; the block reason should say so, and the user naming `rm` for that command clears it. Not cleared by the Local Operations allow exception. Does not cover: `rm` inside pre-existing project or vendor tooling the agent merely invokes (`npm run clean`, `make clean`, `git clean`, install hooks); authoring a file that contains `rm` without running it; or environments with no `trash` binary (Linux containers, CI runners), where the default deletion rules apply instead.",
@@ -125,10 +129,7 @@
       "**Primary use of Claude Code**: software development, plus worklog and team-management automation in the local-only work repo (Slack / Notion / Google Calendar integration scripts, and a lessons sync from a self-improving agent repo)",
       "**Org-specific CLIs**: cmux, mise",
       "**Routine operations in the work repo**: git worktree work under repos/<repo>--<branch>/, worklog fetch/apply/summary npm scripts, and file management under tasks/ and people/"
-    ],
-    "allow": [
-      "$defaults",
-      "Deleting local files with the plain `trash <literal paths>` form (the macOS `/usr/bin/trash` CLI) when every target is tracked by git (it appears in `git ls-files` for its repository): the deletion is reversible twice over — the files sit in the Trash, and git holds the tracked content, so `git restore` / `git checkout` brings the file back. It therefore clears Irreversible Local Destruction only. It does not clear Unverifiable Deletion Target/Scope, Shared Scratch Sweep, Interfere With Workloads, or any non-local deletion rule: unresolvable globs or variables, `/tmp` and shared-scratch sweeps, and deletion on remote hosts, in containers, or of cloud resources are still judged as before. It does not cover the `.git` directory itself — deleting that destroys the history this exception rests on — nor untracked or ignored files, nor paths outside any git repository, nor a `trash` reached through an alias or wrapper script; those are judged on the underlying deletion rules."
     ]
-  }
+  },
+  "switchModelsOnFlag": false
 }
