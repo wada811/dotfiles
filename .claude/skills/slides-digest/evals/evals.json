@@ -4,7 +4,7 @@
     {
       "id": 0,
       "name": "url-direct",
-      "prompt": "https://speakerdeck.com/yanzm/nav2-nav3-dot-dot-dot-or-build-your-own-understanding-nav3-s-design-intent-by-building-it-from-scratch これ DroidKaigi の Nav3 のやつなんだけど現地行けてなくて。読んで内容まとめといて。あとで android-app の Navigation どうするか考えるときに見返したい",
+      "prompt": "https://speakerdeck.com/yanzm/nav2-nav3-dot-dot-dot-or-build-your-own-understanding-nav3-s-design-intent-by-building-it-from-scratch これ DroidKaigi の Nav3 のやつなんだけど現地行けてなくて。読んで内容まとめといて。あとで自分のアプリの Navigation どうするか考えるときに見返したい",
       "expected_output": "資料全体から抽出した主張を見出しにして、裏づけスライド画像を貼った markdown。画像の描写や散文の段落がない",
       "files": [],
       "assertions": [

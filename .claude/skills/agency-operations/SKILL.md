@@ -68,9 +68,9 @@ agent pane は**閉じれば dashboard 監視ループが自動 prune** する(t
 
 ---
 
-## agency agent が実リポに PR を出す手順(android-app PR 分割作業の知見)
+## agency agent が実リポに PR を出す手順(Android アプリの PR 分割作業の知見)
 
-**用途:** agency の agent pane が実リポ(例 android-app)で元 PR を分割し、cherry-pick → 専用 worktree → draft PR → レビュー/CI 対応 → 人間承認後 merge まで回すとき。下記は 2026-06-10 の PR-1(共通クラスを共通モジュールへ移動)セッションで得た教訓。失敗も含む。
+**用途:** agency の agent pane が実リポ(例 社内の Android アプリ)で元 PR を分割し、cherry-pick → 専用 worktree → draft PR → レビュー/CI 対応 → 人間承認後 merge まで回すとき。下記は 2026-06-10 の PR-1(共通クラスを共通モジュールへ移動)セッションで得た教訓。失敗も含む。
 
 ### 7. push 済みブランチへの修正は「追加コミット」で。force push しない
 CI 指摘(spotless 等)やレビュー対応でコミットを直したくなっても、`git commit --amend` + `git push --force-with-lease` は**禁止**。
@@ -86,7 +86,7 @@ push / PR 作成の直後に worktree を撤去しない。**merge 完了後・�
 - **なぜ:** PR 作成は作業の終点ではなく、レビュー往復の起点。最初の指示に「push 後撤去可」とあっても、実運用ではユーザーは merge までの残置を期待する。
 
 ### 9. ホスト固有の壊れた CLI は REST API で迂回する
-android-app では `gh pr edit`(assignee / reviewer / body の編集)が **Projects classic 廃止由来の `projectCards` GraphQL エラー**で失敗する。
+ある社内リポジトリでは `gh pr edit`(assignee / reviewer / body の編集)が **Projects classic 廃止由来の `projectCards` GraphQL エラー**で失敗する。
 
 - assignee: `gh api -X POST /repos/<owner>/<repo>/issues/<n>/assignees -f "assignees[]=<user>"`
 - team reviewer: `gh api -X POST /repos/<owner>/<repo>/pulls/<n>/requested_reviewers -f "team_reviewers[]=<team>"`
@@ -106,7 +106,7 @@ merge・共有チャンネルへの投稿・リモートブランチ削除など
 - 宛先(サブチーム ID・チャンネル)や定型文は、チャンネルの**直近の同種投稿を読んで確認**してから送る。複数の似たグループがあるときは特に。
 - **なぜ:** 「レビュー依頼っぽい投稿」を 1 件だけ真似ると、用途違いの狭いグループを誤って叩く。送信は外向きで、間違えるとユーザーが手で直す手間を生む。
 
-**取り込み経緯(第2ブロック):** 2026-06-10 の android-app PR-1 分割セッション(agency agent 視点)で得た転用可能な運用教訓。force push 叱責・projectCards 迂回・Slack 宛先誤り等の実体験が出典。文書作成系 eval では測れないため eval/evolve ループは起動せず、`ingest`(eval ゲート)→ 人間 merge を前提とする。
+**取り込み経緯(第2ブロック):** 2026-06-10 の Android アプリの PR-1 分割セッション(agency agent 視点)で得た転用可能な運用教訓。force push 叱責・projectCards 迂回・Slack 宛先誤り等の実体験が出典。文書作成系 eval では測れないため eval/evolve ループは起動せず、`ingest`(eval ゲート)→ 人間 merge を前提とする。
 
 ---
 
@@ -118,7 +118,7 @@ merge・共有チャンネルへの投稿・リモートブランチ削除など
 クラス名 grep で呼出し元を洗っても、レイアウト内の **view id**(例 `next_button`)を参照するコードは見つからない。レイアウトを別モジュールへ移すと、その id は non-transitive R により**元モジュールの R から消え**、`R.id.xxx` を使うテストが `Unresolved reference` で壊れる。
 
 - 移設時は「クラス名」に加え、**移動した R リソース名(id / layout / menu / string / drawable)**と**生成 databinding クラス名**でも全 repo grep する。
-- アプリモジュールが複数ある場合(例 `:app` と `:app-<product>`)、片方だけ見て他方のテストを見落とさない。壊れた参照は別モジュールの test 配下にいることがある。
+- アプリモジュールが複数ある場合(例 `:app` と製品別の `:app-<product>`)、片方だけ見て他方のテストを見落とさない。壊れた参照は別モジュールの test 配下にいることがある。
 - 直し方: 壊れたテストの R import を移設先モジュールの R に向ける(依存が既に通っていれば追加 build.gradle 不要)。
 - **なぜ:** 移設の破壊は「参照の名前」が多様(クラス名・リソース id・レイアウト名・databinding 名)で、1 種類の grep では取りこぼす。compile が通っても run 時/別モジュールで露見する。
 
@@ -126,7 +126,7 @@ merge・共有チャンネルへの投稿・リモートブランチ削除など
 Gradle のビルドキャッシュヒットで `compileDebugKotlin` が exit 0 を返し、実際のコンパイル破綻を隠していた。`--rerun-tasks` で実コンパイルすると FAILED。
 
 - 「緑だから OK」と報告する前に、**重要な検証はクリーン再実行(`--rerun-tasks` 等)で裏取り**する。特に直前に状態を変えた直後の最初の成功は疑う。
-- ローカルで再現できない領域(secrets 必須のアプリモジュール等。例 `:app-<product>` は `secrets.properties` 必須でローカル config 不可)は**最初から「CI に委ねる」と宣言**し、緑を断定しない。
+- ローカルで再現できない領域(secrets 必須のアプリモジュール等。例 製品別のアプリモジュールは `secrets.properties` 必須でローカル config 不可)は**最初から「CI に委ねる」と宣言**し、緑を断定しない。
 - **なぜ:** キャッシュは入力ハッシュ一致で過去の成功を返すため、未検証の変更でも見かけ上 success になる。偽の安心は「直したつもり」を生む。
 
 ### 14. cherry-pick で「移動」を再現するときは、指定コミットの後ろの修正コミットまで確認する
@@ -139,7 +139,7 @@ Gradle のビルドキャッシュヒットで `compileDebugKotlin` が exit 0 �
 ### 15. 「レビュー依頼」の既定は GitHub team の reviewer 追加。Slack は明示時のみ
 PR-1 の #11 を更新。「android team にレビュー依頼」と言われたら、既定は **GitHub team を PR の reviewer に追加**すること(REST `POST /pulls/<n>/requested_reviewers -f "team_reviewers[]=android"`)。
 
-- **Slack へのレビュー依頼投稿は、明示的に「Slack で」と言われた時だけ**行う。勝手に チームのチャンネル へメンションしない(PR-3 で Slack に投稿したが、望まれていたのは GitHub team reviewer だった)。
+- **Slack へのレビュー依頼投稿は、明示的に「Slack で」と言われた時だけ**行う。勝手にチームの Slack チャンネルへメンションしない(PR-3 で Slack に投稿したが、望まれていたのは GitHub team reviewer だった)。
 - **なぜ:** 依頼の宛先は「どの面で追跡したいか」の運用判断。既定面(GitHub)を外して別チャネル(Slack)に出すと、二重依頼・追跡漏れになる。送信は外向きで巻き戻しにくい。
 
-**取り込み経緯(第3ブロック):** 2026-06-10 の android-app PR-3 分割セッション(agency agent 視点)。ローカル緑なのに CI 赤(別モジュール `:app-<product>` のテストが移動した layout の id を参照)・キャッシュヒットによる偽の compile 成功・cherry-pick が壊れた中間状態を再現・レビュー依頼先の誤り(Slack→GitHub team)が出典。文書作成系 eval では測れないため `ingest`(eval ゲート)→ 人間 merge を前提とする。
+**取り込み経緯(第3ブロック):** 2026-06-10 の Android アプリの PR-3 分割セッション(agency agent 視点)。ローカル緑なのに CI 赤(別のアプリモジュールのテストが移動した layout の id を参照)・キャッシュヒットによる偽の compile 成功・cherry-pick が壊れた中間状態を再現・レビュー依頼先の誤り(Slack→GitHub team)が出典。文書作成系 eval では測れないため `ingest`(eval ゲート)→ 人間 merge を前提とする。
