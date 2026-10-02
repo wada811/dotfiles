@@ -90,10 +90,10 @@
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {},
-  "outputStyle": "fable-like",
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "switchModelsOnFlag": false,
   "autoMode": {
     "allow": [
       "$defaults",
@@ -130,6 +130,5 @@
       "**Org-specific CLIs**: cmux, mise",
       "**Routine operations in the work repo**: git worktree work under repos/<repo>--<branch>/, worklog fetch/apply/summary npm scripts, and file management under tasks/ and people/"
     ]
-  },
-  "switchModelsOnFlag": false
+  }
 }
