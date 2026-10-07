@@ -1,0 +1,170 @@
+#!/usr/bin/env python3
+"""cmux の surface のうち claude が動いた（動いている）ものを一覧する。
+
+usage: cmux-claude-ls [--json]
+
+対象は `cmux surface resume show` に claude の再開記録がある surface。
+claude が終わった後のタブも「stopped」として出し、ただのシェルのタブは出さない。
+surface とセッションの対応は再開記録の checkpoint_id を正にする
+（cmux tree の tty は閉じた後も残り、別のタブで使い回されることがあるため使わない）。
+"""
+import glob
+import json
+import os
+import subprocess
+import sys
+import time
+import unicodedata
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime
+
+HOME = os.path.expanduser("~")
+TAIL_BYTES = 512 * 1024
+
+
+def cmux_json(*args):
+    out = subprocess.run(["cmux", *args, "--json"], capture_output=True, text=True)
+    if out.returncode != 0:
+        return None
+    try:
+        return json.loads(out.stdout)
+    except json.JSONDecodeError:
+        return None
+
+
+def list_surfaces():
+    tree = cmux_json("tree", "--all")
+    if tree is None:
+        sys.exit("cmux-claude-ls: cmux tree が取れない（cmux が起動していない？）")
+    for win in tree.get("windows", []):
+        for ws in win.get("workspaces", []):
+            for pane in ws.get("panes", []):
+                for s in pane.get("surfaces", []):
+                    if s.get("type") == "terminal":
+                        yield {
+                            "window": win.get("ref"),
+                            "workspace": ws.get("ref"),
+                            "workspace_title": ws.get("title"),
+                            "surface": s.get("ref"),
+                            "title": s.get("title"),
+                        }
+
+
+def restore_record(row):
+    r = cmux_json("surface", "resume", "show", "--window", row["window"],
+                  "--workspace", row["workspace"], "--surface", row["surface"])
+    rec = (r or {}).get("restore_record")
+    if rec and rec.get("kind") == "claude" and rec.get("checkpoint_id"):
+        return rec
+    return None
+
+
+def live_sessions():
+    """sessionId → ~/.claude/sessions/<pid>.json（プロセスが生きているものだけ）"""
+    by_sid = {}
+    for path in glob.glob(f"{HOME}/.claude/sessions/*.json"):
+        try:
+            meta = json.load(open(path))
+            os.kill(int(meta["pid"]), 0)
+        except (OSError, ValueError, KeyError, json.JSONDecodeError):
+            continue
+        sid = meta.get("sessionId")
+        if sid and meta.get("updatedAt", 0) >= by_sid.get(sid, {}).get("updatedAt", 0):
+            by_sid[sid] = meta
+    return by_sid
+
+
+def last_timestamp(path):
+    """JSONL の最後の timestamp。ファイルの mtime は中身が変わらなくても
+    一斉に新しくなることがあるため使わない（timestamp が無いときだけ使う）。"""
+    with open(path, "rb") as f:
+        f.seek(max(0, os.path.getsize(path) - TAIL_BYTES))
+        lines = f.read().decode("utf-8", "ignore").splitlines()
+    for line in reversed(lines):
+        try:
+            ts = json.loads(line).get("timestamp")
+        except (json.JSONDecodeError, AttributeError):
+            continue
+        if ts:
+            try:
+                return int(datetime.fromisoformat(ts.replace("Z", "+00:00")).timestamp())
+            except ValueError:
+                pass
+    return int(os.path.getmtime(path))
+
+
+def describe(row, rec, live):
+    sid = rec["checkpoint_id"]
+    meta = live.get(sid)
+    paths = glob.glob(f"{HOME}/.claude/projects/*/{sid}.jsonl")
+    jsonl = max(paths, key=os.path.getmtime) if paths else None
+    row.update(
+        state=meta.get("status", "unknown") if meta else "stopped",
+        updated=last_timestamp(jsonl) if jsonl else None,
+        cwd=(meta or {}).get("cwd") or (rec.get("launch_command") or {}).get("working_directory"),
+        session=sid,
+        pid=meta.get("pid") if meta else None,
+        jsonl=jsonl,
+    )
+    return row
+
+
+def width(s):
+    return sum(2 if unicodedata.east_asian_width(c) in "WF" else 1 for c in s)
+
+
+def fit(s, w):
+    s = " ".join((s or "").split())
+    if width(s) > w:
+        while s and width(s) > w - 1:
+            s = s[:-1]
+        s += "…"
+    return s + " " * (w - width(s))
+
+
+def ago(ts):
+    if ts is None:
+        return "-"
+    d = time.time() - ts
+    for unit, sec in (("d", 86400), ("h", 3600), ("m", 60)):
+        if d >= sec:
+            return f"{int(d // sec)}{unit}"
+    return "now"
+
+
+def num(ref):
+    return (ref or "").split(":")[-1]
+
+
+def print_table(rows):
+    cols = [("WS#", 4), ("WORKSPACE", 18), ("SURFACE#", 8), ("SURFACE", 32),
+            ("CWD", 28), ("STATE", 8), ("AGE", 4)]
+    print("  ".join(fit(n, w) for n, w in cols).rstrip())
+    for r in rows:
+        cwd = (r["cwd"] or "").replace(HOME, "~")
+        vals = [num(r["workspace"]), r["workspace_title"], num(r["surface"]), r["title"],
+                cwd, r["state"], ago(r["updated"])]
+        print("  ".join(fit(v, w) for v, (_, w) in zip(vals, cols)).rstrip())
+
+
+def main():
+    args = sys.argv[1:]
+    if args and args[0] in ("-h", "--help"):
+        print(__doc__.strip())
+        return
+    if args and args != ["--json"]:
+        sys.exit(f"cmux-claude-ls: 不明な引数: {' '.join(args)}")
+    surfaces = list(list_surfaces())
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        recs = list(pool.map(restore_record, surfaces))
+    live = live_sessions()
+    rows = [describe(s, r, live) for s, r in zip(surfaces, recs) if r]
+    if args == ["--json"]:
+        json.dump(rows, sys.stdout, ensure_ascii=False, indent=1)
+        print()
+    else:
+        print_table(rows)
+
+
+if __name__ == "__main__":
+    main()
