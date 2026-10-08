@@ -11,6 +11,9 @@ context_window_size=$(printf "%s" "$input" | jq -r '.context_window.context_wind
 rate_5h_pct=$(printf "%s" "$input" | jq -r '.rate_limits.five_hour.used_percentage // 0 | floor')
 rate_7d_pct=$(printf "%s" "$input" | jq -r '.rate_limits.seven_day.used_percentage // 0 | floor')
 
+# 他のセッション・スクリプトが使用率を読めるよう最新値を残す（statusline 以外に取得口がないため）
+printf "%s" "$input" | jq -c '.rate_limits // empty' > "${TMPDIR:-/tmp}/claude-rate-limits.json" 2>/dev/null
+
 # ── cmux workspace / surface info ───────────────────────────────────────────────
 # cmux tree | grep "◀ active" でアクティブパスを取得し、メタデータを除去して
 # "window:N | workspace:N NAME | pane:N | surface:N NAME" 形式に整形
