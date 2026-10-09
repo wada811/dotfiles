@@ -197,11 +197,6 @@ if [ "$rate_5h_pct" -gt 0 ] || [ "$rate_7d_pct" -gt 0 ]; then
     l5=$(( rate_5h_reset - $(date +%s) )); [ "$l5" -lt 0 ] && l5=0
     r5="${r5} ${dim}$((l5 / 3600))h$(( l5 % 3600 / 60 ))m${reset}"
   fi
-  # 7d のリセットは普段 金曜 08:00 なので、それ以外のときだけ日時を出す
-  if [ "$rate_7d_reset" -gt 0 ]; then
-    r7_at=$(LC_ALL=ja_JP.UTF-8 date -r "$rate_7d_reset" '+%a%H:%M')
-    [ "$r7_at" != "金08:00" ] && r7="${r7} ${dim}${r7_at}${reset}"
-  fi
   line3="${line3} ${dim}|${reset} ${r5} ${dim}|${reset} ${r7}"
 fi
 [ -n "$line3" ] && printf "%b\n" "$line3"
