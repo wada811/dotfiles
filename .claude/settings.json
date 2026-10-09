@@ -62,18 +62,6 @@
         ]
       }
     ],
-    "PostToolUse": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/delegate-reminder.sh",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -102,6 +90,7 @@
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {},
+  "autoCompactWindow": 200000,
   "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
