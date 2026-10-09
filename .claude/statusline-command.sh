@@ -169,9 +169,9 @@ if [ "$ctx_pct" -gt 0 ]; then
     line3="$ctx_str"
   fi
 fi
-# ── 枠の使用率バー: rate_bar_str <使用%> <ラベル> <resets_at> <枠の秒数> <余り警告を出す残り秒数> ──
+# ── 枠の使用率バー: rate_bar_str <使用%> <ラベル> <resets_at> <枠の秒数> ──
 # バーに枠の経過時間の位置を ┃ で立て、使用率がそれより 10% 以上先なら赤（使い切るペース）、
-# リセットが近いのに 10% 以上遅れていれば青（余らせるペース）、それ以外は緑にする。
+# 10% 以上遅れていれば青（余裕がある）、それ以外は緑（ペースどおり）にする。
 rate_bar_str() {
   pct=$(printf "%d" "${1:-0}" 2>/dev/null || printf "0")
   now=$(date +%s)
@@ -180,7 +180,7 @@ rate_bar_str() {
   elapsed=$(( (${4} - left) * 100 / ${4} ))
   if [ "${3:-0}" -le 0 ]; then c="$green"; elapsed=-1
   elif [ "$pct" -gt $((elapsed + 10)) ]; then c="$red"
-  elif [ "$left" -lt "$5" ] && [ "$pct" -lt $((elapsed - 10)) ]; then c="$blue"
+  elif [ "$pct" -lt $((elapsed - 10)) ]; then c="$blue"
   else c="$green"; fi
   bar=$(awk -v used="$pct" -v mark="$elapsed" -v width=10 'BEGIN {
     filled = int(used * width / 100); if (filled > width) filled = width
@@ -190,8 +190,8 @@ rate_bar_str() {
   printf "%s [%s%s%s] %s[%d%%]%s" "$2" "$c" "$bar" "$reset" "$bold" "$pct" "$reset"
 }
 if [ "$rate_5h_pct" -gt 0 ] || [ "$rate_7d_pct" -gt 0 ]; then
-  r5=$(rate_bar_str "$rate_5h_pct" "5h:" "$rate_5h_reset" 18000 3600)
-  r7=$(rate_bar_str "$rate_7d_pct" "7d:" "$rate_7d_reset" 604800 86400)
+  r5=$(rate_bar_str "$rate_5h_pct" "5h:" "$rate_5h_reset" 18000)
+  r7=$(rate_bar_str "$rate_7d_pct" "7d:" "$rate_7d_reset" 604800)
   # 5h はリセットまでの残り時間を出す
   if [ "$rate_5h_reset" -gt 0 ]; then
     l5=$(( rate_5h_reset - $(date +%s) )); [ "$l5" -lt 0 ] && l5=0
