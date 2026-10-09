@@ -168,6 +168,7 @@ for skill_dir in "${DOTFILES_DIR}/.claude/skills"/*/; do
   ln -sfn "${DOTFILES_DIR}/.claude/skills/${skill_name}" "${HOME}/.claude/skills/${skill_name}"
 done
 link ".claude/hooks"  "${HOME}/.claude/hooks"
+link ".claude/agents" "${HOME}/.claude/agents"
 ok "dotfiles の symlink が完了"
 
 # ---- 5.6 diff-highlight の symlink ----
