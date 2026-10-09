@@ -15,7 +15,5 @@ session_id=$(printf "%s" "$input" | jq -r '.session_id // ""' 2>/dev/null)
 [ -z "$session_id" ] && session_id="$CLAUDE_CODE_SESSION_ID"
 if [ -n "$session_id" ]; then
   rm -f "${TMPDIR:-/tmp}/claude-compact-warn/${session_id}" "${TMPDIR:-/tmp}/claude-compact-warned/${session_id}" 2>/dev/null
-  # delegate-reminder.sh も同じく再アームする
-  rm -f "${TMPDIR:-/tmp}/claude-delegate-warned/${session_id}" 2>/dev/null
 fi
 exit 0
