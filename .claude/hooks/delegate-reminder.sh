@@ -16,9 +16,13 @@ transcript=$(printf "%s" "$input" | jq -r '.transcript_path // ""' 2>/dev/null)
 marker="${TMPDIR:-/tmp}/claude-delegate-warned/${session_id}"
 [ -f "$marker" ] && exit 0
 
+# compact 直後は、圧縮後の最初の応答がまだ transcript に書かれておらず、圧縮前の usage を
+# 読んでしまう。最後の compact_boundary より後の行だけを見る。
 ctx=$(tail -n 60 "$transcript" \
-  | jq -r 'select(.type == "assistant") | .message.usage // empty
-           | (.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)' 2>/dev/null \
+  | jq -rs '(map(.subtype == "compact_boundary") | rindex(true)) as $b
+            | (if $b == null then . else .[$b + 1:] end)[]
+            | select(.type == "assistant") | .message.usage // empty
+            | (.input_tokens // 0) + (.cache_creation_input_tokens // 0) + (.cache_read_input_tokens // 0)' 2>/dev/null \
   | tail -n 1)
 [ -z "$ctx" ] && exit 0
 [ "$ctx" -lt "$threshold" ] && exit 0
