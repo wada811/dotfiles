@@ -188,15 +188,16 @@ rate_bar_str() {
     for (i = 0; i < width; i++) printf "%s", (i == m) ? "┃" : (i < filled ? "█" : "░")
   }')
   printf "%s [%s%s%s] %s[%d%%]%s" "$2" "$c" "$bar" "$reset" "$bold" "$pct" "$reset"
+  # 経過時間を「経過/枠の長さ(経過%)」で添え、使用率と同じ向きの数字で比べられるようにする
+  [ "$elapsed" -lt 0 ] && return
+  e=$(( $4 - left ))
+  if [ "$4" -ge 86400 ]; then e_str="$((e / 86400))d$(( e % 86400 / 3600 ))h"
+  else e_str="$((e / 3600))h$(( e % 3600 / 60 ))m"; fi
+  printf " %s%s%s(%d%%)%s" "$dim" "$e_str" "/${2%:}" "$elapsed" "$reset"
 }
 if [ "$rate_5h_pct" -gt 0 ] || [ "$rate_7d_pct" -gt 0 ]; then
   r5=$(rate_bar_str "$rate_5h_pct" "5h:" "$rate_5h_reset" 18000)
   r7=$(rate_bar_str "$rate_7d_pct" "7d:" "$rate_7d_reset" 604800)
-  # 5h はリセットまでの残り時間を出す
-  if [ "$rate_5h_reset" -gt 0 ]; then
-    l5=$(( rate_5h_reset - $(date +%s) )); [ "$l5" -lt 0 ] && l5=0
-    r5="${r5} ${dim}$((l5 / 3600))h$(( l5 % 3600 / 60 ))m${reset}"
-  fi
   line3="${line3} ${dim}|${reset} ${r5} ${dim}|${reset} ${r7}"
 fi
 [ -n "$line3" ] && printf "%b\n" "$line3"
