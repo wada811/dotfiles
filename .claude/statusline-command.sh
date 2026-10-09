@@ -10,6 +10,8 @@ ctx_pct_raw=$(printf "%s" "$input" | jq -r '.context_window.used_percentage // 0
 context_window_size=$(printf "%s" "$input" | jq -r '.context_window.context_window_size // 200000')
 rate_5h_pct=$(printf "%s" "$input" | jq -r '.rate_limits.five_hour.used_percentage // 0 | floor')
 rate_7d_pct=$(printf "%s" "$input" | jq -r '.rate_limits.seven_day.used_percentage // 0 | floor')
+rate_5h_reset=$(printf "%s" "$input" | jq -r '.rate_limits.five_hour.resets_at // 0 | floor')
+rate_7d_reset=$(printf "%s" "$input" | jq -r '.rate_limits.seven_day.resets_at // 0 | floor')
 
 # 他のセッション・スクリプトが使用率を読めるよう最新値を残す（statusline 以外に取得口がないため）
 printf "%s" "$input" | jq -c '.rate_limits // empty' > "${TMPDIR:-/tmp}/claude-rate-limits.json" 2>/dev/null
@@ -41,6 +43,7 @@ cyan="\033[36m"
 green="\033[32m"
 yellow="\033[33m"
 red="\033[31m"
+blue="\033[34m"
 
 # ── Draw progress bar: draw_bar <used> <total> [width=20] ──────────────────────
 draw_bar() {
@@ -166,17 +169,39 @@ if [ "$ctx_pct" -gt 0 ]; then
     line3="$ctx_str"
   fi
 fi
+# ── 枠の使用率バー: rate_bar_str <使用%> <ラベル> <resets_at> <枠の秒数> <余り警告を出す残り秒数> ──
+# バーに枠の経過時間の位置を ┃ で立て、使用率がそれより 10% 以上先なら赤（使い切るペース）、
+# リセットが近いのに 10% 以上遅れていれば青（余らせるペース）、それ以外は緑にする。
 rate_bar_str() {
   pct=$(printf "%d" "${1:-0}" 2>/dev/null || printf "0")
-  if [ "$pct" -gt 80 ]; then c="$red"
-  elif [ "$pct" -gt 50 ]; then c="$yellow"
+  now=$(date +%s)
+  left=$(( ${3:-0} - now ))
+  [ "$left" -lt 0 ] && left=0
+  elapsed=$(( (${4} - left) * 100 / ${4} ))
+  if [ "${3:-0}" -le 0 ]; then c="$green"; elapsed=-1
+  elif [ "$pct" -gt $((elapsed + 10)) ]; then c="$red"
+  elif [ "$left" -lt "$5" ] && [ "$pct" -lt $((elapsed - 10)) ]; then c="$blue"
   else c="$green"; fi
-  bar=$(draw_bar "$pct" 100 10)
+  bar=$(awk -v used="$pct" -v mark="$elapsed" -v width=10 'BEGIN {
+    filled = int(used * width / 100); if (filled > width) filled = width
+    m = (mark < 0) ? -1 : int(mark * width / 100); if (m >= width) m = width - 1
+    for (i = 0; i < width; i++) printf "%s", (i == m) ? "┃" : (i < filled ? "█" : "░")
+  }')
   printf "%s [%s%s%s] %s[%d%%]%s" "$2" "$c" "$bar" "$reset" "$bold" "$pct" "$reset"
 }
 if [ "$rate_5h_pct" -gt 0 ] || [ "$rate_7d_pct" -gt 0 ]; then
-  r5=$(rate_bar_str "$rate_5h_pct" "5h:")
-  r7=$(rate_bar_str "$rate_7d_pct" "7d:")
+  r5=$(rate_bar_str "$rate_5h_pct" "5h:" "$rate_5h_reset" 18000 3600)
+  r7=$(rate_bar_str "$rate_7d_pct" "7d:" "$rate_7d_reset" 604800 86400)
+  # 5h はリセットまでの残り時間を出す
+  if [ "$rate_5h_reset" -gt 0 ]; then
+    l5=$(( rate_5h_reset - $(date +%s) )); [ "$l5" -lt 0 ] && l5=0
+    r5="${r5} ${dim}$((l5 / 3600))h$(( l5 % 3600 / 60 ))m${reset}"
+  fi
+  # 7d のリセットは普段 金曜 08:00 なので、それ以外のときだけ日時を出す
+  if [ "$rate_7d_reset" -gt 0 ]; then
+    r7_at=$(LC_ALL=ja_JP.UTF-8 date -r "$rate_7d_reset" '+%a%H:%M')
+    [ "$r7_at" != "金08:00" ] && r7="${r7} ${dim}${r7_at}${reset}"
+  fi
   line3="${line3} ${dim}|${reset} ${r5} ${dim}|${reset} ${r7}"
 fi
 [ -n "$line3" ] && printf "%b\n" "$line3"
