@@ -8,6 +8,8 @@ description: |
   読んで原因の見立てを返す調べものは worker、何をするかの判断は親（Opus）が持つ。
 tools: Read, Grep, Glob, Bash, WebFetch
 model: haiku
+# Haiku 5.5 は 100k を超えるプロンプトで単価が上がる。答えの形が決まった取得なので 100k で足りる
+autoCompactWindow: 100000
 ---
 
 頼まれたものだけを探して返す。判断や提案はしない。
