@@ -170,8 +170,9 @@ if [ "$ctx_pct" -gt 0 ]; then
   fi
 fi
 # ── 枠の使用率バー: rate_bar_str <使用%> <ラベル> <resets_at> <枠の秒数> ──
-# バーに枠の経過時間の位置を ┃ で立て、使用率がそれより 10% 以上先なら赤（使い切るペース）、
-# 10% 以上遅れていれば青（余裕がある）、それ以外は緑（ペースどおり）にする。
+# バーに枠の経過時間の位置を ┃ で立て、「残り枠 ÷ 残り時間」（この先使ってよいペースが平均の何倍か）で色を決める。
+# 1.2 超は青（余裕）、使用率 ≦ 経過は緑、0.8 以上は黄（やや速い）、0.8 未満は赤（このままでは尽きる）。
+# 差を固定幅で見ると、終わりぎわの 97%/95% を見逃し、開始直後の小さな先行を赤にしてしまうため比で見る。
 rate_bar_str() {
   pct=$(printf "%d" "${1:-0}" 2>/dev/null || printf "0")
   now=$(date +%s)
@@ -179,9 +180,12 @@ rate_bar_str() {
   [ "$left" -lt 0 ] && left=0
   elapsed=$(( (${4} - left) * 100 / ${4} ))
   if [ "${3:-0}" -le 0 ]; then c="$green"; elapsed=-1
-  elif [ "$pct" -gt $((elapsed + 10)) ]; then c="$red"
-  elif [ "$pct" -lt $((elapsed - 10)) ]; then c="$blue"
-  else c="$green"; fi
+  elif [ "$pct" -ge 100 ]; then c="$red"
+  elif [ "$elapsed" -ge 100 ]; then c="$green"
+  elif [ $((100 * (100 - pct))) -gt $((120 * (100 - elapsed))) ]; then c="$blue"
+  elif [ "$pct" -le "$elapsed" ]; then c="$green"
+  elif [ $((100 * (100 - pct))) -ge $((80 * (100 - elapsed))) ]; then c="$yellow"
+  else c="$red"; fi
   bar=$(awk -v used="$pct" -v mark="$elapsed" -v width=10 'BEGIN {
     filled = int(used * width / 100); if (filled > width) filled = width
     m = (mark < 0) ? -1 : int(mark * width / 100); if (m >= width) m = width - 1
