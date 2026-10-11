@@ -27,7 +27,7 @@ if echo "$cmd" | grep -qE 'git (commit|push)'; then
     case "$repo_root" in
       */dotfiles) exit 0 ;;
       */work) exit 0 ;;
-      */cmux-claude-ls) exit 0 ;;
+      */cmux-list-claude-sessions) exit 0 ;;
       */homebrew-tap) exit 0 ;;
     esac
     echo '{"decision":"block","reason":"main/master への直接 commit/push は禁止です。/pr-develop #<issue番号> でブランチを切ってから作業してください。"}'

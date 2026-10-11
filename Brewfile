@@ -7,7 +7,7 @@
 # Taps
 # ============================================================
 tap "manaflow-ai/cmux"             # cmux ターミナル
-tap "wada811/tap"                  # 自作ツール (cmux-claude-ls 等)
+tap "wada811/tap"                  # 自作ツール (cmux-list-claude-sessions 等)
 
 # ============================================================
 # CLI: シェル環境
@@ -71,7 +71,7 @@ brew "ffmpeg"
 cask "visual-studio-code"
 # cask "coteditor"                 # 軽量テキストエディタ (wada811 採用)
 cask "cmux"                        # Ghostty ベースのターミナル (iTerm2 の代替)
-cask "wada811/tap/cmux-claude-ls"  # cmux の claude タブ一覧
+cask "wada811/tap/cmux-list-claude-sessions"  # cmux の claude タブ一覧
 cask "google-chrome"
 # cask "firefox"
 
