@@ -7,6 +7,7 @@
 # Taps
 # ============================================================
 tap "manaflow-ai/cmux"             # cmux ターミナル
+tap "wada811/tap"                  # 自作ツール (cmux-claude-ls 等)
 
 # ============================================================
 # CLI: シェル環境
@@ -15,6 +16,7 @@ brew "zsh"
 brew "zsh-completions"
 brew "peco"                        # インタラクティブ絞り込み (zsh peco-scripts で使用)
 brew "terminal-notifier"           # 通知
+brew "wada811/tap/cmux-claude-ls"  # cmux の claude タブ一覧
 
 # ============================================================
 # CLI: Git
