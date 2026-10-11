@@ -16,7 +16,6 @@ brew "zsh"
 brew "zsh-completions"
 brew "peco"                        # インタラクティブ絞り込み (zsh peco-scripts で使用)
 brew "terminal-notifier"           # 通知
-brew "wada811/tap/cmux-claude-ls"  # cmux の claude タブ一覧
 
 # ============================================================
 # CLI: Git
@@ -72,6 +71,7 @@ brew "ffmpeg"
 cask "visual-studio-code"
 # cask "coteditor"                 # 軽量テキストエディタ (wada811 採用)
 cask "cmux"                        # Ghostty ベースのターミナル (iTerm2 の代替)
+cask "wada811/tap/cmux-claude-ls"  # cmux の claude タブ一覧
 cask "google-chrome"
 # cask "firefox"
 
