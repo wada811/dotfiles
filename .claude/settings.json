@@ -10,11 +10,6 @@
             "type": "command",
             "command": "node ~/.claude/hooks/coach-report.ts --session-start",
             "timeout": 10
-          },
-          {
-            "type": "command",
-            "command": "bash ~/.claude/hooks/session-surface-map.sh",
-            "timeout": 8
           }
         ]
       },
