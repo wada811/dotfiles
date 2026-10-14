@@ -1,6 +1,7 @@
 {
   "env": {
-    "COACH_HOLDOUT": "0.3"
+    "COACH_HOLDOUT": "0.3",
+    "CLAUDE_CODE_IDLE_COMPACT_MIN_TOKENS": "150000"
   },
   "hooks": {
     "SessionStart": [
