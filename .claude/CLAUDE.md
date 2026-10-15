@@ -10,6 +10,9 @@
 - **`for` ループより個別 Bash call を優先**: 複数要素の並列処理は subagent（Agent tool）で行う
 - **`rm` 禁止・`trash` を使う**: ファイル削除は `rm` ではなく `trash` コマンドを使う（macOS 同梱の `/usr/bin/trash`。Brewfile には入っていない）
 - **`npx` 不在時は `mise exec -- npx` にフォールバック**: mise 経由のコマンドは非インタラクティブシェルでは PATH が通らないため
+- **`*`・`?`・`[` を含む引数はクォートする**: `--include='*.kt'`、クエリ付き URL など。zsh がグロブ展開し、一致なしだと `no matches found` で失敗して後ろのコマンドの出力も読めなくなる
+- **出力の区切りは `echo '---'`**: `echo ===` は zsh の `=cmd` 展開で `=== not found` になり失敗する
+- **画像の切り抜き・縮小は `sips`**: macOS 標準のコマンドを使う。python3 の PIL は入っておらず `ModuleNotFoundError` になる
 
 ## サブエージェントへの委譲とモデルの使い分け
 
