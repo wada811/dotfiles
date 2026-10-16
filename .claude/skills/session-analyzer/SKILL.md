@@ -7,7 +7,7 @@ description: |
   Use when the user wants to analyze their Claude usage patterns,
   or when asked to "scrape sessions", "what do I do with Claude",
   or "what should be a skill vs agent vs claude.md".
-argument-hint: "[--days N] (デフォルト: 全期間)"
+argument-hint: "[--days N] (デフォルト: 90 日)"
 ---
 
 # Session Analyzer
@@ -19,7 +19,7 @@ argument-hint: "[--days N] (デフォルト: 全期間)"
 ### 1. セッションデータ抽出
 
 ```bash
-npx tsx "$HOME/.claude/skills/session-analyzer/scripts/extract-sessions.ts" > tmp/sessions-output.txt 2>&1
+npx tsx "$HOME/.claude/skills/session-analyzer/scripts/extract-sessions.ts" --days 90 > tmp/sessions-output.txt 2>&1
 ```
 
 出力が大きいため `tmp/sessions-output.txt` に保存してから読む。
@@ -123,4 +123,4 @@ npx tsx "$HOME/.claude/skills/session-analyzer/scripts/extract-sessions.ts" > tm
 
 - セッションファイルにはプライベートな情報（コード・会議内容等）が含まれる
 - 分析結果はローカルのみで処理し、外部送信しない
-- 大量のセッションがある場合は直近 90 日に絞っても良い
+- 期間は `--days N` で変える（既定 90 日）。件数で絞ると直近の自動起動セッションで埋まる

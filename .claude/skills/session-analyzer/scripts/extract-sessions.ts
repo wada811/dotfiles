@@ -10,7 +10,10 @@ import os from "os";
 
 const CLAUDE_DIR = path.join(os.homedir(), ".claude", "projects");
 const MAX_MSG_LENGTH = 500; // truncate very long messages
-const MAX_SESSIONS = 200; // safety limit
+// Filter by period, not count: a count limit fills up with recent headless sessions
+const DAYS_ARG = process.argv.indexOf("--days");
+const DAYS = DAYS_ARG >= 0 ? Number(process.argv[DAYS_ARG + 1]) : 90;
+const CUTOFF_MS = Date.now() - DAYS * 24 * 60 * 60 * 1000;
 
 interface SessionEntry {
   type?: string;
@@ -154,8 +157,7 @@ function main() {
       .readdirSync(projectDir)
       .filter((f) => f.endsWith(".jsonl"))
       .map((f) => path.join(projectDir, f))
-      .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs) // newest first
-      .slice(0, MAX_SESSIONS);
+      .filter((f) => fs.statSync(f).mtimeMs >= CUTOFF_MS);
 
     for (const file of files) {
       const session = processSessionFile(file, project);
